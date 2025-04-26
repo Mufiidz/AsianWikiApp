@@ -1,11 +1,15 @@
 import 'package:flutter/material.dart';
 
-import '../res/theme.dart';
+import '../styles/theme.dart';
+import '../widgets/shimmer.dart';
 
 extension ContextExt on BuildContext {
   ThemeData get theme => Theme.of(this);
+  ColorScheme get colorScheme => theme.colorScheme;
   TextTheme get textTheme => theme.textTheme;
   Size get mediaSize => MediaQuery.of(this).size;
   ScaffoldMessengerState get snackbar => ScaffoldMessenger.of(this);
   MaterialTheme get materialTheme => MaterialTheme(this);
+  double get heightWithToolbar => mediaSize.height - kToolbarHeight;
+  ShimmerState? get shimmer => Shimmer.of(this);
 }

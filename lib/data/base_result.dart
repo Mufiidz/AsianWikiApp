@@ -6,15 +6,16 @@ sealed class BaseResult<T> {
   TResult when<TResult extends Object?>({
     required TResult Function(T data) result,
     required TResult Function(String message) error,
-  }) =>
-      switch (this) {
-        DataResult<T>(:final T data) => result(data),
-        ErrorResult<T>(:final String message) => error(message)
-      };
+  }) => switch (this) {
+    DataResult<T>(:final T data) => result(data),
+    ErrorResult<T>(:final String message) => error(message),
+  };
 
   T get onDataResult => (this as DataResult<T>).data;
 
   String get onErrorResult => (this as ErrorResult<T>).message;
+
+  bool get isError => (this is ErrorResult<T>);
 }
 
 @MappableClass()

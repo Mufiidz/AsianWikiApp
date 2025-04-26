@@ -1,10 +1,13 @@
 # To add configuration for dart_mappable
-# global_options:
-#   dart_mappable_builder:
-#     options:
-#       ignoreNull: true
-#       renameMethods:
-#         fromJson: fromJsonString
-#         toJson: toJsonString
-#         fromMap: fromJson
-#         toMap: toJson
+global_options:
+  dart_mappable_builder:
+    runs_before:
+      # list the generator packages you depend on, e.g.
+      - retrofit_generator
+    options:
+      ignoreNull: true
+      renameMethods:
+        fromJson: fromJsonString
+        toJson: toJsonString
+        fromMap: fromJson
+        toMap: toJson

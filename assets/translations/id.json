@@ -1,7 +1,9 @@
 {
     "retry" : "Coba Lagi",
     "empty_data" : "Data kosong",
-    "connection_error" : "Kesalahan koneksi",
+    "connection_error" : "Koneksi error",
     "connection_timeout" : "Waktu koneksi habis",
-    "empty_response" : "Respon kosong"
+    "empty_response" : "Tidak ada respon",
+    "url_not_found" : "URL tidak ditemukan",
+    "title_upcoming_home" : "Upcoming Bulan Ini" 
 }

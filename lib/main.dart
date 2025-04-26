@@ -3,7 +3,9 @@ import 'package:easy_localization_loader/easy_localization_loader.dart';
 import 'package:flutter/material.dart';
 
 import 'di/injection.dart';
-import 'screens/home.dart';
+import 'model/upcoming.dart';
+import 'res/constants/constants.dart' as constants;
+import 'screens/home/home_screen.dart';
 import 'utils/export_utils.dart';
 
 void main() async {
@@ -12,6 +14,7 @@ void main() async {
     EasyLocalization.ensureInitialized(),
     setupDI(),
   ]);
+  UpcomingMapper.ensureInitialized();
   runApp(
     EasyLocalization(
       supportedLocales: const <Locale>[Locale('id'), Locale('en')],
@@ -30,15 +33,21 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'AsianWiki',
+      title: constants.appName,
       navigatorKey: AppRoute.navigatorKey,
       localizationsDelegates: context.localizationDelegates,
       supportedLocales: context.supportedLocales,
-      theme:
-          context.theme.isDark
-              ? context.materialTheme.dark()
-              : context.materialTheme.light(),
+      // theme: context.materialTheme.light(),
+      theme: context.materialTheme.dark(),
+      // theme:
+      //     context.theme.isDark
+      //         ? context.materialTheme.dark()
+      //         : context.materialTheme.light(),
       home: const HomeScreen(),
+      // builder: (BuildContext context, Widget? child) {
+      //   ErrorWidget.builder = (FlutterErrorDetails details) {};
+      //   return child!;
+      // },
     );
   }
 }

@@ -3,5 +3,7 @@
     "empty_data" : "Empty data",
     "connection_error" : "Connection error",
     "connection_timeout" : "Connection timeout",
-    "empty_response" : "Empty response"
+    "empty_response" : "Empty response",
+    "url_not_found" : "URL not found",
+    "title_upcoming_home" : "Upcoming this Month"
 }
