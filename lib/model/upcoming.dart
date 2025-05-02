@@ -4,6 +4,7 @@ import 'package:dart_mappable/dart_mappable.dart';
 import 'package:drift/drift.dart';
 
 import '../data/local/app_database.dart';
+import 'drama.dart';
 
 part 'upcoming.mapper.dart';
 
@@ -34,6 +35,9 @@ class Upcoming with UpcomingMappable {
     endDate: Value.absentIfNull(weekRange?.end),
     image: Value.absentIfNull(imageUrl),
   );
+
+  Drama toDrama() =>
+      Drama(id: id, title: title, imageUrl: imageUrl ?? '', url: link);
 }
 
 @MappableClass()

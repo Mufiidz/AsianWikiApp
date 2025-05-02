@@ -1,22 +1,22 @@
 import 'package:flutter/material.dart';
 
-import '../../model/upcoming.dart';
-import '../../styles/export_styles.dart';
-import '../../utils/export_utils.dart';
-import '../../widgets/export_widget.dart';
+import '../model/drama.dart';
+import '../styles/export_styles.dart';
+import '../utils/export_utils.dart';
+import 'export_widget.dart';
 
 typedef OnClickItem = Function()?;
 
-class ItemUpcoming extends StatefulWidget {
-  final Upcoming drama;
+class ItemDrama extends StatefulWidget {
+  final Drama drama;
   final OnClickItem? onClick;
-  const ItemUpcoming({required this.drama, super.key, this.onClick});
+  const ItemDrama({required this.drama, super.key, this.onClick});
 
   @override
-  State<ItemUpcoming> createState() => _ItemUpcomingState();
+  State<ItemDrama> createState() => _ItemDramaState();
 }
 
-class _ItemUpcomingState extends State<ItemUpcoming> {
+class _ItemDramaState extends State<ItemDrama> {
   late Color _baseColor;
 
   @override
@@ -27,7 +27,7 @@ class _ItemUpcomingState extends State<ItemUpcoming> {
 
   @override
   Widget build(BuildContext context) {
-    final Upcoming(:String? imageUrl) = widget.drama;
+    final Drama(:String? imageUrl) = widget.drama;
     return Card(
       shape: RoundedRectangleBorder(borderRadius: CornerRadius.mediumRadius),
       elevation: Elevation.small,

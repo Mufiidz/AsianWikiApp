@@ -6,13 +6,13 @@ import 'package:shared_preferences/shared_preferences.dart';
 import '../data/base_result.dart';
 import '../data/local/dao/upcoming_dao.dart';
 import '../data/network/api_services.dart';
-import '../model/slider_drama.dart';
+import '../model/drama.dart';
 import '../model/upcoming.dart';
 import '../res/constants/sharedpref_keys.dart' as sharedpref_keys;
 import '../utils/export_utils.dart';
 
 abstract class HomeRepository {
-  Future<BaseResult<List<SliderDrama>>> getSlider();
+  Future<BaseResult<List<Drama>>> getSlider();
   Future<BaseResult<List<Upcoming>>> getUpcoming({int? month, int? page});
 }
 
@@ -29,7 +29,7 @@ class HomeRepositoryImpl implements HomeRepository {
   );
 
   @override
-  Future<BaseResult<List<SliderDrama>>> getSlider() =>
+  Future<BaseResult<List<Drama>>> getSlider() =>
       _apiServices.slider().awaitResponse;
 
   @override

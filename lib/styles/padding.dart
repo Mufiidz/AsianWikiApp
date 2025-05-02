@@ -28,5 +28,6 @@ abstract class PaddingStyle {
     vertical:medium,
   );
 
+  /// Padding for medium (bottom: 16)
   static const EdgeInsets onlyBottomM = EdgeInsets.only(bottom: medium);
 }

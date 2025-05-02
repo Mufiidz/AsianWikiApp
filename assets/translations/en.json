@@ -1,9 +1,13 @@
 {
-    "retry" : "Retry",
-    "empty_data" : "Empty data",
-    "connection_error" : "Connection error",
-    "connection_timeout" : "Connection timeout",
-    "empty_response" : "Empty response",
-    "url_not_found" : "URL not found",
-    "title_upcoming_home" : "Upcoming this Month"
+    "retry": "Retry",
+    "empty_data": "Empty data",
+    "connection_error": "Connection error",
+    "connection_timeout": "Connection timeout",
+    "empty_response": "Empty response",
+    "url_not_found": "URL not found",
+    "title_upcoming_home": "Upcoming this Month",
+    "searchbar_hint": "Search title or person",
+    "content_search_history": "Remove from search history?",
+    "cancel": "Cancel",
+    "remove": "Remove"
 }

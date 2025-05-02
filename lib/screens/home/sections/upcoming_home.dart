@@ -6,7 +6,7 @@ import '../../../model/upcoming.dart';
 import '../../../res/locale_keys.g.dart';
 import '../../../styles/export_styles.dart';
 import '../../../utils/export_utils.dart';
-import '../item_upcoming.dart';
+import '../../../widgets/item_drama.dart';
 
 class UpcomingHome extends StatelessWidget {
   final PagingController<int, Upcoming> controller;
@@ -29,7 +29,10 @@ class UpcomingHome extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
-              Text(LocaleKeys.title_upcoming_home.tr(), style: context.textTheme.titleLarge),
+              Text(
+                LocaleKeys.title_upcoming_home.tr(),
+                style: context.textTheme.titleLarge,
+              ),
               Spacing.mediumSpacing,
               PagedGridView<int, Upcoming>(
                 pagingController: controller,
@@ -42,7 +45,7 @@ class UpcomingHome extends StatelessWidget {
                 builderDelegate: PagedChildBuilderDelegate<Upcoming>(
                   itemBuilder:
                       (BuildContext context, Upcoming item, int index) =>
-                          ItemUpcoming(drama: item, onClick: () {}),
+                          ItemDrama(drama: item.toDrama(), onClick: () {}),
                   newPageProgressIndicatorBuilder:
                       (BuildContext context) =>
                           const Center(child: CircularProgressIndicator()),

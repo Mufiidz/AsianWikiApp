@@ -1,5 +1,7 @@
 import 'package:intl/intl.dart';
 
+import 'export_utils.dart';
+
 extension IntExt on int? {
   String toIdr({bool withSymbol = true}) {
     NumberFormat currencyFormatter = NumberFormat.currency(
@@ -9,4 +11,7 @@ extension IntExt on int? {
     );
     return currencyFormatter.format(this ?? 0);
   }
+
+  /// Convert int to double.degreesToRadia
+  double get degreesToRadian => (this ?? 0).roundToDouble().degreesToRadian;
 }

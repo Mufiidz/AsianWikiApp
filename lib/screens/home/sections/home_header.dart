@@ -1,15 +1,12 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 
-import '../../../model/slider_drama.dart';
+import '../../../model/drama.dart';
 import '../item_slider.dart';
 
 class HomeHeader extends StatelessWidget {
-  final List<SliderDrama> sliders;
-  const HomeHeader({
-    required this.sliders,
-    super.key,
-  });
+  final List<Drama> sliders;
+  const HomeHeader({required this.sliders, super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -20,7 +17,7 @@ class HomeHeader extends StatelessWidget {
     return CarouselSlider.builder(
       itemCount: sliders.length,
       itemBuilder: (BuildContext context, int index, int realIndex) {
-        final SliderDrama sliderDrama = sliders[index];
+        final Drama sliderDrama = sliders[index];
 
         if (sliderDrama.isEmpty) return const SizedBox.shrink();
 

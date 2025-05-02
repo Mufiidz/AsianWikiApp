@@ -1,5 +1,6 @@
 export 'app_context.dart';
 export 'app_route.dart';
+export 'double_ext.dart';
 export 'future_ext.dart';
 export 'int_ext.dart';
 export 'lifecycle_event_handler.dart';

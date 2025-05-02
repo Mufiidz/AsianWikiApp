@@ -1,9 +1,13 @@
 {
-    "retry" : "Coba Lagi",
-    "empty_data" : "Data kosong",
-    "connection_error" : "Koneksi error",
-    "connection_timeout" : "Waktu koneksi habis",
-    "empty_response" : "Tidak ada respon",
-    "url_not_found" : "URL tidak ditemukan",
-    "title_upcoming_home" : "Upcoming Bulan Ini" 
+    "retry": "Coba Lagi",
+    "empty_data": "Data kosong",
+    "connection_error": "Koneksi error",
+    "connection_timeout": "Waktu koneksi habis",
+    "empty_response": "Tidak ada respon",
+    "url_not_found": "URL tidak ditemukan",
+    "title_upcoming_home": "Upcoming Bulan Ini",
+    "searchbar_hint": "Cari judul atau orang",
+    "content_search_history": "Hapus dari riwayat pencarian?",
+    "cancel": "Batal",
+    "remove": "Hapus"
 }

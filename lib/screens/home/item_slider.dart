@@ -1,17 +1,17 @@
 import 'package:flutter/material.dart';
 
-import '../../model/slider_drama.dart';
+import '../../model/drama.dart';
 import '../../styles/export_styles.dart';
 import '../../utils/export_utils.dart';
 import '../../widgets/export_widget.dart';
 
 class ItemSlider extends StatelessWidget {
-  final SliderDrama item;
+  final Drama item;
   const ItemSlider({required this.item, super.key});
 
   @override
   Widget build(BuildContext context) {
-    final SliderDrama(:String title, :String imageUrl) = item;
+    final Drama(:String title, :String imageUrl) = item;
     return Card(
       shape: RoundedRectangleBorder(borderRadius: CornerRadius.mediumRadius),
       elevation: Elevation.medium,

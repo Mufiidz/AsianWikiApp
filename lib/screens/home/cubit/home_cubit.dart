@@ -5,9 +5,10 @@ import 'package:injectable/injectable.dart';
 
 import '../../../data/base_result.dart';
 import '../../../data/base_state.dart';
-import '../../../model/slider_drama.dart';
+import '../../../model/drama.dart';
 import '../../../model/upcoming.dart';
 import '../../../repository/home_repository.dart';
+import '../../../repository/search_repository.dart';
 import '../../../utils/export_utils.dart';
 
 part 'home_cubit.mapper.dart';
@@ -16,9 +17,10 @@ part 'home_state.dart';
 @injectable
 class HomeCubit extends Cubit<HomeState> {
   final HomeRepository _homeRepository;
+  final SearchRepository _searchRepository;
   final List<String> _errors = <String>[];
   late PagingController<int, Upcoming> _pagingController;
-  HomeCubit(this._homeRepository) : super(HomeState());
+  HomeCubit(this._homeRepository, this._searchRepository) : super(HomeState());
 
   Future<void> initial(PagingController<int, Upcoming> pagingController) async {
     emit(state.copyWith(statusState: StatusState.loading));
@@ -46,12 +48,11 @@ class HomeCubit extends Cubit<HomeState> {
   Future<void> getSlider() async {
     logger.d('Hit Get Slider');
 
-    final BaseResult<List<SliderDrama>> result =
-        await _homeRepository.getSlider();
+    final BaseResult<List<Drama>> result = await _homeRepository.getSlider();
 
     result.when(
       result:
-          (List<SliderDrama> data) => emit(
+          (List<Drama> data) => emit(
             state.copyWith(sliders: data, statusState: StatusState.idle),
           ),
       error: (String message) {
@@ -91,4 +92,23 @@ class HomeCubit extends Cubit<HomeState> {
       },
     );
   }
+
+  Future<List<String>> getSearchHistory({String? query}) async {
+    List<String>? searchHistories = await _searchRepository.getSearchHistory();
+
+    if (query != null && query.isNotEmpty) {
+      searchHistories =
+          searchHistories
+              ?.where(
+                (String element) =>
+                    element.toLowerCase().contains(query.toLowerCase()),
+              )
+              .toList();
+    }
+
+    return searchHistories ?? List<String>.empty();
+  }
+
+  Future<void> removeSearchHistory(String title) =>
+      _searchRepository.removeSearchHistory(title);
 }
