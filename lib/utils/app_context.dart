@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../styles/theme.dart';
+import '../styles/export_styles.dart';
 import '../widgets/shimmer.dart';
 
 extension ContextExt on BuildContext {
@@ -12,4 +12,6 @@ extension ContextExt on BuildContext {
   MaterialTheme get materialTheme => MaterialTheme(this);
   double get heightWithToolbar => mediaSize.height - kToolbarHeight;
   ShimmerState? get shimmer => Shimmer.of(this);
+  TextTheme get appTextTheme =>
+      createTextTheme(this, displayFontString: 'Poppins');
 }

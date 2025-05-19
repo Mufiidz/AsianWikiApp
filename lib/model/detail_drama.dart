@@ -1,29 +1,32 @@
 import 'package:dart_mappable/dart_mappable.dart';
 
+import 'date_range.dart';
+import 'simple_data.dart';
 import 'synopsis.dart';
 
 part 'detail_drama.mapper.dart';
 
 @MappableClass()
 class DetailDrama with DetailDramaMappable {
-  final String id;
-  final String title;
-  final String url;
-  final String imageUrl;
-  final int rating;
-  final int vote;
-  final String drama;
-  final String revisedRomanization;
-  final String hangul;
-  final String director;
-  final String writer;
-  final String network;
-  final int episodes;
-  final String releaseDate;
-  final String runtime;
-  final String language;
-  final String country;
-  final Synopsis synopsis;
+  String id;
+  String title;
+  String url;
+  String imageUrl;
+  int rating;
+  int vote;
+  String alternativeTitle;
+  String latinTitle;
+  String nativeTitle;
+  String director;
+  String writer;
+  String releaseDate;
+  String language;
+  String country;
+  ShowType? type;
+  String notes;
+  Synopsis synopsis;
+  int episodes;
+  DateRange? releaseDateRange;
 
   DetailDrama({
     this.id = '',
@@ -32,18 +35,44 @@ class DetailDrama with DetailDramaMappable {
     this.imageUrl = '',
     this.rating = 0,
     this.vote = 0,
-    this.drama = '',
-    this.revisedRomanization = '',
-    this.hangul = '',
+    this.alternativeTitle = '',
+    this.latinTitle = '',
+    this.nativeTitle = '',
     this.director = '',
     this.writer = '',
-    this.network = '',
-    this.episodes = 0,
     this.releaseDate = '',
-    this.runtime = '',
     this.language = '',
     this.country = '',
+    this.type,
+    this.notes = '',
     this.synopsis = const Synopsis(),
+    this.episodes = 0,
+    this.releaseDateRange,
   });
 
+  List<SimpleData> getInfo() {
+    final List<SimpleData> infos = <SimpleData>[
+      SimpleData(title: 'Alternative Title', content: alternativeTitle),
+      SimpleData(title: 'Latin Title', content: latinTitle),
+      SimpleData(title: 'Native Title', content: nativeTitle),
+      SimpleData(title: 'Writer', content: writer),
+      SimpleData(title: 'Release Date', content: releaseDate),
+      SimpleData(title: 'Language', content: language),
+    ];
+
+    if (episodes > 0) {
+      infos.add(SimpleData(title: 'Episodes', content: '$episodes'));
+    }
+
+    if (type == null) return List<SimpleData>.empty();
+    return infos;
+  }
+}
+
+@MappableEnum()
+enum ShowType {
+  @MappableValue('Movie')
+  movie,
+  @MappableValue('Drama')
+  drama,
 }

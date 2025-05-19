@@ -8,7 +8,6 @@ import '../res/locale_keys.g.dart';
 import 'export_utils.dart';
 
 extension FutureExt<T> on Future<BaseResponse<T>> {
-  
   Future<BaseResult<T>> get awaitResponse async {
     try {
       final BaseResponse<T> response = await this;
@@ -47,7 +46,12 @@ extension FutureExt<T> on Future<BaseResponse<T>> {
       );
 
       if (response.statusCode == 404) {
-        return ErrorResult<T>(LocaleKeys.url_not_found.tr());
+        String errorMessage = errorResponse.message;
+        errorMessage =
+            errorMessage == 'NOT_FOUND'
+                ? LocaleKeys.url_not_found.tr()
+                : errorMessage;
+        return ErrorResult<T>(errorMessage);
       }
 
       // Convert here for error response

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../model/drama.dart';
+import '../screens/detail/detail_drama_screen.dart';
 import '../styles/export_styles.dart';
 import '../utils/export_utils.dart';
 import 'export_widget.dart';
@@ -16,7 +17,8 @@ class ItemDrama extends StatefulWidget {
   State<ItemDrama> createState() => _ItemDramaState();
 }
 
-class _ItemDramaState extends State<ItemDrama> {
+class _ItemDramaState extends State<ItemDrama>
+    with SingleTickerProviderStateMixin {
   late Color _baseColor;
 
   @override
@@ -27,7 +29,7 @@ class _ItemDramaState extends State<ItemDrama> {
 
   @override
   Widget build(BuildContext context) {
-    final Drama(:String? imageUrl) = widget.drama;
+    final Drama(:String id, :String title, :String? imageUrl) = widget.drama;
     return Card(
       shape: RoundedRectangleBorder(borderRadius: CornerRadius.mediumRadius),
       elevation: Elevation.small,
@@ -35,7 +37,9 @@ class _ItemDramaState extends State<ItemDrama> {
       child: ClipRRect(
         borderRadius: CornerRadius.mediumRadius,
         child: InkWell(
-          onTap: widget.onClick,
+          onTap:
+              widget.onClick ??
+              (() => AppRoute.to(DetailDramaScreen(drama: widget.drama))),
           borderRadius: CornerRadius.mediumRadius,
           child: Stack(
             children: <Widget>[
@@ -44,11 +48,17 @@ class _ItemDramaState extends State<ItemDrama> {
                   if (imageUrl == null || imageUrl.isEmpty) {
                     return const SizedBox.shrink();
                   }
-                  return CachedImageNetwork(
-                    imageUrl,
-                    fit: BoxFit.cover,
-                    width: context.mediaSize.width,
-                    height: context.mediaSize.height,
+                  // TODO : FIX hero tag when entrance animation
+                  return Hero(
+                    tag: id,
+                    child: ImageNetwork(
+                      imageUrl,
+                      context,
+                      borderRadius: CornerRadius.mediumRadius,
+                      fit: BoxFit.cover,
+                      width: context.mediaSize.width,
+                      height: context.mediaSize.height,
+                    ),
                   );
                 },
               ),
@@ -69,7 +79,7 @@ class _ItemDramaState extends State<ItemDrama> {
                   ),
                 ),
                 child: Text(
-                  widget.drama.title,
+                  title,
                   textAlign: TextAlign.center,
                   style: context.textTheme.bodyMedium?.copyWith(
                     color: Colors.white,

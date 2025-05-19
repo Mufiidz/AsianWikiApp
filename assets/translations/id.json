@@ -9,5 +9,11 @@
     "searchbar_hint": "Cari judul atau orang",
     "content_search_history": "Hapus dari riwayat pencarian?",
     "cancel": "Batal",
-    "remove": "Hapus"
+    "remove": "Hapus",
+    "director": "Sutradara",
+    "country": "Negara",
+    "show": "Show",
+    "title_rating": "Peringkat dari {vote} vote",
+    "notes": "Catatan",
+    "synopsis": "Sinopsis"
 }

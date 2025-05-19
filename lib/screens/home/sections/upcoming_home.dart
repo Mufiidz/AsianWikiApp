@@ -7,14 +7,17 @@ import '../../../res/locale_keys.g.dart';
 import '../../../styles/export_styles.dart';
 import '../../../utils/export_utils.dart';
 import '../../../widgets/item_drama.dart';
+import '../../detail/detail_drama_screen.dart';
 
 class UpcomingHome extends StatelessWidget {
   final PagingController<int, Upcoming> controller;
+  final ScrollController? scrollController;
   final int itemsCount;
   const UpcomingHome({
     required this.controller,
     super.key,
     this.itemsCount = 0,
+    this.scrollController,
   });
 
   @override
@@ -37,6 +40,7 @@ class UpcomingHome extends StatelessWidget {
               PagedGridView<int, Upcoming>(
                 pagingController: controller,
                 shrinkWrap: true,
+                scrollController: scrollController,
                 physics: const NeverScrollableScrollPhysics(),
                 padding: PaddingStyle.onlyBottomM,
                 showNewPageProgressIndicatorAsGridChild: false,
@@ -45,7 +49,13 @@ class UpcomingHome extends StatelessWidget {
                 builderDelegate: PagedChildBuilderDelegate<Upcoming>(
                   itemBuilder:
                       (BuildContext context, Upcoming item, int index) =>
-                          ItemDrama(drama: item.toDrama(), onClick: () {}),
+                          ItemDrama(
+                            drama: item.toDrama(),
+                            onClick:
+                                () => AppRoute.to(
+                                  DetailDramaScreen(drama: item.toDrama()),
+                                ),
+                          ),
                   newPageProgressIndicatorBuilder:
                       (BuildContext context) =>
                           const Center(child: CircularProgressIndicator()),

@@ -9,9 +9,7 @@ import '../../res/constants/constants.dart' as constants;
 import '../../res/locale_keys.g.dart';
 import '../../styles/export_styles.dart';
 import '../../utils/export_utils.dart';
-import '../../widgets/appbar_widget.dart';
-import '../../widgets/item_search.dart';
-import '../../widgets/list_widget.dart';
+import '../../widgets/export_widget.dart';
 import '../search/search_screen.dart';
 import 'cubit/home_cubit.dart';
 import 'home_loading.dart';
@@ -29,6 +27,7 @@ class _HomeScreenState extends State<HomeScreen> {
   late final HomeCubit _cubit;
   late final PagingController<int, Upcoming> _pagingController;
   late final SearchController _searchController;
+  final ScrollController _scrollController = ScrollController();
 
   @override
   void initState() {
@@ -78,40 +77,34 @@ class _HomeScreenState extends State<HomeScreen> {
             },
             child: BlocBuilder<HomeCubit, HomeState>(
               bloc: _cubit,
-              builder: (BuildContext context, HomeState state) {
-                if (state.isLoading) {
-                  return HomeLoading(isLoading: state.isLoading);
-                }
-
-                if (state.isError) {
-                  return SingleChildScrollView(
-                    physics: const AlwaysScrollableScrollPhysics(),
-                    child: Container(
-                      width: context.mediaSize.width,
-                      height: context.heightWithToolbar,
-                      padding: PaddingStyle.mediumHorizontal,
-                      alignment: Alignment.center,
-                      child: Text(
-                        state.message,
-                        style: context.textTheme.bodyMedium?.copyWith(
-                          color: context.colorScheme.error,
-                        ),
+              builder:
+                  (BuildContext context, HomeState state) =>
+                      BodyWidget<HomeState>(
+                        state: state,
+                        loadingBuilder:
+                            (BuildContext context, HomeState state) =>
+                                const HomeLoading(),
+                        child: (BuildContext context, HomeState state) {
+                          final List<Widget> contents = _contents(state);
+                          return ListWidget<Widget>(
+                            contents,
+                            controller: _scrollController,
+                            itemBuilder:
+                                (
+                                  BuildContext context,
+                                  Widget item,
+                                  int index,
+                                ) => item,
+                            separatorBuilder:
+                                (
+                                  BuildContext context,
+                                  Widget item,
+                                  int index,
+                                ) => Spacing.mediumSpacing,
+                            isSeparated: true,
+                          );
+                        },
                       ),
-                    ),
-                  );
-                }
-
-                final List<Widget> contents = _contents(state);
-                return ListWidget<Widget>(
-                  contents,
-                  itemBuilder:
-                      (BuildContext context, Widget item, int index) => item,
-                  separatorBuilder:
-                      (BuildContext context, Widget item, int index) =>
-                          Spacing.mediumSpacing,
-                  isSeparated: true,
-                );
-              },
             ),
           ),
           SearchAnchor(
@@ -163,6 +156,7 @@ class _HomeScreenState extends State<HomeScreen> {
     UpcomingHome(
       controller: _pagingController,
       itemsCount: state.upcomingsLength,
+      scrollController: _scrollController,
     ),
   ];
 
@@ -170,6 +164,7 @@ class _HomeScreenState extends State<HomeScreen> {
   void dispose() {
     _pagingController.dispose();
     _searchController.dispose();
+    _scrollController.dispose();
     super.dispose();
   }
 }

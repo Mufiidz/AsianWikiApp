@@ -45,7 +45,6 @@ class _SearchScreenState extends State<SearchScreen> {
       appBar: AppBar(
         automaticallyImplyLeading: false,
         forceMaterialTransparency: true,
-        // TODO : Appbarnya jelek gada padding
         title: SearchAnchor.bar(
           barHintText: LocaleKeys.searchbar_hint.tr(),
           viewHintText: LocaleKeys.searchbar_hint.tr(),
@@ -110,20 +109,7 @@ class _SearchScreenState extends State<SearchScreen> {
               return const Center(child: CircularProgressIndicator.adaptive());
             }
             if (state.isError) {
-              return SingleChildScrollView(
-                physics: const AlwaysScrollableScrollPhysics(),
-                child: Container(
-                  width: context.mediaSize.width,
-                  height: context.heightWithToolbar,
-                  alignment: Alignment.center,
-                  child: Text(
-                    state.message,
-                    style: context.textTheme.bodyMedium?.copyWith(
-                      color: context.colorScheme.error,
-                    ),
-                  ),
-                ),
-              );
+              return ErrorScreen(errorMessage: state.message);
             }
             if (state.results.isEmpty) {
               return Center(child: Text(LocaleKeys.empty_data.tr()));

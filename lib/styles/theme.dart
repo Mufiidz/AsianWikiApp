@@ -338,12 +338,11 @@ class MaterialTheme {
   }
 
   ThemeData theme(ColorScheme colorScheme) {
-    final TextTheme textTheme = createTextTheme(context, 'Roboto', 'Poppins');
     return ThemeData(
       useMaterial3: true,
       brightness: colorScheme.brightness,
       colorScheme: colorScheme,
-      textTheme: textTheme.apply(
+      textTheme: context.appTextTheme.apply(
         bodyColor: colorScheme.onSurface,
         displayColor: colorScheme.onSurface,
       ),

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'back_button_widget.dart';
 
-typedef BackPressCallback = Function()?;
+typedef BackPressCallback = void Function()?;
 
 class AppbarWidget extends AppBar {
   final String name;
@@ -10,10 +10,12 @@ class AppbarWidget extends AppBar {
   final bool showBackButton;
   final Color? backColor;
   final Color? titleColor;
+  final Widget? backButtonWidget;
 
   AppbarWidget(
     this.name, {
     super.key,
+    this.backButtonWidget,
     this.onBackPressed,
     super.actions,
     super.backgroundColor,
@@ -28,7 +30,8 @@ class AppbarWidget extends AppBar {
   }) : super(
          leading:
              showBackButton
-                 ? BackButtonWidget(onClick: onBackPressed, color: backColor)
+                 ? (backButtonWidget ??
+                     BackButtonWidget(onClick: onBackPressed, color: backColor))
                  : null,
          title: Text(
            name,

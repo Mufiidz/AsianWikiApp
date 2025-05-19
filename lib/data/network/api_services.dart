@@ -2,6 +2,7 @@ import 'package:dio/dio.dart';
 import 'package:injectable/injectable.dart';
 import 'package:retrofit/retrofit.dart';
 
+import '../../model/detail_drama.dart';
 import '../../model/drama.dart';
 import '../../model/search_type.dart';
 import '../../model/upcoming.dart';
@@ -30,4 +31,7 @@ abstract class ApiServices {
     @Query('search') String query,
     @Query('type') SearchType searchType,
   );
+
+  @GET(endpoint.show)
+  Future<BaseResponse<DetailDrama>> show(@Path('id') String id);
 }

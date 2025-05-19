@@ -4,6 +4,7 @@ import '../../model/drama.dart';
 import '../../styles/export_styles.dart';
 import '../../utils/export_utils.dart';
 import '../../widgets/export_widget.dart';
+import '../detail/detail_drama_screen.dart';
 
 class ItemSlider extends StatelessWidget {
   final Drama item;
@@ -11,21 +12,26 @@ class ItemSlider extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final Drama(:String title, :String imageUrl) = item;
+    final Drama(:String id, :String title, :String imageUrl) = item;
     return Card(
       shape: RoundedRectangleBorder(borderRadius: CornerRadius.mediumRadius),
       elevation: Elevation.medium,
       child: ClipRRect(
         borderRadius: CornerRadius.mediumRadius,
         child: InkWell(
-          onTap: () {},
+          onTap: () => AppRoute.to(DetailDramaScreen(drama: item)),
           child: Stack(
             children: <Widget>[
-              CachedImageNetwork(
-                imageUrl,
-                fit: BoxFit.cover,
-                width: context.mediaSize.width,
-                height: context.mediaSize.height,
+              Hero(
+                tag: id,
+                child: ImageNetwork(
+                  imageUrl,
+                  borderRadius: CornerRadius.mediumRadius,
+                  context,
+                  fit: BoxFit.cover,
+                  width: context.mediaSize.width,
+                  height: context.mediaSize.height,
+                ),
               ),
               Container(
                 width: context.mediaSize.width,

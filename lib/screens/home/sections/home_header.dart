@@ -27,7 +27,7 @@ class HomeHeader extends StatelessWidget {
         height: 200,
         enlargeCenterPage: true,
         enlargeFactor: 0.2,
-        autoPlay: false,
+        autoPlay: true,
         clipBehavior: Clip.none,
       ),
     );

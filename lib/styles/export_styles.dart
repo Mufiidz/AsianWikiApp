@@ -3,3 +3,4 @@ export 'elevation.dart';
 export 'padding.dart';
 export 'spacing.dart';
 export 'theme.dart';
+export 'typography.dart';

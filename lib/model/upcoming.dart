@@ -4,6 +4,7 @@ import 'package:dart_mappable/dart_mappable.dart';
 import 'package:drift/drift.dart';
 
 import '../data/local/app_database.dart';
+import 'date_range.dart';
 import 'drama.dart';
 
 part 'upcoming.mapper.dart';
@@ -16,7 +17,7 @@ class Upcoming with UpcomingMappable {
   String link;
   String network;
   String week;
-  WeekRange? weekRange;
+  DateRange? weekRange;
 
   Upcoming({
     this.id = '',
@@ -38,12 +39,4 @@ class Upcoming with UpcomingMappable {
 
   Drama toDrama() =>
       Drama(id: id, title: title, imageUrl: imageUrl ?? '', url: link);
-}
-
-@MappableClass()
-class WeekRange with WeekRangeMappable {
-  DateTime? start;
-  DateTime? end;
-
-  WeekRange({this.start, this.end});
 }

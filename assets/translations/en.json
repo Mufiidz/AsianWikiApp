@@ -9,5 +9,11 @@
     "searchbar_hint": "Search title or person",
     "content_search_history": "Remove from search history?",
     "cancel": "Cancel",
-    "remove": "Remove"
+    "remove": "Remove",
+    "director": "Director",
+    "country": "Country",
+    "show": "Show",
+    "title_rating": "Rating from {vote} votes",
+    "notes": "Notes",
+    "synopsis": "Synopsis"
 }

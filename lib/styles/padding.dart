@@ -23,9 +23,15 @@ abstract class PaddingStyle {
     vertical: small,
   );
 
+  /// Padding for screen (horizontal: 16, vertical: 8)
+  static const EdgeInsets paddingH16V8 = EdgeInsets.symmetric(
+    horizontal: medium,
+    vertical: small,
+  );
+
   static const EdgeInsets paddingH8V16 = EdgeInsets.symmetric(
     horizontal: small,
-    vertical:medium,
+    vertical: medium,
   );
 
   /// Padding for medium (bottom: 16)

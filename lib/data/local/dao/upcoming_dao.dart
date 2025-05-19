@@ -3,6 +3,7 @@
 import 'package:drift/drift.dart';
 import 'package:injectable/injectable.dart';
 
+import '../../../model/date_range.dart';
 import '../../../model/upcoming.dart';
 import '../app_database.dart';
 import '../tables/upcoming.dart' as table;
@@ -26,7 +27,6 @@ class UpcomingDaoImpl extends DatabaseAccessor<AppDatabase>
   Future<void> addUpcomings(List<Upcoming> upcomings) async {
     final List<UpcomingCompanion> newUpcoming =
         upcomings.map((Upcoming e) => e.toUpcomingTable).toList();
-
     return await batch(
       (Batch batch) => batch.insertAllOnConflictUpdate(upcoming, newUpcoming),
     );
@@ -59,7 +59,7 @@ class UpcomingDaoImpl extends DatabaseAccessor<AppDatabase>
                 id: data.id,
                 title: data.title,
                 imageUrl: data.image,
-                weekRange: WeekRange(start: data.startDate, end: data.endDate),
+                weekRange: DateRange(start: data.startDate, end: data.endDate),
               ),
             )
             .toList();
