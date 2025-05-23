@@ -1,25 +1,25 @@
 import 'package:flutter/material.dart';
 
-import '../../model/drama.dart';
+import '../../model/show.dart';
 import '../../styles/export_styles.dart';
 import '../../utils/export_utils.dart';
 import '../../widgets/export_widget.dart';
-import '../detail/detail_drama_screen.dart';
+import '../detail/detail_show_screen.dart';
 
 class ItemSlider extends StatelessWidget {
-  final Drama item;
+  final Show item;
   const ItemSlider({required this.item, super.key});
 
   @override
   Widget build(BuildContext context) {
-    final Drama(:String id, :String title, :String imageUrl) = item;
+    final Show(:String id, :String title, :String imageUrl) = item;
     return Card(
       shape: RoundedRectangleBorder(borderRadius: CornerRadius.mediumRadius),
       elevation: Elevation.medium,
       child: ClipRRect(
         borderRadius: CornerRadius.mediumRadius,
         child: InkWell(
-          onTap: () => AppRoute.to(DetailDramaScreen(drama: item)),
+          onTap: () => AppRoute.to(DetailShowScreen(drama: item)),
           child: Stack(
             children: <Widget>[
               Hero(

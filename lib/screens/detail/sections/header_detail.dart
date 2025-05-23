@@ -8,12 +8,11 @@ class HeaderDetail extends StatefulWidget {
   final String heroId;
   final String image;
   final String title;
-  final Animation<double> animation;
   const HeaderDetail({
     required this.image,
     required this.title,
     required this.heroId,
-    required this.animation, super.key,
+    super.key,
   });
 
   @override

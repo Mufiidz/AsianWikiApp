@@ -5,7 +5,7 @@ import 'package:injectable/injectable.dart';
 
 import '../../../data/base_result.dart';
 import '../../../data/base_state.dart';
-import '../../../model/drama.dart';
+import '../../../model/show.dart';
 import '../../../model/upcoming.dart';
 import '../../../repository/home_repository.dart';
 import '../../../repository/search_repository.dart';
@@ -48,11 +48,11 @@ class HomeCubit extends Cubit<HomeState> {
   Future<void> getSlider() async {
     logger.d('Hit Get Slider');
 
-    final BaseResult<List<Drama>> result = await _homeRepository.getSlider();
+    final BaseResult<List<Show>> result = await _homeRepository.getSlider();
 
     result.when(
       result:
-          (List<Drama> data) => emit(
+          (List<Show> data) => emit(
             state.copyWith(sliders: data, statusState: StatusState.idle),
           ),
       error: (String message) {

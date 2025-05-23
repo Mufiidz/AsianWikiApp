@@ -5,4 +5,74 @@
         "mytemplate.iml": true,
         ".flutter-plugins-dependencies": true
     },
+    "better-comments.tags": [
+        {
+            "tag": "issue",
+            "color": "#FF2D00",
+            "strikethrough": false,
+            "underline": false,
+            "backgroundColor": "transparent",
+            "bold": false,
+            "italic": false
+        },
+        {
+            "tag": "?",
+            "color": "#3498DB",
+            "strikethrough": false,
+            "underline": false,
+            "backgroundColor": "transparent",
+            "bold": false,
+            "italic": false
+        },
+        {
+            "tag": "//",
+            "color": "#474747",
+            "strikethrough": true,
+            "underline": false,
+            "backgroundColor": "transparent",
+            "bold": false,
+            "italic": false
+        },
+        {
+            "tag": "todo",
+            "color": "#FF8C00",
+            "strikethrough": false,
+            "underline": false,
+            "backgroundColor": "transparent",
+            "bold": false,
+            "italic": false
+        },
+        {
+            "tag": "*",
+            "color": "#98C379",
+            "strikethrough": false,
+            "underline": false,
+            "backgroundColor": "transparent",
+            "bold": false,
+            "italic": false
+        }
+    ],
+    "todo-tree.highlights.customHighlight": {
+        "ISSUE": {
+            "icon": "flame",
+            "color": "#FF2D00",
+            "bold": true,
+            "background": "#FFD6D6",
+            "foreground": "#FF2D00"
+        },
+    },
+    "todo-tree.general.tagGroups": {
+        "ISSUE": [
+            "ISSUE",
+            "BUG"
+        ]
+    },
+    "todo-tree.general.tags": [
+        "TODO",
+        "[ ]",
+        "[x]",
+        "ISSUE"
+    ],
+    "todo-tree.tree.groupedByTag": true,
+    "todo-tree.tree.showCountsInTree": false,
 }

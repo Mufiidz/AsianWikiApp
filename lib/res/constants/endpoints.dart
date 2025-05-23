@@ -13,5 +13,5 @@ const String search = '/search';
 /// /show/{id}
 const String show = '$_show/{id}';
 
-/// /show/cast/{id}
-const String cast = '$_show/cast/{id}';
+/// /show/casts/{id}
+const String cast = '$_show/casts/{id}';

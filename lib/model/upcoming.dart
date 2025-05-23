@@ -5,7 +5,7 @@ import 'package:drift/drift.dart';
 
 import '../data/local/app_database.dart';
 import 'date_range.dart';
-import 'drama.dart';
+import 'show.dart';
 
 part 'upcoming.mapper.dart';
 
@@ -37,6 +37,6 @@ class Upcoming with UpcomingMappable {
     image: Value.absentIfNull(imageUrl),
   );
 
-  Drama toDrama() =>
-      Drama(id: id, title: title, imageUrl: imageUrl ?? '', url: link);
+  Show toDrama() =>
+      Show(id: id, title: title, imageUrl: imageUrl ?? '', url: link);
 }

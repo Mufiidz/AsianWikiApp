@@ -72,6 +72,7 @@ class _HomeScreenState extends State<HomeScreen> {
         children: <Widget>[
           RefreshIndicator.adaptive(
             onRefresh: () {
+              // ISSUE : data not updated when refresh
               _cubit.initial(_pagingController);
               return Future<void>.value();
             },

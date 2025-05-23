@@ -10,7 +10,8 @@ import 'cubit/webview_cubit.dart';
 
 class WebviewScreen extends StatefulWidget {
   final String url;
-  const WebviewScreen({required this.url, super.key});
+  final String? title;
+  const WebviewScreen({required this.url, super.key, this.title});
 
   @override
   State<WebviewScreen> createState() => _WebviewScreenState();
@@ -38,12 +39,11 @@ class _WebviewScreenState extends State<WebviewScreen> {
       },
       child: Scaffold(
         appBar: AppbarWidget(
-          appName,
+          widget.title ?? appName,
           onBackPressed: _goBack,
           actions: <Widget>[
             IconButton(
-              onPressed:
-                  () => _cubit.loadUrl(),
+              onPressed: () => _cubit.loadUrl(),
               icon: const Icon(Icons.refresh),
             ),
           ],
@@ -61,7 +61,15 @@ class _WebviewScreenState extends State<WebviewScreen> {
             }
 
             if (state.isError) {
-              return Center(child: Text(state.message));
+              return Center(
+                child: Text(
+                  state.message,
+                  textAlign: TextAlign.center,
+                  style: context.textTheme.bodyMedium?.copyWith(
+                    color: context.colorScheme.error,
+                  ),
+                ),
+              );
             }
             return WebViewWidget(controller: _controller);
           },

@@ -2,11 +2,11 @@ part of 'search_cubit.dart';
 
 @MappableClass()
 class SearchState extends BaseState with SearchStateMappable {
-  final List<Drama> results;
+  final List<Show> results;
 
   SearchState({
     super.message,
     super.statusState,
-    this.results = const <Drama>[],
+    this.results = const <Show>[],
   });
 }

@@ -2,21 +2,21 @@ import 'package:collection/collection.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 
-import '../../../model/detail_drama.dart';
+import '../../../model/detail_show.dart';
 import '../../../model/simple_data.dart';
 import '../../../res/locale_keys.g.dart';
 import '../../../styles/export_styles.dart';
 import '../../../utils/export_utils.dart';
 
 class MainInfoDetail extends StatelessWidget {
-  final DetailDrama? detailDrama;
+  final DetailShow? detailDrama;
   const MainInfoDetail({super.key, this.detailDrama});
 
   @override
   Widget build(BuildContext context) {
-    final DetailDrama? detailDrama = this.detailDrama;
+    final DetailShow? detailDrama = this.detailDrama;
     if (detailDrama == null) return const SizedBox.shrink();
-    final DetailDrama(
+    final DetailShow(
       :int vote,
       :int rating,
       :String director,

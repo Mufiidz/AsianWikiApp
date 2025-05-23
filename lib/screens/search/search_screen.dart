@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../di/injection.dart';
-import '../../model/drama.dart';
+import '../../model/show.dart';
 import '../../res/locale_keys.g.dart';
 import '../../styles/export_styles.dart';
 import '../../utils/export_utils.dart';
@@ -124,7 +124,7 @@ class _SearchScreenState extends State<SearchScreen> {
               ),
               itemCount: state.results.length,
               itemBuilder: (BuildContext context, int index) {
-                final Drama drama = state.results[index];
+                final Show drama = state.results[index];
                 return ItemDrama(drama: drama);
               },
             );

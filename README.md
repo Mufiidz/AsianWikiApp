@@ -19,6 +19,8 @@ Screenshots of app? See [here](/screenshots).
 - Amazing Slider (Home)
 - Upcoming Drama (Home)
 - Search Drama & Movie (Search)
+- Detail Drama & Movie (Detail Show)
+- Search Drama & Movie Cast (Detail Show)
 
 ## Tech Stack & Library
 

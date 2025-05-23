@@ -2,6 +2,13 @@ part of 'detail_drama_cubit.dart';
 
 @MappableClass()
 class DetailDramaState extends BaseState with DetailDramaStateMappable {
-  final DetailDrama? drama;
-  DetailDramaState({super.statusState, super.message, this.drama});
+  final DetailShow? drama;
+  final List<CastResponse> casts;
+
+  DetailDramaState({
+    super.statusState,
+    super.message,
+    this.drama,
+    this.casts = const <CastResponse>[],
+  });
 }

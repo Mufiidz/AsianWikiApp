@@ -10,4 +10,6 @@ abstract class Env {
   static const String baseUrlIos = _Env.baseUrlIos;
   @EnviedField()
   static const String dbName = _Env.dbName;
+  @EnviedField()
+  static const String asianwikiUrl = _Env.asianwikiUrl;
 }

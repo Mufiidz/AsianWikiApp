@@ -1,13 +1,15 @@
 import 'package:dart_mappable/dart_mappable.dart';
+import 'package:easy_localization/easy_localization.dart';
 
+import '../res/locale_keys.g.dart';
 import 'date_range.dart';
 import 'simple_data.dart';
 import 'synopsis.dart';
 
-part 'detail_drama.mapper.dart';
+part 'detail_show.mapper.dart';
 
 @MappableClass()
-class DetailDrama with DetailDramaMappable {
+class DetailShow with DetailShowMappable {
   String id;
   String title;
   String url;
@@ -28,7 +30,7 @@ class DetailDrama with DetailDramaMappable {
   int episodes;
   DateRange? releaseDateRange;
 
-  DetailDrama({
+  DetailShow({
     this.id = '',
     this.title = '',
     this.url = '',
@@ -52,16 +54,21 @@ class DetailDrama with DetailDramaMappable {
 
   List<SimpleData> getInfo() {
     final List<SimpleData> infos = <SimpleData>[
-      SimpleData(title: 'Alternative Title', content: alternativeTitle),
-      SimpleData(title: 'Latin Title', content: latinTitle),
-      SimpleData(title: 'Native Title', content: nativeTitle),
-      SimpleData(title: 'Writer', content: writer),
-      SimpleData(title: 'Release Date', content: releaseDate),
-      SimpleData(title: 'Language', content: language),
+      SimpleData(
+        title: LocaleKeys.alternative_title.tr(),
+        content: alternativeTitle,
+      ),
+      SimpleData(title: LocaleKeys.latin_title.tr(), content: latinTitle),
+      SimpleData(title: LocaleKeys.native_title.tr(), content: nativeTitle),
+      SimpleData(title: LocaleKeys.writer.tr(), content: writer),
+      SimpleData(title: LocaleKeys.release_date.tr(), content: releaseDate),
+      SimpleData(title: LocaleKeys.language.tr(), content: language),
     ];
 
     if (episodes > 0) {
-      infos.add(SimpleData(title: 'Episodes', content: '$episodes'));
+      infos.add(
+        SimpleData(title: LocaleKeys.episodes.tr(), content: '$episodes'),
+      );
     }
 
     if (type == null) return List<SimpleData>.empty();

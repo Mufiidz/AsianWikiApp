@@ -15,5 +15,14 @@
     "show": "Show",
     "title_rating": "Rating from {vote} votes",
     "notes": "Notes",
-    "synopsis": "Synopsis"
+    "synopsis": "Synopsis",
+    "alternative_title": "Alternative Title",
+    "latin_title": "Latin Title",
+    "native_title": "Native Title",
+    "writer": "Writer",
+    "release_date": "Release Date",
+    "language": "Language",
+    "episodes": "Episodes",
+    "as": "as",
+    "hint_cast": "Search casts or by title cast"
 }

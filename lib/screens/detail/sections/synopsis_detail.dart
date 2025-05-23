@@ -14,7 +14,7 @@ class SynopsisDetail extends StatelessWidget {
   Widget build(BuildContext context) {
     final Synopsis? newSynopsis = synopsis;
     if (newSynopsis == null) return const SizedBox.shrink();
-    final Synopsis(:String id, :String original) = newSynopsis;
+    final Synopsis(:String translated, :String original) = newSynopsis;
     return Card.filled(
       shape: RoundedRectangleBorder(borderRadius: CornerRadius.largeRadius),
       child: Padding(
@@ -29,18 +29,10 @@ class SynopsisDetail extends StatelessWidget {
               ),
             ),
             Spacing.mediumSpacing,
-            Text(
-              _getSynopsisText(context, id, original),
-              style: context.textTheme.bodyMedium,
-            ),
+            Text(translated, style: context.textTheme.bodyMedium),
           ],
         ),
       ),
     );
-  }
-
-  String _getSynopsisText(BuildContext context, String id, String original) {
-    final String currentLang = context.locale.languageCode;
-    return currentLang == 'id' ? id : original;
   }
 }

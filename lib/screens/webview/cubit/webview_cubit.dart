@@ -20,6 +20,7 @@ class WebviewCubit extends Cubit<WebviewState> {
     _webViewController = controller;
     currentUrl = url;
     if (_webViewController == null) return;
+    await _webViewController?.setJavaScriptMode(JavaScriptMode.unrestricted);
     await _webViewController?.setNavigationDelegate(
       NavigationDelegate(
         onPageStarted: (String url) {
@@ -38,9 +39,7 @@ class WebviewCubit extends Cubit<WebviewState> {
             ),
           );
         },
-        onHttpError:
-            (HttpResponseError error) =>
-                logger.e('Http Error ${error.request}'),
+        onHttpError: (HttpResponseError error) => logger.e('Http Error $error'),
         onWebResourceError: (WebResourceError error) {
           isError = true;
           emit(
@@ -52,7 +51,8 @@ class WebviewCubit extends Cubit<WebviewState> {
         },
       ),
     );
-    await _webViewController?.loadRequest(Uri.parse(url));
+    final Uri uri = Uri.parse(url);
+    await _webViewController?.loadRequest(uri);
   }
 
   void loadUrl() async {

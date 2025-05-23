@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-import '../model/drama.dart';
-import '../screens/detail/detail_drama_screen.dart';
+import '../model/show.dart';
+import '../screens/detail/detail_show_screen.dart';
 import '../styles/export_styles.dart';
 import '../utils/export_utils.dart';
 import 'export_widget.dart';
@@ -9,7 +9,7 @@ import 'export_widget.dart';
 typedef OnClickItem = Function()?;
 
 class ItemDrama extends StatefulWidget {
-  final Drama drama;
+  final Show drama;
   final OnClickItem? onClick;
   const ItemDrama({required this.drama, super.key, this.onClick});
 
@@ -29,7 +29,7 @@ class _ItemDramaState extends State<ItemDrama>
 
   @override
   Widget build(BuildContext context) {
-    final Drama(:String id, :String title, :String? imageUrl) = widget.drama;
+    final Show(:String id, :String title, :String? imageUrl) = widget.drama;
     return Card(
       shape: RoundedRectangleBorder(borderRadius: CornerRadius.mediumRadius),
       elevation: Elevation.small,
@@ -39,7 +39,7 @@ class _ItemDramaState extends State<ItemDrama>
         child: InkWell(
           onTap:
               widget.onClick ??
-              (() => AppRoute.to(DetailDramaScreen(drama: widget.drama))),
+              (() => AppRoute.to(DetailShowScreen(drama: widget.drama))),
           borderRadius: CornerRadius.mediumRadius,
           child: Stack(
             children: <Widget>[
@@ -48,7 +48,7 @@ class _ItemDramaState extends State<ItemDrama>
                   if (imageUrl == null || imageUrl.isEmpty) {
                     return const SizedBox.shrink();
                   }
-                  // TODO : FIX hero tag when entrance animation
+                  // ISSUE : FIX hero tag when entrance animation
                   return Hero(
                     tag: id,
                     child: ImageNetwork(
