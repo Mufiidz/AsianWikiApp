@@ -51,14 +51,12 @@ class UpcomingHome extends StatelessWidget {
                       (BuildContext context, Upcoming item, int index) =>
                           ItemDrama(
                             drama: item.toDrama(),
-                            onClick:
-                                () => AppRoute.to(
-                                  DetailShowScreen(drama: item.toDrama()),
-                                ),
+                            onClick: () => AppRoute.to(
+                              DetailShowScreen(drama: item.toDrama()),
+                            ),
                           ),
-                  newPageProgressIndicatorBuilder:
-                      (BuildContext context) =>
-                          const Center(child: CircularProgressIndicator()),
+                  newPageProgressIndicatorBuilder: (BuildContext context) =>
+                      const Center(child: CircularProgressIndicator()),
                 ),
                 gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                   crossAxisCount: context.mediaSize.width > 600 ? 4 : 2,

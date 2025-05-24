@@ -20,6 +20,7 @@ class HomeCubit extends Cubit<HomeState> {
   final SearchRepository _searchRepository;
   final List<String> _errors = <String>[];
   late PagingController<int, Upcoming> _pagingController;
+  int currentPage = 1;
   HomeCubit(this._homeRepository, this._searchRepository) : super(HomeState());
 
   Future<void> initial(PagingController<int, Upcoming> pagingController) async {
@@ -29,15 +30,20 @@ class HomeCubit extends Cubit<HomeState> {
 
     _pagingController.refresh();
     _errors.clear();
+    currentPage = 1;
+
+    int page = _pagingController.nextPageKey ?? _pagingController.firstPageKey;
 
     final List<Future<void>> actions = <Future<void>>[
       getSlider(),
-      getUpcoming(),
+      getUpcoming(page: page),
     ];
 
     await Future.wait(actions);
 
-    if (_errors.length == actions.length) {
+    if (_errors.length == actions.length &&
+        (_pagingController.itemList == null ||
+            _pagingController.itemList?.isEmpty == true)) {
       emit(
         state.copyWith(statusState: StatusState.failure, message: _errors[0]),
       );
@@ -51,10 +57,8 @@ class HomeCubit extends Cubit<HomeState> {
     final BaseResult<List<Show>> result = await _homeRepository.getSlider();
 
     result.when(
-      result:
-          (List<Show> data) => emit(
-            state.copyWith(sliders: data, statusState: StatusState.idle),
-          ),
+      result: (List<Show> data) =>
+          emit(state.copyWith(sliders: data, statusState: StatusState.idle)),
       error: (String message) {
         _errors.add(message);
       },
@@ -62,7 +66,7 @@ class HomeCubit extends Cubit<HomeState> {
   }
 
   Future<void> getUpcoming({int? page}) async {
-    logger.d('Hit Get Upcoming');
+    if (page == null || page != currentPage) return;
     final BaseResult<List<Upcoming>> result = await _homeRepository.getUpcoming(
       page: page,
     );
@@ -71,6 +75,7 @@ class HomeCubit extends Cubit<HomeState> {
 
     result.when(
       result: (List<Upcoming> data) {
+        currentPage++;
         if (data.isNotEmpty && nextPageKey != null) {
           _pagingController.appendPage(data, nextPageKey + 1);
         } else {
@@ -97,13 +102,12 @@ class HomeCubit extends Cubit<HomeState> {
     List<String>? searchHistories = await _searchRepository.getSearchHistory();
 
     if (query != null && query.isNotEmpty) {
-      searchHistories =
-          searchHistories
-              ?.where(
-                (String element) =>
-                    element.toLowerCase().contains(query.toLowerCase()),
-              )
-              .toList();
+      searchHistories = searchHistories
+          ?.where(
+            (String element) =>
+                element.toLowerCase().contains(query.toLowerCase()),
+          )
+          .toList();
     }
 
     return searchHistories ?? List<String>.empty();

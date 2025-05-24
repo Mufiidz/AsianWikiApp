@@ -72,40 +72,31 @@ class _HomeScreenState extends State<HomeScreen> {
         children: <Widget>[
           RefreshIndicator.adaptive(
             onRefresh: () {
-              // ISSUE : data not updated when refresh
               _cubit.initial(_pagingController);
               return Future<void>.value();
             },
             child: BlocBuilder<HomeCubit, HomeState>(
               bloc: _cubit,
-              builder:
-                  (BuildContext context, HomeState state) =>
-                      BodyWidget<HomeState>(
-                        state: state,
-                        loadingBuilder:
-                            (BuildContext context, HomeState state) =>
-                                const HomeLoading(),
-                        child: (BuildContext context, HomeState state) {
-                          final List<Widget> contents = _contents(state);
-                          return ListWidget<Widget>(
-                            contents,
-                            controller: _scrollController,
-                            itemBuilder:
-                                (
-                                  BuildContext context,
-                                  Widget item,
-                                  int index,
-                                ) => item,
-                            separatorBuilder:
-                                (
-                                  BuildContext context,
-                                  Widget item,
-                                  int index,
-                                ) => Spacing.mediumSpacing,
-                            isSeparated: true,
-                          );
-                        },
-                      ),
+              builder: (BuildContext context, HomeState state) =>
+                  BodyWidget<HomeState>(
+                    state: state,
+                    loadingBuilder: (BuildContext context, HomeState state) =>
+                        const HomeLoading(),
+                    child: (BuildContext context, HomeState state) {
+                      final List<Widget> contents = _contents(state);
+                      return ListWidget<Widget>(
+                        contents,
+                        controller: _scrollController,
+                        itemBuilder:
+                            (BuildContext context, Widget item, int index) =>
+                                item,
+                        separatorBuilder:
+                            (BuildContext context, Widget item, int index) =>
+                                Spacing.mediumSpacing,
+                        isSeparated: true,
+                      );
+                    },
+                  ),
             ),
           ),
           SearchAnchor(
@@ -118,34 +109,33 @@ class _HomeScreenState extends State<HomeScreen> {
                 ..clear();
               AppRoute.to(SearchScreen(query: value));
             },
-            builder:
-                (BuildContext context, SearchController controller) =>
-                    Container(),
-            suggestionsBuilder: (
-              BuildContext context,
-              SearchController controller,
-            ) async {
-              List<String> suggest = await _cubit.getSearchHistory(
-                query: controller.text,
-              );
-              return suggest
-                  .map(
-                    (String title) => ItemSearch(
-                      title: title,
-                      onInsert: () {
-                        controller.value = TextEditingValue(text: '$title ');
-                      },
-                      onClik: () {
-                        controller
-                          ..clear()
-                          ..closeView(title);
-                        AppRoute.to(SearchScreen(query: title));
-                      },
-                      onRemove: () => _cubit.removeSearchHistory(title),
-                    ),
-                  )
-                  .toList();
-            },
+            builder: (BuildContext context, SearchController controller) =>
+                Container(),
+            suggestionsBuilder:
+                (BuildContext context, SearchController controller) async {
+                  List<String> suggest = await _cubit.getSearchHistory(
+                    query: controller.text,
+                  );
+                  return suggest
+                      .map(
+                        (String title) => ItemSearch(
+                          title: title,
+                          onInsert: () {
+                            controller.value = TextEditingValue(
+                              text: '$title ',
+                            );
+                          },
+                          onClik: () {
+                            controller
+                              ..clear()
+                              ..closeView(title);
+                            AppRoute.to(SearchScreen(query: title));
+                          },
+                          onRemove: () => _cubit.removeSearchHistory(title),
+                        ),
+                      )
+                      .toList();
+                },
           ),
         ],
       ),

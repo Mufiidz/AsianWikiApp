@@ -67,10 +67,9 @@ class HomeRepositoryImpl implements HomeRepository {
 
       logger.d('remote upcomings');
 
-      final BaseResult<List<Upcoming>> response =
-          await _apiServices
-              .upcoming(currentMonth, page: queryPage)
-              .awaitResponse;
+      final BaseResult<List<Upcoming>> response = await _apiServices
+          .upcoming(currentMonth, page: queryPage)
+          .awaitResponse;
 
       if (response.isError) {
         throw response.onErrorResult;
