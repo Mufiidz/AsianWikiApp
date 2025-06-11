@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 
-import '../../../data/network/cast_response.dart';
-import '../../../model/cast_show.dart';
-import '../../../styles/export_styles.dart';
-import '../../../utils/export_utils.dart';
+import '../../../../data/network/cast_response.dart';
+import '../../../../model/cast_show.dart';
+import '../../../../styles/export_styles.dart';
+import '../../../../utils/export_utils.dart';
 import 'item_cast.dart';
 
 class CastDetail extends StatelessWidget {

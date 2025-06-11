@@ -9,6 +9,9 @@ abstract class PaddingStyle {
   /// Padding for medium (16)
   static const double medium = 16.0;
 
+  /// Padding 24 (24)
+  static const double padding24 = 24.0;
+
   /// Padding for large (32)
   static const double large = 32.0;
 

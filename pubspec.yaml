@@ -66,6 +66,8 @@ dependencies:
   webview_flutter: ^4.11.0
   extended_image: ^10.0.1
   html: ^0.15.6
+  flutter_svg: ^2.1.0
+  url_launcher: ^6.3.1
 
 dev_dependencies:
   flutter_test:
@@ -89,8 +91,8 @@ dev_dependencies:
 # following page: https://dart.dev/tools/pub/pubspec
 flutter_gen:
   output: lib/res/
-  # integrations:
-  #   flutter_svg: true
+  integrations:
+    flutter_svg: true
   assets:
     outputs:
       class_name: Assets
@@ -107,7 +109,7 @@ flutter:
   # To add assets to your application, add an assets section, like this:
   assets:
     #   - assets/images/
-    #   - assets/icons/
+    - assets/icons/
     - assets/translations/
 
   # An image asset can refer to one or more resolution-specific "variants", see

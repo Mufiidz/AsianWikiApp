@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 
-import '../../../data/network/cast_response.dart';
-import '../../../widgets/export_widget.dart';
+import '../../../../data/network/cast_response.dart';
+import '../../../../styles/export_styles.dart';
+import '../../../../widgets/export_widget.dart';
 import '../widgets/cast_detail.dart';
 
 class CastsDetail extends StatelessWidget {
@@ -16,12 +17,10 @@ class CastsDetail extends StatelessWidget {
       shrinkWrap: true,
       scrollPhysics: const NeverScrollableScrollPhysics(),
       isSeparated: true,
-      itemBuilder:
-          (BuildContext context, CastResponse item, int index) =>
-              CastDetail(cast: item),
-      separatorBuilder:
-          (BuildContext context, CastResponse item, int index) =>
-              const SizedBox(height: 24),
+      itemBuilder: (BuildContext context, CastResponse item, int index) =>
+          CastDetail(cast: item),
+      separatorBuilder: (BuildContext context, CastResponse item, int index) =>
+          Spacing.spacing24,
     );
   }
 }

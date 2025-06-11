@@ -1,5 +1,7 @@
 import 'package:dart_mappable/dart_mappable.dart';
 
+import 'person.dart';
+
 part 'cast_show.mapper.dart';
 
 @MappableClass()
@@ -18,4 +20,6 @@ class CastShow with CastShowMappable {
     this.cast,
   });
 
+  Person get toPerson =>
+      Person(id: id, name: name, url: profileUrl, imageUrl: imageUrl ?? '');
 }

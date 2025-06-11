@@ -13,21 +13,24 @@ class InfoDetail extends StatelessWidget {
     List<SimpleData>? infos = this.infos;
     if (infos == null || infos.isEmpty) return const SizedBox.shrink();
     return Padding(
-      padding: const EdgeInsets.all(CornerRadius.medium),
+      padding: const EdgeInsets.only(
+        bottom: PaddingStyle.padding24,
+        left: PaddingStyle.medium,
+        right: PaddingStyle.medium,
+      ),
       child: ListWidget<SimpleData>(
         infos,
         shrinkWrap: true,
         scrollPhysics: const NeverScrollableScrollPhysics(),
-        itemBuilder:
-            (BuildContext context, SimpleData item, int index) => Row(
-              mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: <Widget>[
-                Expanded(child: Text(item.title)),
-                const Text(' : '),
-                Expanded(flex: 2, child: Text(item.content)),
-              ],
-            ),
+        itemBuilder: (BuildContext context, SimpleData item, int index) => Row(
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: <Widget>[
+            Expanded(child: Text(item.title)),
+            const Text(' : '),
+            Expanded(flex: 2, child: Text(item.content)),
+          ],
+        ),
       ),
     );
   }

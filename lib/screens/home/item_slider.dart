@@ -4,7 +4,7 @@ import '../../model/show.dart';
 import '../../styles/export_styles.dart';
 import '../../utils/export_utils.dart';
 import '../../widgets/export_widget.dart';
-import '../detail/detail_show_screen.dart';
+import '../detail/show/detail_show_screen.dart';
 
 class ItemSlider extends StatelessWidget {
   final Show item;

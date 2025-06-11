@@ -39,13 +39,12 @@ class _HeaderDetailState extends State<HeaderDetail> {
               widget.image,
               context,
               fit: BoxFit.cover,
-              errorBuilder:
-                  (Object? error) => Container(
-                    width: context.mediaSize.width,
-                    height: kToolbarHeight + 20,
-                    alignment: Alignment.center,
-                    child: Text(error.toString()),
-                  ),
+              errorBuilder: (Object? error) => Container(
+                width: context.mediaSize.width,
+                height: kToolbarHeight + 20,
+                alignment: Alignment.center,
+                child: Text(error.toString()),
+              ),
             ),
           ),
         ),
@@ -54,6 +53,7 @@ class _HeaderDetailState extends State<HeaderDetail> {
             top: PaddingStyle.large,
             right: PaddingStyle.medium,
             left: PaddingStyle.medium,
+            bottom: PaddingStyle.medium,
           ),
           child: Text(
             widget.title,

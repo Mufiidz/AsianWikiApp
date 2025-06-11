@@ -1,28 +1,18 @@
 import 'package:collection/collection.dart';
-import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 
-import '../../../model/detail_show.dart';
 import '../../../model/simple_data.dart';
-import '../../../res/locale_keys.g.dart';
 import '../../../styles/export_styles.dart';
 import '../../../utils/export_utils.dart';
 
 class MainInfoDetail extends StatelessWidget {
-  final DetailShow? detailDrama;
-  const MainInfoDetail({super.key, this.detailDrama});
+  final List<SimpleData>? mainInfos;
+  const MainInfoDetail({super.key, this.mainInfos});
 
   @override
   Widget build(BuildContext context) {
-    final DetailShow? detailDrama = this.detailDrama;
-    if (detailDrama == null) return const SizedBox.shrink();
-    final DetailShow(
-      :int vote,
-      :int rating,
-      :String director,
-      :ShowType? type,
-      :String country,
-    ) = detailDrama;
+    final List<SimpleData>? mainInfos = this.mainInfos;
+    if (mainInfos == null) return const SizedBox.shrink();
     return SizedBox(
       width: context.mediaSize.width,
       child: GridView(
@@ -34,29 +24,12 @@ class MainInfoDetail extends StatelessWidget {
         ),
         physics: const NeverScrollableScrollPhysics(),
         shrinkWrap: true,
-        children:
-            <SimpleData>[
-                  SimpleData(
-                    title: LocaleKeys.title_rating.tr(
-                      namedArgs: <String, String>{'vote': vote.toString()},
-                    ),
-                    content: '$rating%',
-                  ),
-                  SimpleData(
-                    title: LocaleKeys.director.tr(),
-                    content: director,
-                  ),
-                  SimpleData(title: LocaleKeys.country.tr(), content: country),
-                  SimpleData(
-                    title: LocaleKeys.show.tr(),
-                    content: type?.name.capitalize() ?? '-',
-                  ),
-                ]
-                .mapIndexed(
-                  (int index, SimpleData item) =>
-                      _mainContent(context, index, item.title, item.content),
-                )
-                .toList(),
+        children: mainInfos
+            .mapIndexed(
+              (int index, SimpleData item) =>
+                  _mainContent(context, index, item.title, item.content),
+            )
+            .toList(),
       ),
     );
   }

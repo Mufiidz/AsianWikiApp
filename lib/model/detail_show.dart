@@ -2,6 +2,7 @@ import 'package:dart_mappable/dart_mappable.dart';
 import 'package:easy_localization/easy_localization.dart';
 
 import '../res/locale_keys.g.dart';
+import '../utils/export_utils.dart';
 import 'date_range.dart';
 import 'simple_data.dart';
 import 'synopsis.dart';
@@ -51,6 +52,21 @@ class DetailShow with DetailShowMappable {
     this.episodes = 0,
     this.releaseDateRange,
   });
+
+  List<SimpleData> get mainInfo => <SimpleData>[
+    SimpleData(
+      title: LocaleKeys.title_rating.tr(
+        namedArgs: <String, String>{'vote': vote.toString()},
+      ),
+      content: '$rating%',
+    ),
+    SimpleData(title: LocaleKeys.director.tr(), content: director),
+    SimpleData(title: LocaleKeys.country.tr(), content: country),
+    SimpleData(
+      title: LocaleKeys.show.tr(),
+      content: type?.name.capitalize() ?? '-',
+    ),
+  ];
 
   List<SimpleData> getInfo() {
     final List<SimpleData> infos = <SimpleData>[

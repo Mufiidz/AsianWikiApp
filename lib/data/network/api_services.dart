@@ -2,6 +2,7 @@ import 'package:dio/dio.dart';
 import 'package:injectable/injectable.dart';
 import 'package:retrofit/retrofit.dart';
 
+import '../../model/detail_person.dart';
 import '../../model/detail_show.dart';
 import '../../model/search_type.dart';
 import '../../model/show.dart';
@@ -34,8 +35,17 @@ abstract class ApiServices {
   );
 
   @GET(endpoint.show)
-  Future<BaseResponse<DetailShow>> show(@Path('id') String id, @Query('lang') String? langCode);
+  Future<BaseResponse<DetailShow>> show(
+    @Path('id') String id,
+    @Query('lang') String? langCode,
+  );
 
   @GET(endpoint.cast)
   Future<BaseResponse<List<CastResponse>>> casts(@Path('id') String id);
+
+  @GET(endpoint.person)
+  Future<BaseResponse<DetailPerson>> person(
+    @Path('id') String id,
+    @Query('lang') String? langCode,
+  );
 }

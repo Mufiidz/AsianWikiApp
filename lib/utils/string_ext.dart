@@ -1,3 +1,5 @@
+import 'package:intl/intl.dart';
+
 extension StringExt on String? {
   String get cleanedText =>
       (this ?? '').trim().replaceAll(RegExp(r'\s+\b|\b\s'), ' ');
@@ -31,5 +33,13 @@ extension StringExt on String? {
     if (value == null || value.isEmpty) return false;
     final Uri? uri = Uri.tryParse(value);
     return uri != null && (uri.hasScheme && uri.hasAuthority);
+  }
+
+  String? toDateFormat({String? format = 'dd MMMM yyyy', String? locale}) {
+    final String? value = this;
+    if (value == null || value.isEmpty) return value;
+    final DateTime dateTime = DateTime.parse(value);
+    final DateFormat dateFormat = DateFormat(format, locale);
+    return dateFormat.format(dateTime);
   }
 }

@@ -4,12 +4,12 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/widgets.dart';
 import 'package:injectable/injectable.dart';
 
-import '../../../data/base_result.dart';
-import '../../../data/base_state.dart';
-import '../../../data/network/cast_response.dart';
-import '../../../model/detail_show.dart';
-import '../../../repository/detail_repository.dart';
-import '../../../utils/logger.dart';
+import '../../../../data/base_result.dart';
+import '../../../../data/base_state.dart';
+import '../../../../data/network/cast_response.dart';
+import '../../../../model/detail_show.dart';
+import '../../../../repository/detail_repository.dart';
+import '../../../../utils/logger.dart';
 
 part 'detail_drama_state.dart';
 part 'detail_drama_cubit.mapper.dart';

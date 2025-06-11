@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../model/show.dart';
-import '../screens/detail/detail_show_screen.dart';
+import '../screens/detail/show/detail_show_screen.dart';
 import '../styles/export_styles.dart';
 import '../utils/export_utils.dart';
 import 'export_widget.dart';

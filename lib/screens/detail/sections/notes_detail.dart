@@ -20,32 +20,37 @@ class NotesDetail extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     if (notes == null || notes?.isEmpty == true) return const SizedBox.shrink();
-    return Card.filled(
-      shape: RoundedRectangleBorder(borderRadius: CornerRadius.largeRadius),
-      child: Padding(
-        padding: const EdgeInsets.all(PaddingStyle.medium),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: <Widget>[
-            Text(
-              LocaleKeys.notes.tr(),
-              style: context.textTheme.headlineMedium?.copyWith(
-                fontWeight: FontWeight.bold,
+    return Padding(
+      padding: const EdgeInsets.only(bottom: PaddingStyle.padding24),
+      child: Card.filled(
+        shape: RoundedRectangleBorder(borderRadius: CornerRadius.largeRadius),
+        child: Padding(
+          padding: const EdgeInsets.all(PaddingStyle.medium),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget>[
+              Text(
+                LocaleKeys.notes.tr(),
+                style: context.textTheme.headlineMedium?.copyWith(
+                  fontWeight: FontWeight.bold,
+                ),
               ),
-            ),
-            Spacing.mediumSpacing,
-            HtmlWidget(
-              notes ?? '',
-              // ignore: always_specify_types
-              customStylesBuilder: (element) {
-                if (element.attributes.containsKey('href')) {
-                  return <String, String>{'color': '#008CE3'};
-                }
-                return null;
-              },
-              onTapUrl: _onTapUrl,
-            ),
-          ],
+              Spacing.mediumSpacing,
+              HtmlWidget(
+                notes ?? '',
+                // ignore: always_specify_types
+                customStylesBuilder: (element) {
+                  if (element.attributes.containsKey('href')) {
+                    return <String, String>{
+                      'color': context.colorScheme.primary.hex0x,
+                    };
+                  }
+                  return null;
+                },
+                onTapUrl: _onTapUrl,
+              ),
+            ],
+          ),
         ),
       ),
     );

@@ -1,10 +1,10 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 
-import '../../../model/synopsis.dart';
-import '../../../res/locale_keys.g.dart';
-import '../../../styles/export_styles.dart';
-import '../../../utils/export_utils.dart';
+import '../../../../model/synopsis.dart';
+import '../../../../res/locale_keys.g.dart';
+import '../../../../styles/export_styles.dart';
+import '../../../../utils/export_utils.dart';
 
 class SynopsisDetail extends StatelessWidget {
   final Synopsis? synopsis;

@@ -24,5 +24,9 @@
     "language": "Language",
     "episodes": "Episodes",
     "as": "as",
-    "hint_cast": "Search casts or by title cast"
+    "hint_cast": "Search cast or by title casts",
+    "biography": "Biography",
+    "read_more": "Read More",
+    "search": "Search",
+    "hint_person_show": "Search show or by title shows"
 }

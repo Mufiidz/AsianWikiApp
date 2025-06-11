@@ -1,12 +1,12 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 
-import '../../../model/cast_show.dart';
-import '../../../res/locale_keys.g.dart';
-import '../../../styles/export_styles.dart';
-import '../../../utils/export_utils.dart';
-import '../../../widgets/image_network.dart';
-import '../../webview/webview_screen.dart';
+import '../../../../model/cast_show.dart';
+import '../../../../res/locale_keys.g.dart';
+import '../../../../styles/export_styles.dart';
+import '../../../../utils/export_utils.dart';
+import '../../../../widgets/image_network.dart';
+import '../../person/detail_person_screen.dart';
 
 class ItemCast extends StatelessWidget {
   final CastShow cast;
@@ -15,6 +15,7 @@ class ItemCast extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final CastShow(
+      :String id,
       :String name,
       :String? imageUrl,
       :String? cast,
@@ -23,7 +24,7 @@ class ItemCast extends StatelessWidget {
     const double imageSize = 70;
     return InkWell(
       borderRadius: CornerRadius.mediumRadius,
-      onTap: () => AppRoute.to(WebviewScreen(url: profileUrl, title: name)),
+      onTap: () => AppRoute.to(DetailPersonScreen(person: this.cast.toPerson)),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.center,

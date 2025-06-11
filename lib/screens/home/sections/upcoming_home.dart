@@ -7,7 +7,7 @@ import '../../../res/locale_keys.g.dart';
 import '../../../styles/export_styles.dart';
 import '../../../utils/export_utils.dart';
 import '../../../widgets/item_drama.dart';
-import '../../detail/detail_show_screen.dart';
+import '../../detail/show/detail_show_screen.dart';
 
 class UpcomingHome extends StatelessWidget {
   final PagingController<int, Upcoming> controller;

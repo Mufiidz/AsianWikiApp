@@ -388,3 +388,23 @@ class ColorFamily {
   final Color colorContainer;
   final Color onColorContainer;
 }
+
+extension ColorExtensions on Color {
+  int get red => (r * 255.0).round();
+  int get green => (g * 255.0).round();
+  int get blue => (b * 255.0).round();
+  int get alpha => (a * 255.0).round();
+
+  /// Format: 0xAARRGGBB (contoh: 0xFF123456)
+  String get hex0x =>
+      '0x${toARGB32().toRadixString(16).padLeft(8, '0').toUpperCase()}';
+
+  /// Format: #AARRGGBB (contoh: #FF123456)
+  String get hexWithAlpha =>
+      '#${toARGB32().toRadixString(16).padLeft(8, '0').toUpperCase()}';
+
+  /// Format: #RRGGBB (tanpa alpha)
+  String get hexWithoutAlpha =>
+      '#${red.toRadixString(16).padLeft(2, '0')}${green.toRadixString(16).padLeft(2, '0')}${blue.toRadixString(16).padLeft(2, '0')}'
+          .toUpperCase();
+}
