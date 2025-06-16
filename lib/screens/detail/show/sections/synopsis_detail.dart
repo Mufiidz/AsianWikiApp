@@ -15,22 +15,25 @@ class SynopsisDetail extends StatelessWidget {
     final Synopsis? newSynopsis = synopsis;
     if (newSynopsis == null) return const SizedBox.shrink();
     final Synopsis(:String translated, :String original) = newSynopsis;
-    return Card.filled(
-      shape: RoundedRectangleBorder(borderRadius: CornerRadius.largeRadius),
-      child: Padding(
-        padding: const EdgeInsets.all(PaddingStyle.medium),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: <Widget>[
-            Text(
-              LocaleKeys.synopsis.tr(),
-              style: context.textTheme.headlineMedium?.copyWith(
-                fontWeight: FontWeight.bold,
+    return Padding(
+      padding: const EdgeInsets.only(bottom: PaddingStyle.padding24),
+      child: Card.filled(
+        shape: RoundedRectangleBorder(borderRadius: CornerRadius.largeRadius),
+        child: Padding(
+          padding: const EdgeInsets.all(PaddingStyle.medium),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget>[
+              Text(
+                LocaleKeys.synopsis.tr(),
+                style: context.textTheme.headlineMedium?.copyWith(
+                  fontWeight: FontWeight.bold,
+                ),
               ),
-            ),
-            Spacing.mediumSpacing,
-            Text(translated, style: context.textTheme.bodyMedium),
-          ],
+              Spacing.mediumSpacing,
+              Text(translated, style: context.textTheme.bodyMedium),
+            ],
+          ),
         ),
       ),
     );

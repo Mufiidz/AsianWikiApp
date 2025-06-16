@@ -108,7 +108,6 @@ class _DetailShowScreenState extends State<DetailShowScreen>
                       ListWidget<Widget>(
                         _contents,
                         controller: _scrollController,
-                        isSeparated: true,
                         itemBuilder:
                             (BuildContext context, Widget item, int index) {
                               if (index == 0) return item;
@@ -117,11 +116,6 @@ class _DetailShowScreenState extends State<DetailShowScreen>
                                 child: item,
                               );
                             },
-                        separatorBuilder:
-                            (BuildContext context, Widget item, int index) =>
-                                SizedBox(
-                                  height: index == 0 || index == 1 ? 8 : 24,
-                                ),
                       ),
                 ),
               ),
