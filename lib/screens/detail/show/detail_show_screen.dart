@@ -185,7 +185,7 @@ class _DetailShowScreenState extends State<DetailShowScreen>
     ),
     MainInfoDetail(mainInfos: _detailDrama?.mainInfo),
     InfoDetail(infos: _detailDrama?.getInfo()),
-    SynopsisDetail(synopsis: _detailDrama?.synopsis),
+    SynopsisDetail(synopsis: _detailDrama?.getSynopsis()),
     NotesDetail(notes: _detailDrama?.notes, onTapUrl: _onTapUrl),
     BlocSelector<DetailDramaCubit, DetailDramaState, List<CastResponse>>(
       bloc: _detailDramaCubit,

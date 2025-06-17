@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../styles/export_styles.dart';
+import '../widgets/read_more_modal.dart';
 import '../widgets/shimmer.dart';
 
 extension ContextExt on BuildContext {
@@ -14,4 +15,6 @@ extension ContextExt on BuildContext {
   ShimmerState? get shimmer => Shimmer.of(this);
   TextTheme get appTextTheme =>
       createTextTheme(this, displayFontString: 'Poppins');
+  void showReadMoreModal(List<String>? contents, String title) =>
+      readMoreModal(this, contents, title);
 }

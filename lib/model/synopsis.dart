@@ -4,13 +4,13 @@ part 'synopsis.mapper.dart';
 
 @MappableClass()
 class Synopsis with SynopsisMappable {
-  final String original;
-  final String translated;
+  final List<String> original;
+  final List<String> translated;
   final List<Link> links;
 
   const Synopsis({
-    this.original = '',
-    this.translated = '',
+    this.original = const <String>[],
+    this.translated = const <String>[],
     this.links = const <Link>[],
   });
 }

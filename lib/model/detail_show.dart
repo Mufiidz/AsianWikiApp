@@ -90,6 +90,17 @@ class DetailShow with DetailShowMappable {
     if (type == null) return List<SimpleData>.empty();
     return infos;
   }
+
+  List<String> getSynopsis() {
+    final Synopsis(:List<String> original, :List<String> translated) = synopsis;
+    if (translated.isNotEmpty) {
+      return translated;
+    } else if (original.isNotEmpty) {
+      return original;
+    } else {
+      return List<String>.empty();
+    }
+  }
 }
 
 @MappableEnum()
