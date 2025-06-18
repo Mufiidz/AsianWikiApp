@@ -3,13 +3,16 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 import '../data/base_result.dart';
 import '../data/network/api_services.dart';
+import '../model/search.dart';
 import '../model/search_type.dart';
-import '../model/show.dart';
 import '../res/constants/sharedpref_keys.dart' as sharedpref_keys;
 import '../utils/export_utils.dart';
 
 abstract class SearchRepository {
-  Future<BaseResult<List<Show>>> searchDrama(String title);
+  Future<BaseResult<List<Search>>> searchDrama(
+    String title, {
+    SearchType type = SearchType.all,
+  });
   Future<void> saveSearchHistory(String title);
   Future<List<String>?> getSearchHistory();
   Future<void> removeSearchHistory(String title);
@@ -25,8 +28,10 @@ class SearchRepositoryImpl implements SearchRepository {
   SearchRepositoryImpl(this._apiServices, this._preferencesAsync);
 
   @override
-  Future<BaseResult<List<Show>>> searchDrama(String title) =>
-      _apiServices.search(title, SearchType.title).awaitResponse;
+  Future<BaseResult<List<Search>>> searchDrama(
+    String title, {
+    SearchType type = SearchType.all,
+  }) => _apiServices.search(title, type).awaitResponse;
 
   @override
   Future<List<String>?> getSearchHistory() async =>

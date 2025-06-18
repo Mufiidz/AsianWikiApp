@@ -4,7 +4,7 @@ import 'package:injectable/injectable.dart';
 
 import '../../../data/base_result.dart';
 import '../../../data/base_state.dart';
-import '../../../model/show.dart';
+import '../../../model/search.dart';
 import '../../../repository/search_repository.dart';
 import '../../../utils/logger.dart';
 
@@ -23,12 +23,12 @@ class SearchCubit extends Cubit<SearchState> {
 
     await _searchRepository.saveSearchHistory(title);
 
-    final BaseResult<List<Show>> result = await _searchRepository.searchDrama(
+    final BaseResult<List<Search>> result = await _searchRepository.searchDrama(
       title,
     );
 
     final SearchState newState = result.when(
-      result: (List<Show> data) {
+      result: (List<Search> data) {
         logger.d('Search Result: $data');
         return state.copyWith(statusState: StatusState.success, results: data);
       },

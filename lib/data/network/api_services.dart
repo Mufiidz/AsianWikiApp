@@ -4,6 +4,7 @@ import 'package:retrofit/retrofit.dart';
 
 import '../../model/detail_person.dart';
 import '../../model/detail_show.dart';
+import '../../model/search.dart';
 import '../../model/search_type.dart';
 import '../../model/show.dart';
 import '../../model/upcoming.dart';
@@ -29,8 +30,8 @@ abstract class ApiServices {
   });
 
   @GET(endpoint.search)
-  Future<BaseResponse<List<Show>>> search(
-    @Query('search') String query,
+  Future<BaseResponse<List<Search>>> search(
+    @Query('query') String query,
     @Query('type') SearchType searchType,
   );
 

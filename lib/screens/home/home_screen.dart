@@ -118,7 +118,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   );
                   return suggest
                       .map(
-                        (String title) => ItemSearch(
+                        (String title) => ItemSuggestionSearch(
                           title: title,
                           onInsert: () {
                             controller.value = TextEditingValue(

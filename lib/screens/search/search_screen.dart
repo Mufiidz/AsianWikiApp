@@ -3,12 +3,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../di/injection.dart';
-import '../../model/show.dart';
+import '../../model/search.dart';
 import '../../res/locale_keys.g.dart';
 import '../../styles/export_styles.dart';
 import '../../utils/export_utils.dart';
 import '../../widgets/export_widget.dart';
 import 'cubit/search_cubit.dart';
+import 'item_search.dart';
 
 class SearchScreen extends StatefulWidget {
   final String? query;
@@ -71,30 +72,28 @@ class _SearchScreenState extends State<SearchScreen> {
               ),
             );
           },
-          suggestionsBuilder: (
-            BuildContext context,
-            SearchController controller,
-          ) async {
-            final List<String> suggest = await _cubit.getSearchHistory(
-              query: controller.text,
-            );
+          suggestionsBuilder:
+              (BuildContext context, SearchController controller) async {
+                final List<String> suggest = await _cubit.getSearchHistory(
+                  query: controller.text,
+                );
 
-            return suggest.map(
-              (String title) => ItemSearch(
-                title: title,
-                onInsert: () {
-                  controller.value = TextEditingValue(text: '$title ');
-                },
-                onClik: () {
-                  controller
-                    ..clear()
-                    ..closeView(title);
-                  _cubit.searchDrama(title);
-                },
-                onRemove: () => _cubit.removeSearchHistory(title),
-              ),
-            );
-          },
+                return suggest.map(
+                  (String title) => ItemSuggestionSearch(
+                    title: title,
+                    onInsert: () {
+                      controller.value = TextEditingValue(text: '$title ');
+                    },
+                    onClik: () {
+                      controller
+                        ..clear()
+                        ..closeView(title);
+                      _cubit.searchDrama(title);
+                    },
+                    onRemove: () => _cubit.removeSearchHistory(title),
+                  ),
+                );
+              },
         ),
       ),
       body: RefreshIndicator.adaptive(
@@ -124,8 +123,8 @@ class _SearchScreenState extends State<SearchScreen> {
               ),
               itemCount: state.results.length,
               itemBuilder: (BuildContext context, int index) {
-                final Show drama = state.results[index];
-                return ItemDrama(drama: drama);
+                final Search search = state.results[index];
+                return ItemSearch(search: search);
               },
             );
           },

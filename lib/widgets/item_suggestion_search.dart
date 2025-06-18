@@ -6,12 +6,12 @@ import '../utils/export_utils.dart';
 
 typedef OnClik = void Function();
 
-class ItemSearch extends StatefulWidget {
+class ItemSuggestionSearch extends StatefulWidget {
   final String title;
   final OnClik? onClik;
   final OnClik? onInsert;
   final OnClik? onRemove;
-  const ItemSearch({
+  const ItemSuggestionSearch({
     required this.title,
     super.key,
     this.onClik,
@@ -20,10 +20,10 @@ class ItemSearch extends StatefulWidget {
   });
 
   @override
-  State<ItemSearch> createState() => _ItemSearchState();
+  State<ItemSuggestionSearch> createState() => _ItemSuggestionSearchState();
 }
 
-class _ItemSearchState extends State<ItemSearch> {
+class _ItemSuggestionSearchState extends State<ItemSuggestionSearch> {
   bool isDeleted = false;
   @override
   Widget build(BuildContext context) {
@@ -48,25 +48,24 @@ class _ItemSearchState extends State<ItemSearch> {
   void showDeleteDialog(BuildContext context) {
     showAdaptiveDialog(
       context: context,
-      builder:
-          (BuildContext context) => AlertDialog.adaptive(
-            title: Text(widget.title),
-            content: Text(LocaleKeys.content_search_history.tr()),
-            actions: <Widget>[
-              TextButton(
-                onPressed: () => AppRoute.back(context),
-                child: Text(LocaleKeys.cancel.tr()),
-              ),
-              TextButton(
-                onPressed: () {
-                  widget.onRemove?.call();
-                  setState(() => isDeleted = true);
-                  AppRoute.back(context);
-                },
-                child: Text(LocaleKeys.remove.tr()),
-              ),
-            ],
+      builder: (BuildContext context) => AlertDialog.adaptive(
+        title: Text(widget.title),
+        content: Text(LocaleKeys.content_search_history.tr()),
+        actions: <Widget>[
+          TextButton(
+            onPressed: () => AppRoute.back(context),
+            child: Text(LocaleKeys.cancel.tr()),
           ),
+          TextButton(
+            onPressed: () {
+              widget.onRemove?.call();
+              setState(() => isDeleted = true);
+              AppRoute.back(context);
+            },
+            child: Text(LocaleKeys.remove.tr()),
+          ),
+        ],
+      ),
     );
   }
 }
