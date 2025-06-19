@@ -28,6 +28,7 @@ class DetailPerson with DetailPersonMappable {
   final String notes;
   final String? university;
   final int height;
+  final int age;
   final List<PersonShow> shows;
   final List<String>? biographies;
 
@@ -53,6 +54,7 @@ class DetailPerson with DetailPersonMappable {
     this.shows = const <PersonShow>[],
     this.biographies,
     this.university,
+    this.age = 0,
   });
 
   List<Sosmed> get sosmed =>
@@ -95,6 +97,7 @@ class DetailPerson with DetailPersonMappable {
     SimpleData.nullableContent(title: 'Native Name', content: nativeName),
     SimpleData.nullableContent(title: 'Birth Name', content: birthName),
     SimpleData.nullableContent(title: 'Blood Type', content: bloodType),
+    SimpleData.nullableContent(title: 'Age', content: age > 0 ? '$age' : '-'),
     SimpleData(title: 'Height', content: height > 0 ? '$height cm' : '-'),
     SimpleData.nullableContent(title: 'University', content: university),
   ];
