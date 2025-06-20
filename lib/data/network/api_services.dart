@@ -23,8 +23,8 @@ abstract class ApiServices {
   @GET(endpoint.slider)
   Future<BaseResponse<List<Show>>> slider();
 
-  @GET(endpoint.upcoming)
-  Future<BaseResponse<List<Upcoming>>> upcoming(
+  @GET(endpoint.allUpcoming)
+  Future<BaseResponse<List<Upcoming>>> allUpcoming(
     @Query('month') int month, {
     @Query('page') int? page = 1,
   });

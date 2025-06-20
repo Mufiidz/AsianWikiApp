@@ -3,13 +3,16 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../di/injection.dart';
+import '../../model/person.dart';
 import '../../model/search.dart';
+import '../../model/search_type.dart';
 import '../../res/locale_keys.g.dart';
 import '../../styles/export_styles.dart';
 import '../../utils/export_utils.dart';
 import '../../widgets/export_widget.dart';
+import '../detail/person/detail_person_screen.dart';
+import '../detail/show/detail_show_screen.dart';
 import 'cubit/search_cubit.dart';
-import 'item_search.dart';
 
 class SearchScreen extends StatefulWidget {
   final String? query;
@@ -54,7 +57,8 @@ class _SearchScreenState extends State<SearchScreen> {
           barTrailing: <Widget>[
             IconButton(
               icon: const Icon(Icons.search),
-              onPressed: () => _cubit.searchDrama(_searchController.text),
+              onPressed: () => _searchController.openView(),
+              onLongPress: () => _cubit.searchDrama(_searchController.text),
             ),
           ],
           isFullScreen: false,
@@ -124,13 +128,26 @@ class _SearchScreenState extends State<SearchScreen> {
               itemCount: state.results.length,
               itemBuilder: (BuildContext context, int index) {
                 final Search search = state.results[index];
-                return ItemSearch(search: search);
+                return ItemShow(
+                  show: search.toShow,
+                  onClick: () => _onClickItem(search),
+                );
               },
             );
           },
         ),
       ),
     );
+  }
+
+  void _onClickItem(Search search) {
+    final Search(:String id, :SearchType type) = search;
+    if (type == SearchType.drama || type == SearchType.movie) {
+      AppRoute.to(DetailShowScreen(drama: search.toShow));
+    }
+    if (type == SearchType.name) {
+      AppRoute.to(DetailPersonScreen(person: Person(id: id)));
+    }
   }
 
   @override

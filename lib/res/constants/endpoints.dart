@@ -1,12 +1,14 @@
-const String _dramas = '/dramas';
 const String _show = '/show';
 const String _person = '/person';
 
-/// /dramas/slider
-const String slider = '$_dramas/slider';
+/// /slider
+const String slider = '/slider';
 
-/// /dramas/upcoming
-const String upcoming = '$_dramas/upcoming';
+/// /upcoming
+const String upcoming = '/upcoming';
+
+/// /upcoming/all
+const String allUpcoming = '/upcoming/all';
 
 /// /search
 const String search = '/search';

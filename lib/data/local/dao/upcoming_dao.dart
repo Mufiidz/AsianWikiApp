@@ -25,8 +25,9 @@ class UpcomingDaoImpl extends DatabaseAccessor<AppDatabase>
 
   @override
   Future<void> addUpcomings(List<Upcoming> upcomings) async {
-    final List<UpcomingCompanion> newUpcoming =
-        upcomings.map((Upcoming e) => e.toUpcomingTable).toList();
+    final List<UpcomingCompanion> newUpcoming = upcomings
+        .map((Upcoming e) => e.toUpcomingTable)
+        .toList();
     return await batch(
       (Batch batch) => batch.insertAllOnConflictUpdate(upcoming, newUpcoming),
     );
@@ -52,17 +53,17 @@ class UpcomingDaoImpl extends DatabaseAccessor<AppDatabase>
               ..limit(size, offset: currentPage * size))
             .get();
 
-    final newUpcomings =
-        upcomingDatas
-            .map(
-              (UpcomingData data) => Upcoming(
-                id: data.id,
-                title: data.title,
-                imageUrl: data.image,
-                weekRange: DateRange(start: data.startDate, end: data.endDate),
-              ),
-            )
-            .toList();
+    final newUpcomings = upcomingDatas
+        .map(
+          (UpcomingData data) => Upcoming(
+            id: data.id,
+            title: data.title,
+            imageUrl: data.image,
+            type: UpcomingTypeMapper.ensureInitialized().decode(data.type),
+            weekRange: DateRange(start: data.startDate, end: data.endDate),
+          ),
+        )
+        .toList();
     return newUpcomings;
   }
 

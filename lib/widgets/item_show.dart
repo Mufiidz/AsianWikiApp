@@ -1,23 +1,22 @@
 import 'package:flutter/material.dart';
 
 import '../model/show.dart';
-import '../screens/detail/show/detail_show_screen.dart';
 import '../styles/export_styles.dart';
 import '../utils/export_utils.dart';
 import 'export_widget.dart';
 
 typedef OnClickItem = Function()?;
 
-class ItemDrama extends StatefulWidget {
-  final Show drama;
+class ItemShow extends StatefulWidget {
+  final Show show;
   final OnClickItem? onClick;
-  const ItemDrama({required this.drama, super.key, this.onClick});
+  const ItemShow({required this.show, super.key, this.onClick});
 
   @override
-  State<ItemDrama> createState() => _ItemDramaState();
+  State<ItemShow> createState() => _ItemShowState();
 }
 
-class _ItemDramaState extends State<ItemDrama>
+class _ItemShowState extends State<ItemShow>
     with SingleTickerProviderStateMixin {
   late Color _baseColor;
 
@@ -29,7 +28,8 @@ class _ItemDramaState extends State<ItemDrama>
 
   @override
   Widget build(BuildContext context) {
-    final Show(:String id, :String title, :String? imageUrl) = widget.drama;
+    final Show(:String id, :String title, :String? imageUrl, :String? type) =
+        widget.show;
     return Card(
       shape: RoundedRectangleBorder(borderRadius: CornerRadius.mediumRadius),
       elevation: Elevation.small,
@@ -37,9 +37,7 @@ class _ItemDramaState extends State<ItemDrama>
       child: ClipRRect(
         borderRadius: CornerRadius.mediumRadius,
         child: InkWell(
-          onTap:
-              widget.onClick ??
-              (() => AppRoute.to(DetailShowScreen(drama: widget.drama))),
+          onTap: widget.onClick,
           borderRadius: CornerRadius.mediumRadius,
           child: Stack(
             children: <Widget>[
@@ -61,6 +59,29 @@ class _ItemDramaState extends State<ItemDrama>
                     ),
                   );
                 },
+              ),
+              Align(
+                alignment: Alignment.topCenter,
+                child: type != null
+                    ? Container(
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: PaddingStyle.medium,
+                          vertical: 2,
+                        ),
+                        decoration: const BoxDecoration(
+                          color: Colors.black45,
+                          borderRadius: BorderRadius.vertical(
+                            bottom: Radius.circular(CornerRadius.medium),
+                          ),
+                        ),
+                        child: Text(
+                          type.toTitleCase() ?? '',
+                          style: context.textTheme.bodyMedium?.copyWith(
+                            color: Colors.white,
+                          ),
+                        ),
+                      )
+                    : const SizedBox.shrink(),
               ),
               Container(
                 width: context.mediaSize.width,

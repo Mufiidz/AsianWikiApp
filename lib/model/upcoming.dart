@@ -17,6 +17,7 @@ class Upcoming with UpcomingMappable {
   String link;
   String network;
   String week;
+  UpcomingType? type;
   DateRange? weekRange;
 
   Upcoming({
@@ -27,16 +28,26 @@ class Upcoming with UpcomingMappable {
     this.network = '',
     this.week = '',
     this.weekRange,
+    this.type,
   });
 
   UpcomingCompanion get toUpcomingTable => UpcomingCompanion.insert(
     id: id,
     title: title,
+    type: Value.absentIfNull(type?.name),
     startDate: Value.absentIfNull(weekRange?.start),
     endDate: Value.absentIfNull(weekRange?.end),
     image: Value.absentIfNull(imageUrl),
   );
 
-  Show toDrama() =>
-      Show(id: id, title: title, imageUrl: imageUrl ?? '', url: link);
+  Show get toDrama => Show(
+    id: id,
+    title: title,
+    imageUrl: imageUrl ?? '',
+    url: link,
+    type: type?.name,
+  );
 }
+
+@MappableEnum()
+enum UpcomingType { drama, movie }

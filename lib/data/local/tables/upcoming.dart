@@ -4,6 +4,7 @@ class Upcoming extends Table {
   TextColumn get id => text()();
   TextColumn get title => text()();
   TextColumn get image => text().nullable()();
+  TextColumn get type => text().nullable()();
   DateTimeColumn get startDate => dateTime().nullable()();
   DateTimeColumn get endDate => dateTime().nullable()();
   DateTimeColumn get createdAt => dateTime().withDefault(currentDate)();

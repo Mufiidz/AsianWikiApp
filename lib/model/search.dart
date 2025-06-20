@@ -1,6 +1,7 @@
 import 'package:dart_mappable/dart_mappable.dart';
 
 import 'search_type.dart';
+import 'show.dart';
 
 part 'search.mapper.dart';
 
@@ -19,4 +20,7 @@ class Search with SearchMappable {
     this.url = '',
     this.imageUrl,
   });
+
+  Show get toShow =>
+      Show(id: id, title: title, imageUrl: imageUrl ?? '', url: url);
 }
