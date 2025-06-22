@@ -28,5 +28,9 @@
     "biography": "Biography",
     "read_more": "Read More",
     "search": "Search",
-    "hint_person_show": "Search show or by title shows"
+    "hint_person_show": "Search show or by title shows",
+    "success_msg_language": "Language successfully changed",
+    "error_msg_language": "Language failed to change",
+    "settings": "Settings",
+    "title_choose_language": "Choose Language"
 }

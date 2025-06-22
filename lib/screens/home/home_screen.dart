@@ -11,6 +11,7 @@ import '../../styles/export_styles.dart';
 import '../../utils/export_utils.dart';
 import '../../widgets/export_widget.dart';
 import '../search/search_screen.dart';
+import '../settings/settings_screen.dart';
 import 'cubit/home_cubit.dart';
 import 'home_loading.dart';
 import 'sections/home_header.dart';
@@ -54,6 +55,7 @@ class _HomeScreenState extends State<HomeScreen> {
         actions: <Widget>[
           IconButton(
             icon: const Icon(Icons.search),
+            tooltip: LocaleKeys.search.tr(),
             onPressed: () {
               _searchController
                 ..value = TextEditingValue(
@@ -65,6 +67,11 @@ class _HomeScreenState extends State<HomeScreen> {
                 )
                 ..openView();
             },
+          ),
+          IconButton(
+            onPressed: () => AppRoute.to(const SettingsScreen()),
+            icon: const Icon(Icons.settings),
+            tooltip: LocaleKeys.settings.tr(),
           ),
         ],
       ),

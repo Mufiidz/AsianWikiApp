@@ -37,6 +37,7 @@ class MyApp extends StatelessWidget {
       navigatorKey: AppRoute.navigatorKey,
       localizationsDelegates: context.localizationDelegates,
       supportedLocales: context.supportedLocales,
+      locale: context.locale,
       // theme: context.materialTheme.light(),
       theme: context.materialTheme.dark(),
       // theme:

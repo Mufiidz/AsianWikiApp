@@ -28,5 +28,9 @@
     "biography": "Biografi",
     "read_more": "Baca Selengkapnya",
     "search": "Cari",
-    "hint_person_show": "Cari acara atau judul acara"
+    "hint_person_show": "Cari acara atau judul acara",
+    "success_msg_language": "Bahasa berhasil diubah",
+    "error_msg_language": "Bahasa gagal diubah",
+    "settings": "Pengaturan",
+    "title_choose_language": "Ubah Bahasa"
 }
