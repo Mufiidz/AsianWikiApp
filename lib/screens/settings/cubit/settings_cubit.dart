@@ -10,7 +10,7 @@ import '../../../repository/settings_repository.dart';
 part 'settings_state.dart';
 part 'settings_cubit.mapper.dart';
 
-@injectable
+@singleton
 class SettingsCubit extends Cubit<SettingsState> {
   final SettingsRepository _settingsRepository;
   SettingsCubit(this._settingsRepository) : super(SettingsState());

@@ -5,6 +5,7 @@ import 'package:injectable/injectable.dart';
 
 import '../../../model/date_range.dart';
 import '../../../model/upcoming.dart';
+import '../../../utils/export_utils.dart';
 import '../app_database.dart';
 import '../tables/upcoming.dart' as table;
 
@@ -59,7 +60,9 @@ class UpcomingDaoImpl extends DatabaseAccessor<AppDatabase>
             id: data.id,
             title: data.title,
             imageUrl: data.image,
-            type: UpcomingTypeMapper.ensureInitialized().decode(data.type),
+            type: UpcomingTypeMapper.ensureInitialized().decode(
+              data.type?.capitalizeFirst(),
+            ),
             weekRange: DateRange(start: data.startDate, end: data.endDate),
           ),
         )

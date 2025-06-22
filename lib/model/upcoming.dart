@@ -4,6 +4,7 @@ import 'package:dart_mappable/dart_mappable.dart';
 import 'package:drift/drift.dart';
 
 import '../data/local/app_database.dart';
+import '../utils/export_utils.dart';
 import 'date_range.dart';
 import 'show.dart';
 
@@ -34,7 +35,7 @@ class Upcoming with UpcomingMappable {
   UpcomingCompanion get toUpcomingTable => UpcomingCompanion.insert(
     id: id,
     title: title,
-    type: Value.absentIfNull(type?.name),
+    type: Value.absentIfNull(type?.name.capitalizeFirst()),
     startDate: Value.absentIfNull(weekRange?.start),
     endDate: Value.absentIfNull(weekRange?.end),
     image: Value.absentIfNull(imageUrl),
@@ -49,5 +50,5 @@ class Upcoming with UpcomingMappable {
   );
 }
 
-@MappableEnum()
+@MappableEnum(caseStyle: CaseStyle.pascalCase)
 enum UpcomingType { drama, movie }

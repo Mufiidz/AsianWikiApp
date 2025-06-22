@@ -94,6 +94,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       return ListWidget<Widget>(
                         contents,
                         controller: _scrollController,
+                        scrollPhysics: const AlwaysScrollableScrollPhysics(),
                         itemBuilder:
                             (BuildContext context, Widget item, int index) =>
                                 item,
