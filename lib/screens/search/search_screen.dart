@@ -49,6 +49,7 @@ class _SearchScreenState extends State<SearchScreen> {
       appBar: AppBar(
         automaticallyImplyLeading: false,
         forceMaterialTransparency: true,
+        toolbarHeight: kToolbarHeight + 20,
         title: SearchAnchor.bar(
           barHintText: LocaleKeys.searchbar_hint.tr(),
           viewHintText: LocaleKeys.searchbar_hint.tr(),
@@ -118,7 +119,12 @@ class _SearchScreenState extends State<SearchScreen> {
               return Center(child: Text(LocaleKeys.empty_data.tr()));
             }
             return GridView.builder(
-              padding: const EdgeInsets.all(PaddingStyle.medium),
+              padding: const EdgeInsets.only(
+                top: PaddingStyle.small,
+                left: PaddingStyle.medium,
+                right: PaddingStyle.medium,
+                bottom: PaddingStyle.medium,
+              ),
               gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                 crossAxisCount: context.mediaSize.width > 600 ? 4 : 2,
                 crossAxisSpacing: Spacing.small,
