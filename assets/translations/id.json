@@ -32,5 +32,13 @@
     "success_msg_language": "Bahasa berhasil diubah",
     "error_msg_language": "Bahasa gagal diubah",
     "settings": "Pengaturan",
-    "title_choose_language": "Ubah Bahasa"
+    "title_choose_language": "Ubah Bahasa",
+    "themes": "Tema",
+    "title_choose_theme": "Ubah Tema",
+    "title_theme_system": "Sistem",
+    "subtitle_theme_system": "Tema otomatis sesuai sistem",
+    "title_theme_light": "Terang",
+    "title_theme_dark": "Gelap",
+    "success_msg_theme": "Tema berhasil diubah",
+    "error_msg_theme": "Tema gagal diubah"
 }

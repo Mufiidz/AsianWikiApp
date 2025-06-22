@@ -1,11 +1,13 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:easy_localization_loader/easy_localization_loader.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'di/injection.dart';
 import 'model/upcoming.dart';
 import 'res/constants/constants.dart' as constants;
 import 'screens/home/home_screen.dart';
+import 'screens/settings/cubit/settings_cubit.dart';
 import 'utils/export_utils.dart';
 
 void main() async {
@@ -32,23 +34,26 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: constants.appName,
-      navigatorKey: AppRoute.navigatorKey,
-      localizationsDelegates: context.localizationDelegates,
-      supportedLocales: context.supportedLocales,
-      locale: context.locale,
-      // theme: context.materialTheme.light(),
-      theme: context.materialTheme.dark(),
-      // theme:
-      //     context.theme.isDark
-      //         ? context.materialTheme.dark()
-      //         : context.materialTheme.light(),
-      home: const HomeScreen(),
-      // builder: (BuildContext context, Widget? child) {
-      //   ErrorWidget.builder = (FlutterErrorDetails details) {};
-      //   return child!;
-      // },
+    return BlocProvider<SettingsCubit>(
+      create: (BuildContext context) => getIt<SettingsCubit>()..initial(),
+      child: BlocSelector<SettingsCubit, SettingsState, ThemeMode>(
+        selector: (SettingsState state) => state.selectedTheme,
+        builder: (BuildContext context, ThemeMode state) => MaterialApp(
+          title: constants.appName,
+          navigatorKey: AppRoute.navigatorKey,
+          localizationsDelegates: context.localizationDelegates,
+          supportedLocales: context.supportedLocales,
+          locale: context.locale,
+          theme: context.materialTheme.light(),
+          darkTheme: context.materialTheme.dark(),
+          themeMode: state,
+          home: const HomeScreen(),
+          // builder: (BuildContext context, Widget? child) {
+          //   ErrorWidget.builder = (FlutterErrorDetails details) {};
+          //   return child!;
+          // },
+        ),
+      ),
     );
   }
 }

@@ -57,6 +57,7 @@ abstract class AppModule {
           allowList: <String>{
             sharedpref_keys.lastMonthUpcoming,
             sharedpref_keys.lastPageUpcoming,
+            sharedpref_keys.theme,
           },
         ),
       );

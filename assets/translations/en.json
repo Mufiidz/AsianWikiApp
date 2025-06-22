@@ -32,5 +32,13 @@
     "success_msg_language": "Language successfully changed",
     "error_msg_language": "Language failed to change",
     "settings": "Settings",
-    "title_choose_language": "Choose Language"
+    "title_choose_language": "Choose Language",
+    "themes": "Themes",
+    "title_choose_theme": "Choose Theme",
+    "title_theme_system": "System",
+    "subtitle_theme_system": "Follow system theme",
+    "title_theme_light": "Light",
+    "title_theme_dark": "Dark",
+    "success_msg_theme": "Theme successfully changed",
+    "error_msg_theme": "Theme failed to change"
 }

@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../di/injection.dart';
+import '../../model/option_setting.dart';
 import '../../res/locale_keys.g.dart';
 import '../../styles/export_styles.dart';
 import '../../utils/export_utils.dart';
@@ -26,6 +27,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
   void initState() {
     _settingsCubit = getIt<SettingsCubit>();
     super.initState();
+    _settingsCubit.initial();
   }
 
   @override
@@ -33,7 +35,6 @@ class _SettingsScreenState extends State<SettingsScreen> {
     return Scaffold(
       appBar: AppbarWidget(LocaleKeys.settings.tr()),
       body: BlocConsumer<SettingsCubit, SettingsState>(
-        bloc: _settingsCubit,
         listener: (BuildContext context, SettingsState state) {
           if (state.isSuccess) {
             context.snackbar.showSnackBar(
@@ -70,6 +71,19 @@ class _SettingsScreenState extends State<SettingsScreen> {
               ),
               onTap: () => _changeLanguage(context, state.selectedLang),
             ),
+            ListTile(
+              title: Text(LocaleKeys.themes.tr()),
+              subtitle: Text(
+                '${state.selectedTheme.name.capitalizeFirst()} Mode.',
+              ),
+              leading: ListOptions.themes()
+                  .firstWhere(
+                    (OptionSetting<ThemeMode> option) =>
+                        option.value == state.selectedTheme,
+                  )
+                  .icon,
+              onTap: () => _changeTheme(context, state.selectedTheme),
+            ),
           ],
         ),
       ),
@@ -95,5 +109,22 @@ class _SettingsScreenState extends State<SettingsScreen> {
     if (!context.mounted) return;
 
     _settingsCubit.changeLanguage(context, newSelectedLang);
+  }
+
+  void _changeTheme(BuildContext context, ThemeMode selectedTheme) async {
+    final dynamic newSelectedTheme = await AppRoute.to(
+      OptionScreen<ThemeMode>(
+        options: ListOptions.themes(),
+        selectedValue: selectedTheme,
+        title: LocaleKeys.title_choose_theme.tr(),
+      ),
+    );
+    if (newSelectedTheme == null || newSelectedTheme is! ThemeMode) {
+      return;
+    }
+
+    if (!context.mounted) return;
+
+    _settingsCubit.changeThemeMode(newSelectedTheme);
   }
 }
