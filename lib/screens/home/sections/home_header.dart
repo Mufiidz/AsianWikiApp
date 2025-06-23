@@ -21,7 +21,10 @@ class HomeHeader extends StatelessWidget {
 
         if (sliderDrama.isEmpty) return const SizedBox.shrink();
 
-        return ItemSlider(item: sliderDrama);
+        return ItemSlider(
+          heroId: 'slider-${sliderDrama.id}$index',
+          item: sliderDrama,
+        );
       },
       options: CarouselOptions(
         height: 200,
