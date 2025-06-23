@@ -74,8 +74,8 @@ class _DetailShowScreenState extends State<DetailShowScreen>
           Match? match = regExp.firstMatch(errorMessage);
           String? result = match?.group(1);
 
-          if (state.isError) {
-            if (result != null && result.isNotEmpty && result == 'actrees') {
+          if (state.isError && result != null) {
+            if (result == 'actrees') {
               AppRoute.clearTopTo(
                 DetailPersonScreen(person: Person(id: _showId)),
               );
