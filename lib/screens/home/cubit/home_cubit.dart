@@ -5,8 +5,10 @@ import 'package:injectable/injectable.dart';
 
 import '../../../data/base_result.dart';
 import '../../../data/base_state.dart';
+import '../../../model/favorite.dart';
 import '../../../model/show.dart';
 import '../../../model/upcoming.dart';
+import '../../../repository/favorite_repository.dart';
 import '../../../repository/home_repository.dart';
 import '../../../repository/search_repository.dart';
 import '../../../utils/export_utils.dart';
@@ -18,10 +20,15 @@ part 'home_state.dart';
 class HomeCubit extends Cubit<HomeState> {
   final HomeRepository _homeRepository;
   final SearchRepository _searchRepository;
+  final FavoriteRepository _favoriteRepository;
   final List<String> _errors = <String>[];
   late PagingController<int, Upcoming> _pagingController;
   int currentPage = 1;
-  HomeCubit(this._homeRepository, this._searchRepository) : super(HomeState());
+  HomeCubit(
+    this._homeRepository,
+    this._searchRepository,
+    this._favoriteRepository,
+  ) : super(HomeState());
 
   Future<void> initial(PagingController<int, Upcoming> pagingController) async {
     emit(state.copyWith(statusState: StatusState.loading));
@@ -37,6 +44,7 @@ class HomeCubit extends Cubit<HomeState> {
     final List<Future<void>> actions = <Future<void>>[
       getSlider(),
       getUpcoming(page: page),
+      getFavoriteActress(),
     ];
 
     await Future.wait(actions);
@@ -115,4 +123,15 @@ class HomeCubit extends Cubit<HomeState> {
 
   Future<void> removeSearchHistory(String title) =>
       _searchRepository.removeSearchHistory(title);
+
+  Future<void> getFavoriteActress() async {
+    final BaseResult<List<Favorite>> result = await _favoriteRepository
+        .getFavoriteActress();
+    result.when(
+      result: (List<Favorite> data) {
+        emit(state.copyWith(favoriteActress: data));
+      },
+      error: (String message) => _errors.add(message),
+    );
+  }
 }

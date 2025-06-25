@@ -25,7 +25,7 @@ class SnackbarWidget extends SnackBar {
   static Color? getBackgroundColor(SnackbarState state, BuildContext context) {
     return switch (state) {
       SnackbarState.success =>
-        context.isDark ? Colors.green[300] : Colors.green[700],
+        context.theme.isDark ? Colors.green[300] : Colors.green[700],
       SnackbarState.error => context.colorScheme.error,
       _ => null,
     };

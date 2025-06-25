@@ -28,8 +28,9 @@ import 'sections/casts_detail.dart';
 import 'sections/synopsis_detail.dart';
 
 class DetailShowScreen extends StatefulWidget {
+  final String? heroId;
   final Show drama;
-  const DetailShowScreen({required this.drama, super.key});
+  const DetailShowScreen({required this.drama, super.key, this.heroId});
 
   @override
   State<DetailShowScreen> createState() => _DetailShowScreenState();
@@ -44,10 +45,12 @@ class _DetailShowScreenState extends State<DetailShowScreen>
   String _showId = '';
   List<Widget> _contents = <Widget>[];
   late final SearchController _searchController;
+  late final String _heroId;
 
   @override
   void initState() {
     _drama = widget.drama;
+    _heroId = widget.heroId ?? _drama.id;
     _detailDramaCubit = getIt<DetailDramaCubit>();
     _scrollController = ScrollController();
     _searchController = SearchController();
@@ -179,7 +182,7 @@ class _DetailShowScreenState extends State<DetailShowScreen>
   // ISSUE : non smoth scroll
   List<Widget> get _baseContents => <Widget>[
     HeaderDetail(
-      heroId: widget.drama.id,
+      heroId: _heroId,
       image: _detailDrama?.imageUrl ?? '',
       title: _detailDrama?.title ?? widget.drama.title,
     ),

@@ -38,7 +38,7 @@ class MyApp extends StatelessWidget {
       create: (BuildContext context) => getIt<SettingsCubit>()..initial(),
       child: BlocSelector<SettingsCubit, SettingsState, ThemeMode>(
         selector: (SettingsState state) => state.selectedTheme,
-        builder: (BuildContext context, ThemeMode state) => MaterialApp(
+        builder: (BuildContext context, ThemeMode theme) => MaterialApp(
           title: constants.appName,
           navigatorKey: AppRoute.navigatorKey,
           localizationsDelegates: context.localizationDelegates,
@@ -46,7 +46,7 @@ class MyApp extends StatelessWidget {
           locale: context.locale,
           theme: context.materialTheme.light(),
           darkTheme: context.materialTheme.dark(),
-          themeMode: state,
+          themeMode: theme,
           home: const HomeScreen(),
           // builder: (BuildContext context, Widget? child) {
           //   ErrorWidget.builder = (FlutterErrorDetails details) {};

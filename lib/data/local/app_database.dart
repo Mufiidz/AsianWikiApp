@@ -10,20 +10,31 @@ import 'package:injectable/injectable.dart';
 // import 'package:sqlite3_flutter_libs/sqlite3_flutter_libs.dart';
 
 import '../../config/env.dart';
+import 'app_database.steps.dart';
+import 'tables/favorite_table.dart';
 import 'tables/upcoming.dart';
 
 part 'app_database.g.dart';
 
 @lazySingleton
-@DriftDatabase(tables: <Type>[Upcoming])
+@DriftDatabase(tables: <Type>[Upcoming, FavoriteTable])
 class AppDatabase extends _$AppDatabase {
   AppDatabase() : super(_openConnection());
 
   @override
-  int get schemaVersion => 1;
+  int get schemaVersion => 2;
 
   static QueryExecutor _openConnection() =>
       driftDatabase(name: Env.dbName, native: const DriftNativeOptions());
+
+  @override
+  MigrationStrategy get migration => MigrationStrategy(
+    onCreate: (Migrator m) => m.createAll(),
+    onUpgrade: stepByStep(
+      from1To2: (Migrator m, Schema2 schema) async =>
+          await m.createTable(schema.favorite),
+    ),
+  );
 }
 
 // LazyDatabase _openConnection() => LazyDatabase(() async {

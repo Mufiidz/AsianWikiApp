@@ -11,3 +11,10 @@ global_options:
         toJson: toJsonString
         fromMap: fromJson
         toMap: toJson
+targets:
+  $default:
+    builders:
+      drift_dev:
+        options:
+          databases:
+            asianwiki: lib/data/local/app_database.dart

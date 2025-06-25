@@ -7,9 +7,8 @@ import '../../widgets/export_widget.dart';
 import '../detail/show/detail_show_screen.dart';
 
 class ItemSlider extends StatelessWidget {
-  final String heroId;
   final Show item;
-  const ItemSlider({required this.item, required this.heroId, super.key});
+  const ItemSlider({required this.item, super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -24,7 +23,7 @@ class ItemSlider extends StatelessWidget {
           child: Stack(
             children: <Widget>[
               Hero(
-                tag: heroId,
+                tag: id,
                 child: ImageNetwork(
                   imageUrl,
                   borderRadius: CornerRadius.mediumRadius,

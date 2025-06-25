@@ -30,6 +30,7 @@ class CircleButtonWidget extends ElevatedButton {
     this.paddingSize,
     this.iconSize,
     this.size,
+    Color? iconColor,
   }) : super(
          style: ElevatedButton.styleFrom(
            shape: const CircleBorder(),
@@ -37,6 +38,6 @@ class CircleButtonWidget extends ElevatedButton {
            padding: EdgeInsets.all(paddingSize ?? PaddingStyle.small),
            fixedSize: Size.square(size ?? 48),
          ),
-         child: Icon(icon),
+         child: Icon(icon, color: iconColor),
        );
 }

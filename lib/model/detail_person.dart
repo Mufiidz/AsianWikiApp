@@ -1,6 +1,7 @@
 import 'package:dart_mappable/dart_mappable.dart';
 
 import '../utils/export_utils.dart';
+import 'favorite.dart';
 import 'person_show.dart';
 import 'simple_data.dart';
 import 'sosmed.dart';
@@ -101,4 +102,7 @@ class DetailPerson with DetailPersonMappable {
     SimpleData(title: 'Height', content: height > 0 ? '$height cm' : '-'),
     SimpleData.nullableContent(title: 'University', content: university),
   ];
+
+  Favorite get toFavorite =>
+      Favorite(id: id, title: title, imageUrl: imageUrl, type: type);
 }

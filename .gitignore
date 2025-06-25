@@ -52,7 +52,9 @@ app.*.map.json
 *.mapper.dart
 *.g.dart
 *.gen.dart
+*.steps.dart
 
 # Custom
 /test
 .env
+/drift_schemas

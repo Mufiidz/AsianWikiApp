@@ -68,6 +68,7 @@ dependencies:
   html: ^0.15.6
   flutter_svg: ^2.1.0
   url_launcher: ^6.3.1
+  lottie: ^3.3.1
 
 dev_dependencies:
   flutter_test:
@@ -93,6 +94,7 @@ flutter_gen:
   output: lib/res/
   integrations:
     flutter_svg: true
+    lottie: true
   assets:
     outputs:
       class_name: Assets
@@ -111,6 +113,7 @@ flutter:
     #   - assets/images/
     - assets/icons/
     - assets/translations/
+    - assets/lottie/
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/to/resolution-aware-images

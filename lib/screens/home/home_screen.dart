@@ -4,16 +4,19 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 
 import '../../di/injection.dart';
+import '../../model/favorite.dart';
 import '../../model/upcoming.dart';
 import '../../res/constants/constants.dart' as constants;
 import '../../res/locale_keys.g.dart';
 import '../../styles/export_styles.dart';
 import '../../utils/export_utils.dart';
 import '../../widgets/export_widget.dart';
+import '../detail/person/detail_person_screen.dart';
 import '../search/search_screen.dart';
 import '../settings/settings_screen.dart';
 import 'cubit/home_cubit.dart';
 import 'home_loading.dart';
+import 'sections/favorite_actress.dart';
 import 'sections/home_header.dart';
 import 'sections/upcoming_home.dart';
 
@@ -152,6 +155,15 @@ class _HomeScreenState extends State<HomeScreen> {
 
   List<Widget> _contents(HomeState state) => <Widget>[
     HomeHeader(sliders: state.sliders),
+    FavoriteActress(
+      state.favoriteActress,
+      onTapFavorite: (Favorite favorite) async {
+        await AppRoute.to(
+          DetailPersonScreen(person: favorite.toPerson, heroId: favorite.id),
+        );
+        _cubit.getFavoriteActress();
+      },
+    ),
     UpcomingHome(
       controller: _pagingController,
       itemsCount: state.upcomingsLength,

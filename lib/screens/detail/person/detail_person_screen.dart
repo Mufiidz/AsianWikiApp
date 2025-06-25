@@ -1,6 +1,5 @@
 import 'dart:io';
 
-import 'package:easy_localization/easy_localization.dart';
 import 'package:extended_image/extended_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -11,7 +10,7 @@ import '../../../model/person.dart';
 import '../../../model/person_show.dart';
 import '../../../model/show.dart';
 import '../../../repository/detail_repository.dart';
-import '../../../res/locale_keys.g.dart';
+import '../../../res/export_res.dart';
 import '../../../styles/export_styles.dart';
 import '../../../utils/export_utils.dart';
 import '../../../widgets/export_widget.dart';
@@ -28,24 +27,28 @@ import 'widgets/item_personshow_widget.dart';
 
 class DetailPersonScreen extends StatefulWidget {
   final Person person;
-  const DetailPersonScreen({required this.person, super.key});
+  final String? heroId;
+  const DetailPersonScreen({required this.person, super.key, this.heroId});
 
   @override
   State<DetailPersonScreen> createState() => _DetailPersonScreenState();
 }
 
-class _DetailPersonScreenState extends State<DetailPersonScreen> {
+class _DetailPersonScreenState extends State<DetailPersonScreen>
+    with TickerProviderStateMixin {
   late final DetailPersonCubit _cubit;
   DetailPerson? _detailPerson;
   late final Person _person;
   List<Widget> _contents = <Widget>[];
   late final SearchController _searchController;
+  late final AnimationController _favoriteController;
 
   @override
   void initState() {
     _cubit = getIt<DetailPersonCubit>();
     _person = widget.person;
     _searchController = SearchController();
+    _favoriteController = AnimationController(vsync: this);
     super.initState();
 
     WidgetsBinding.instance.addPostFrameCallback((_) {
@@ -100,13 +103,47 @@ class _DetailPersonScreenState extends State<DetailPersonScreen> {
               ),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
-                  CircleButtonWidget.icon(
-                    Platform.isIOS ? Icons.arrow_back_ios : Icons.arrow_back,
-                    onPressed: () => AppRoute.back(),
+                  Expanded(
+                    flex: 2,
+                    child: Align(
+                      alignment: Alignment.topLeft,
+                      child: CircleButtonWidget.icon(
+                        Platform.isIOS
+                            ? Icons.arrow_back_ios
+                            : Icons.arrow_back,
+                        onPressed: () => AppRoute.back(),
+                      ),
+                    ),
+                  ),
+                  BlocSelector<DetailPersonCubit, DetailPersonState, bool?>(
+                    bloc: _cubit,
+                    selector: (DetailPersonState state) => state.isFavorite,
+                    builder: (BuildContext context, bool? isFavorite) {
+                      return Visibility(
+                        visible:
+                            isFavorite != null &&
+                            (!state.isError && !state.isLoading),
+                        child: CircleButtonWidget(
+                          onPressed: () {
+                            if (isFavorite == false) {
+                              _favoriteController.forward(from: 0.25);
+                            }
+                            _cubit.toggleFavorite();
+                          },
+                          child: FavoriteIcon(
+                            isFavorite: isFavorite == true,
+                            favoriteController: _favoriteController,
+                          ),
+                        ),
+                      );
+                    },
                   ),
                   Visibility(
-                    visible: state.person.shows.isNotEmpty,
+                    visible:
+                        state.person.shows.isNotEmpty &&
+                        (!state.isError && !state.isLoading),
                     child: CircleSearchButton(
                       searchController: _searchController,
                       hintText: LocaleKeys.hint_person_show.tr(),
@@ -137,7 +174,7 @@ class _DetailPersonScreenState extends State<DetailPersonScreen> {
     HeaderDetail(
       image: _detailPerson?.imageUrl ?? _person.imageUrl,
       title: _detailPerson?.name ?? _person.name,
-      heroId: _person.id,
+      heroId: widget.heroId ?? _person.id,
     ),
     SosmedSection(sosmeds: _detailPerson?.sosmed),
     InfoDetail(infos: _detailPerson?.info),
@@ -161,6 +198,8 @@ class _DetailPersonScreenState extends State<DetailPersonScreen> {
   @override
   void dispose() {
     clearMemoryImageCache();
+    _searchController.dispose();
+    _favoriteController.dispose();
     super.dispose();
   }
 }
