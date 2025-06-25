@@ -7,11 +7,18 @@ import '../../../utils/export_utils.dart';
 import '../../../widgets/export_widget.dart';
 
 typedef OnTapFavorite = void Function(Favorite favorite);
+typedef OnTapSeeAll = void Function();
 
 class FavoriteActress extends StatelessWidget {
   final List<Favorite> favoriteActress;
   final OnTapFavorite? onTapFavorite;
-  const FavoriteActress(this.favoriteActress, {super.key, this.onTapFavorite});
+  final OnTapSeeAll? onTapSeeAll;
+  const FavoriteActress(
+    this.favoriteActress, {
+    super.key,
+    this.onTapFavorite,
+    this.onTapSeeAll,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -28,10 +35,13 @@ class FavoriteActress extends StatelessWidget {
                 LocaleKeys.title_favorite_actress_sections.tr(),
                 style: context.textTheme.titleLarge,
               ),
-              // FilledButton.tonal(
-              //   onPressed: () {},
-              //   child: const Text('View all'),
-              // ),
+              Visibility(
+                visible: favoriteActress.length > 5,
+                child: FilledButton.tonal(
+                  onPressed: onTapSeeAll,
+                  child: Text(LocaleKeys.see_all.tr()),
+                ),
+              ),
             ],
           ),
         ),
@@ -76,7 +86,7 @@ class FavoriteActress extends StatelessWidget {
                 ),
             separatorBuilder:
                 (BuildContext context, Favorite item, int index) =>
-                    const SizedBox(width: 16),
+                    Spacing.mediumHSpacing,
           ),
         ),
       ],

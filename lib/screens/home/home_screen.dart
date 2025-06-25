@@ -12,6 +12,7 @@ import '../../styles/export_styles.dart';
 import '../../utils/export_utils.dart';
 import '../../widgets/export_widget.dart';
 import '../detail/person/detail_person_screen.dart';
+import '../favorites/favorites_screen.dart';
 import '../search/search_screen.dart';
 import '../settings/settings_screen.dart';
 import 'cubit/home_cubit.dart';
@@ -161,6 +162,10 @@ class _HomeScreenState extends State<HomeScreen> {
         await AppRoute.to(
           DetailPersonScreen(person: favorite.toPerson, heroId: favorite.id),
         );
+        _cubit.getFavoriteActress();
+      },
+      onTapSeeAll: () async {
+        await AppRoute.to(const FavoritesScreen(type: FavoriteType.actress));
         _cubit.getFavoriteActress();
       },
     ),

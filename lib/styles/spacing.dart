@@ -22,6 +22,11 @@ abstract class Spacing {
   /// SizedBox(height: 16)
   static const SizedBox mediumSpacing = SizedBox(height: medium);
 
+  /// Medium Spacing
+  ///
+  /// SizedBox(height: 16)
+  static const SizedBox mediumHSpacing = SizedBox(width: medium);
+
   /// Spacing with height 24
   ///
   /// SizedBox(height: 24)

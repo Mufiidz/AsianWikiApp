@@ -41,5 +41,7 @@
     "title_theme_dark": "Dark",
     "success_msg_theme": "Theme successfully changed",
     "error_msg_theme": "Theme failed to change",
-    "title_favorite_actress_sections": "Actress you like it"
+    "title_favorite_actress_sections": "Actress you like it",
+    "see_all": "See all",
+    "title_favorite_screen": "My Favorite"
 }

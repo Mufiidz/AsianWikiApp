@@ -2,6 +2,7 @@ import 'package:dart_mappable/dart_mappable.dart';
 
 import '../data/local/app_database.dart';
 import 'person.dart';
+import 'show.dart';
 
 part 'favorite.mapper.dart';
 
@@ -29,4 +30,9 @@ class Favorite with FavoriteMappable {
   );
 
   Person get toPerson => Person(id: id, name: title, imageUrl: imageUrl);
+
+  Show get toShow => Show(id: id, title: title, imageUrl: imageUrl, type: type);
 }
+
+@MappableEnum(defaultValue: FavoriteType.all)
+enum FavoriteType { all, actress, drama, movie }
