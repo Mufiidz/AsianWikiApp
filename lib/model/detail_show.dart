@@ -4,6 +4,7 @@ import 'package:easy_localization/easy_localization.dart';
 import '../res/locale_keys.g.dart';
 import '../utils/export_utils.dart';
 import 'date_range.dart';
+import 'favorite.dart';
 import 'simple_data.dart';
 import 'synopsis.dart';
 
@@ -101,6 +102,13 @@ class DetailShow with DetailShowMappable {
       return List<String>.empty();
     }
   }
+
+  Favorite get toFavorite => Favorite(
+    id: id,
+    title: title,
+    imageUrl: imageUrl,
+    type: type?.name ?? '',
+  );
 }
 
 @MappableEnum()

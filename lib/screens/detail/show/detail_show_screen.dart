@@ -1,6 +1,5 @@
 import 'dart:io';
 
-import 'package:easy_localization/easy_localization.dart';
 import 'package:extended_image/extended_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -13,7 +12,8 @@ import '../../../model/detail_show.dart';
 import '../../../model/person.dart';
 import '../../../model/show.dart';
 import '../../../repository/detail_repository.dart';
-import '../../../res/locale_keys.g.dart';
+import '../../../res/constants/constants.dart' as constants;
+import '../../../res/export_res.dart';
 import '../../../styles/export_styles.dart';
 import '../../../utils/export_utils.dart';
 import '../../../widgets/export_widget.dart';
@@ -46,6 +46,7 @@ class _DetailShowScreenState extends State<DetailShowScreen>
   List<Widget> _contents = <Widget>[];
   late final SearchController _searchController;
   late final String _heroId;
+  late final AnimationController _favoriteController;
 
   @override
   void initState() {
@@ -54,6 +55,7 @@ class _DetailShowScreenState extends State<DetailShowScreen>
     _detailDramaCubit = getIt<DetailDramaCubit>();
     _scrollController = ScrollController();
     _searchController = SearchController();
+    _favoriteController = AnimationController(vsync: this);
     super.initState();
     _showId = _drama.id;
     WidgetsBinding.instance.addPostFrameCallback((_) {
@@ -78,7 +80,7 @@ class _DetailShowScreenState extends State<DetailShowScreen>
           String? result = match?.group(1);
 
           if (state.isError && result != null) {
-            if (result == 'actrees') {
+            if (result == constants.actress) {
               AppRoute.clearTopTo(
                 DetailPersonScreen(person: Person(id: _showId)),
               );
@@ -131,13 +133,47 @@ class _DetailShowScreenState extends State<DetailShowScreen>
               ),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
-                  CircleButtonWidget.icon(
-                    Platform.isIOS ? Icons.arrow_back_ios : Icons.arrow_back,
-                    onPressed: () => AppRoute.back(),
+                  Expanded(
+                    flex: 2,
+                    child: Align(
+                      alignment: Alignment.topLeft,
+                      child: CircleButtonWidget.icon(
+                        Platform.isIOS
+                            ? Icons.arrow_back_ios
+                            : Icons.arrow_back,
+                        onPressed: () => AppRoute.back(),
+                      ),
+                    ),
+                  ),
+                  BlocSelector<DetailDramaCubit, DetailDramaState, bool?>(
+                    bloc: _detailDramaCubit,
+                    selector: (DetailDramaState state) => state.isFavorite,
+                    builder: (BuildContext context, bool? isFavorite) {
+                      return Visibility(
+                        visible:
+                            isFavorite != null &&
+                            (!state.isError && !state.isLoading),
+                        child: CircleButtonWidget(
+                          onPressed: () {
+                            if (isFavorite == false) {
+                              _favoriteController.forward(from: 0.25);
+                            }
+                            _detailDramaCubit.toggleFavorite();
+                          },
+                          child: FavoriteIcon(
+                            isFavorite: isFavorite == true,
+                            favoriteController: _favoriteController,
+                          ),
+                        ),
+                      );
+                    },
                   ),
                   Visibility(
-                    visible: state.casts.isNotEmpty,
+                    visible:
+                        state.casts.isNotEmpty &&
+                        (!state.isError && !state.isLoading),
                     child: CircleSearchButton(
                       searchController: _searchController,
                       hintText: LocaleKeys.hint_cast.tr(),
@@ -214,6 +250,7 @@ class _DetailShowScreenState extends State<DetailShowScreen>
     clearMemoryImageCache();
     _searchController.dispose();
     _scrollController.dispose();
+    _favoriteController.dispose();
     super.dispose();
   }
 }
