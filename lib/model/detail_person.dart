@@ -1,5 +1,6 @@
 import 'package:dart_mappable/dart_mappable.dart';
 
+import '../res/export_res.dart';
 import '../utils/export_utils.dart';
 import 'favorite.dart';
 import 'person_show.dart';
@@ -89,18 +90,39 @@ class DetailPerson with DetailPersonMappable {
           .toList();
 
   List<SimpleData> get info => <SimpleData>[
-    SimpleData(title: 'Rating', content: '$rating% ($votes vote)'),
+    SimpleData(
+      title: LocaleKeys.rating.tr(),
+      content: '$rating% ($votes vote)',
+    ),
     SimpleData.nullableContent(
-      title: 'Born',
+      title: LocaleKeys.born.tr(),
       content: born?.toIso8601String().toDateFormat(),
     ),
-    SimpleData(title: 'Birthplace', content: birthplace),
-    SimpleData.nullableContent(title: 'Native Name', content: nativeName),
-    SimpleData.nullableContent(title: 'Birth Name', content: birthName),
-    SimpleData.nullableContent(title: 'Blood Type', content: bloodType),
-    SimpleData.nullableContent(title: 'Age', content: age > 0 ? '$age' : '-'),
-    SimpleData(title: 'Height', content: height > 0 ? '$height cm' : '-'),
-    SimpleData.nullableContent(title: 'University', content: university),
+    SimpleData(title: LocaleKeys.birthplace.tr(), content: birthplace),
+    SimpleData.nullableContent(
+      title: LocaleKeys.native_name.tr(),
+      content: nativeName,
+    ),
+    SimpleData.nullableContent(
+      title: LocaleKeys.birthname.tr(),
+      content: birthName,
+    ),
+    SimpleData.nullableContent(
+      title: LocaleKeys.blood_type.tr(),
+      content: bloodType,
+    ),
+    SimpleData.nullableContent(
+      title: LocaleKeys.age.tr(),
+      content: age > 0 ? '$age' : '-',
+    ),
+    SimpleData(
+      title: LocaleKeys.height.tr(),
+      content: height > 0 ? '$height cm' : '-',
+    ),
+    SimpleData.nullableContent(
+      title: LocaleKeys.university.tr(),
+      content: university,
+    ),
   ];
 
   Favorite get toFavorite =>

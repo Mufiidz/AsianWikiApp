@@ -43,5 +43,14 @@
     "error_msg_theme": "Theme failed to change",
     "title_favorite_type_sections": "{type} you like it",
     "see_all": "See all",
-    "title_favorite_screen": "My Favorite"
+    "title_favorite_screen": "My Favorite",
+    "rating": "Rating",
+    "born": "Born",
+    "birthplace": "Birthplace",
+    "native_name": "Native Name",
+    "birthname": "Birthname",
+    "blood_type": "Blood Type",
+    "age": "Age",
+    "height": "Height",
+    "university": "University"
 }

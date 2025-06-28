@@ -24,7 +24,7 @@ class InfoDetail extends StatelessWidget {
         scrollPhysics: const NeverScrollableScrollPhysics(),
         itemBuilder: (BuildContext context, SimpleData item, int index) => Row(
           mainAxisAlignment: MainAxisAlignment.start,
-          crossAxisAlignment: CrossAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.center,
           children: <Widget>[
             Expanded(child: Text(item.title)),
             const Text(' : '),

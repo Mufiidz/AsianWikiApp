@@ -43,5 +43,14 @@
     "error_msg_theme": "Tema gagal diubah",
     "title_favorite_type_sections": "{type} yang kamu suka",
     "see_all": "Lihat Semua",
-    "title_favorite_screen": "Favorit Saya"
+    "title_favorite_screen": "Favorit Saya",
+    "rating": "Rating",
+    "born": "Lahir",
+    "birthplace": "Tempat Lahir",
+    "native_name": "Nama Asli",
+    "birthname": "Nama Lahir",
+    "blood_type": "Golongan Darah",
+    "age": "Umur",
+    "height": "Tinggi",
+    "university": "Universitas"
 }
