@@ -1,7 +1,5 @@
 import 'package:bloc/bloc.dart';
 import 'package:dart_mappable/dart_mappable.dart';
-import 'package:easy_localization/easy_localization.dart';
-import 'package:flutter/widgets.dart';
 import 'package:injectable/injectable.dart';
 
 import '../../../../data/base_result.dart';
@@ -25,14 +23,15 @@ class DetailDramaCubit extends Cubit<DetailDramaState> {
   DetailDramaCubit(this._detailRepository, this._favoriteRepository)
     : super(DetailDramaState());
 
-  void getAllDetail(String id, BuildContext context) async {
+  void getAllDetail(String id, String? langCode) async {
     if (id.isEmpty) return;
     emit(state.copyWith(statusState: StatusState.loading));
     _errors.clear();
 
+    await checkFavorite(id);
+
     final List<Future<void>> actions = <Future<void>>[
-      checkFavorite(id),
-      getDetail(id, context.locale.languageCode),
+      getDetail(id, langCode),
       getCasts(id),
     ];
 

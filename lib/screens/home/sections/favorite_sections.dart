@@ -9,12 +9,14 @@ import '../../../widgets/export_widget.dart';
 typedef OnTapFavorite = void Function(Favorite favorite);
 typedef OnTapSeeAll = void Function();
 
-class FavoriteActress extends StatelessWidget {
-  final List<Favorite> favoriteActress;
+class FavoriteSections extends StatelessWidget {
+  final List<Favorite> favorites;
+  final FavoriteType type;
   final OnTapFavorite? onTapFavorite;
   final OnTapSeeAll? onTapSeeAll;
-  const FavoriteActress(
-    this.favoriteActress, {
+  const FavoriteSections(
+    this.favorites,
+    this.type, {
     super.key,
     this.onTapFavorite,
     this.onTapSeeAll,
@@ -22,7 +24,8 @@ class FavoriteActress extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    if (favoriteActress.isEmpty) return const SizedBox.shrink();
+    logger.d(favorites.length);
+    if (favorites.isEmpty) return const SizedBox.shrink();
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
@@ -32,11 +35,17 @@ class FavoriteActress extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: <Widget>[
               Text(
-                LocaleKeys.title_favorite_actress_sections.tr(),
+                LocaleKeys.title_favorite_type_sections.tr(
+                  namedArgs: <String, String>{
+                    'type': type.name.toTitleCase().whenEmpty(
+                      defaultValue: '-',
+                    ),
+                  },
+                ),
                 style: context.textTheme.titleLarge,
               ),
               Visibility(
-                visible: favoriteActress.length > 5,
+                visible: favorites.length > 5,
                 child: FilledButton.tonal(
                   onPressed: onTapSeeAll,
                   child: Text(LocaleKeys.see_all.tr()),
@@ -47,9 +56,9 @@ class FavoriteActress extends StatelessWidget {
         ),
         Spacing.mediumSpacing,
         SizedBox(
-          height: 230,
+          height: 250,
           child: ListWidget<Favorite>(
-            favoriteActress,
+            favorites,
             isHorizontal: true,
             padding: PaddingStyle.mediumHorizontal,
             isSeparated: true,
@@ -61,16 +70,15 @@ class FavoriteActress extends StatelessWidget {
                     borderRadius: CornerRadius.mediumRadius,
                     child: Column(
                       children: <Widget>[
-                        Expanded(
-                          child: Hero(
-                            tag: item.id,
-                            child: ImageNetwork(
-                              item.imageUrl,
-                              context,
-                              width: double.infinity,
-                              fit: BoxFit.cover,
-                              borderRadius: CornerRadius.mediumRadius,
-                            ),
+                        Hero(
+                          tag: item.id,
+                          child: ImageNetwork(
+                            item.imageUrl,
+                            context,
+                            width: double.infinity,
+                            height: 190,
+                            fit: BoxFit.cover,
+                            borderRadius: CornerRadius.mediumRadius,
                           ),
                         ),
                         Spacing.mediumSpacing,

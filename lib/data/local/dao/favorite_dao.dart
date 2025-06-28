@@ -11,7 +11,7 @@ part 'favorite_dao.g.dart';
 abstract class FavoriteDao {
   Future<Favorite> addFavorite(Favorite favorite);
   Future<bool> isFavorite(String id);
-  Future<List<Favorite>> getFavorites({String? type, int size, int? page});
+  Future<List<Favorite>> getFavorites({String? type, int? size, int? page});
   Future<Favorite?> deleteFavorite(String id);
   Future<int> deleteAllFavorites();
 }
@@ -48,10 +48,11 @@ class FavoriteDaoImpl extends DatabaseAccessor<AppDatabase>
   @override
   Future<List<Favorite>> getFavorites({
     String? type,
-    int size = 5,
+    int? size,
     int? page,
   }) async {
     final int newPage = page ?? 1;
+    final int newSize = size ?? 5;
     final SimpleSelectStatement<$FavoriteTableTable, FavoriteTableData> query =
         select(favoriteTable);
     if (type != null) {
@@ -61,7 +62,7 @@ class FavoriteDaoImpl extends DatabaseAccessor<AppDatabase>
       );
     }
     query
-      ..limit(size, offset: (newPage - 1) * size)
+      ..limit(newSize, offset: (newPage - 1) * newSize)
       ..orderBy(<OrderClauseGenerator<$FavoriteTableTable>>[
         ($FavoriteTableTable tbl) =>
             OrderingTerm(expression: tbl.createdAt, mode: OrderingMode.desc),

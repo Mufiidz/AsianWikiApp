@@ -59,7 +59,7 @@ class _DetailShowScreenState extends State<DetailShowScreen>
     super.initState();
     _showId = _drama.id;
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      _detailDramaCubit.getAllDetail(_showId, context);
+      _detailDramaCubit.getAllDetail(_showId, context.locale.languageCode);
     });
   }
 
@@ -101,7 +101,10 @@ class _DetailShowScreenState extends State<DetailShowScreen>
           children: <Widget>[
             RefreshIndicator.adaptive(
               onRefresh: () async {
-                _detailDramaCubit.getAllDetail(_showId, context);
+                _detailDramaCubit.getAllDetail(
+                  _showId,
+                  context.locale.languageCode,
+                );
                 return Future<void>.value();
               },
               child: MediaQuery.removePadding(

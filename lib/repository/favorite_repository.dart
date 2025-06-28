@@ -12,9 +12,9 @@ abstract class FavoriteRepository {
   Future<bool?> isFavorite(String id);
   Future<BaseResult<Favorite>> addFavorite(Favorite favorite);
   Future<BaseResult<List<Favorite>>> getFavorites({int? page});
-  Future<BaseResult<List<Favorite>>> getFavoriteDramas({int? page});
-  Future<BaseResult<List<Favorite>>> getFavoriteMovies({int? page});
-  Future<BaseResult<List<Favorite>>> getFavoriteActress({int? page});
+  Future<BaseResult<List<Favorite>>> getFavoriteDramas({int? page, int? size});
+  Future<BaseResult<List<Favorite>>> getFavoriteMovies({int? page, int? size});
+  Future<BaseResult<List<Favorite>>> getFavoriteActress({int? page, int? size});
   Future<BaseResult<String>> deleteFavorite(String id);
   Future<BaseResult<String>> deleteAllFavorites();
 }
@@ -78,11 +78,15 @@ class FavoriteRepositoryImpl implements FavoriteRepository {
   }
 
   @override
-  Future<BaseResult<List<Favorite>>> getFavoriteActress({int? page}) async {
+  Future<BaseResult<List<Favorite>>> getFavoriteActress({
+    int? page,
+    int? size,
+  }) async {
     try {
       final List<Favorite> favorites = await _favoriteDao.getFavorites(
         type: constants.actress,
         page: page,
+        size: size,
       );
       return DataResult(favorites);
     } catch (e) {
@@ -91,11 +95,15 @@ class FavoriteRepositoryImpl implements FavoriteRepository {
   }
 
   @override
-  Future<BaseResult<List<Favorite>>> getFavoriteDramas({int? page}) async {
+  Future<BaseResult<List<Favorite>>> getFavoriteDramas({
+    int? page,
+    int? size,
+  }) async {
     try {
       final List<Favorite> favorites = await _favoriteDao.getFavorites(
         type: constants.drama,
         page: page,
+        size: size,
       );
       return DataResult(favorites);
     } catch (e) {
@@ -104,11 +112,15 @@ class FavoriteRepositoryImpl implements FavoriteRepository {
   }
 
   @override
-  Future<BaseResult<List<Favorite>>> getFavoriteMovies({int? page}) async {
+  Future<BaseResult<List<Favorite>>> getFavoriteMovies({
+    int? page,
+    int? size,
+  }) async {
     try {
       final List<Favorite> favorites = await _favoriteDao.getFavorites(
         type: constants.movie,
         page: page,
+        size: size,
       );
       return DataResult(favorites);
     } catch (e) {

@@ -12,12 +12,13 @@ import '../../styles/export_styles.dart';
 import '../../utils/export_utils.dart';
 import '../../widgets/export_widget.dart';
 import '../detail/person/detail_person_screen.dart';
+import '../detail/show/detail_show_screen.dart';
 import '../favorites/favorites_screen.dart';
 import '../search/search_screen.dart';
 import '../settings/settings_screen.dart';
 import 'cubit/home_cubit.dart';
 import 'home_loading.dart';
-import 'sections/favorite_actress.dart';
+import 'sections/favorite_sections.dart';
 import 'sections/home_header.dart';
 import 'sections/upcoming_home.dart';
 
@@ -156,8 +157,23 @@ class _HomeScreenState extends State<HomeScreen> {
 
   List<Widget> _contents(HomeState state) => <Widget>[
     HomeHeader(sliders: state.sliders),
-    FavoriteActress(
+    FavoriteSections(
+      state.favoriteDramas,
+      FavoriteType.drama,
+      onTapFavorite: (Favorite favorite) async {
+        await AppRoute.to(
+          DetailShowScreen(drama: favorite.toShow, heroId: favorite.id),
+        );
+        _cubit.getFavoriteActress();
+      },
+      onTapSeeAll: () async {
+        await AppRoute.to(const FavoritesScreen(type: FavoriteType.drama));
+        _cubit.getFavoriteDrama();
+      },
+    ),
+    FavoriteSections(
       state.favoriteActress,
+      FavoriteType.actress,
       onTapFavorite: (Favorite favorite) async {
         await AppRoute.to(
           DetailPersonScreen(person: favorite.toPerson, heroId: favorite.id),
@@ -167,6 +183,20 @@ class _HomeScreenState extends State<HomeScreen> {
       onTapSeeAll: () async {
         await AppRoute.to(const FavoritesScreen(type: FavoriteType.actress));
         _cubit.getFavoriteActress();
+      },
+    ),
+    FavoriteSections(
+      state.favoriteMovies,
+      FavoriteType.movie,
+      onTapFavorite: (Favorite favorite) async {
+        await AppRoute.to(
+          DetailShowScreen(drama: favorite.toShow, heroId: favorite.id),
+        );
+        _cubit.getFavoriteActress();
+      },
+      onTapSeeAll: () async {
+        await AppRoute.to(const FavoritesScreen(type: FavoriteType.movie));
+        _cubit.getFavoriteMovie();
       },
     ),
     UpcomingHome(

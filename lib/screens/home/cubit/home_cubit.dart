@@ -44,7 +44,9 @@ class HomeCubit extends Cubit<HomeState> {
     final List<Future<void>> actions = <Future<void>>[
       getSlider(),
       getUpcoming(page: page),
+      getFavoriteDrama(),
       getFavoriteActress(),
+      getFavoriteMovie(),
     ];
 
     await Future.wait(actions);
@@ -126,10 +128,32 @@ class HomeCubit extends Cubit<HomeState> {
 
   Future<void> getFavoriteActress() async {
     final BaseResult<List<Favorite>> result = await _favoriteRepository
-        .getFavoriteActress();
+        .getFavoriteActress(size: 6);
     result.when(
       result: (List<Favorite> data) {
         emit(state.copyWith(favoriteActress: data));
+      },
+      error: (String message) => _errors.add(message),
+    );
+  }
+
+  Future<void> getFavoriteDrama() async {
+    final BaseResult<List<Favorite>> result = await _favoriteRepository
+        .getFavoriteDramas(size: 6);
+    result.when(
+      result: (List<Favorite> data) {
+        emit(state.copyWith(favoriteDramas: data));
+      },
+      error: (String message) => _errors.add(message),
+    );
+  }
+
+  Future<void> getFavoriteMovie() async {
+    final BaseResult<List<Favorite>> result = await _favoriteRepository
+        .getFavoriteMovies(size: 6);
+    result.when(
+      result: (List<Favorite> data) {
+        emit(state.copyWith(favoriteMovies: data));
       },
       error: (String message) => _errors.add(message),
     );
