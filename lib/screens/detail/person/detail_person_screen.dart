@@ -141,6 +141,13 @@ class _DetailPersonScreenState extends State<DetailPersonScreen>
                     },
                   ),
                   Visibility(
+                    visible: !state.isError && !state.isLoading,
+                    child: CircleButtonWidget.icon(
+                      Icons.share,
+                      onPressed: () => _cubit.sharePerson(),
+                    ),
+                  ),
+                  Visibility(
                     visible:
                         state.person.shows.isNotEmpty &&
                         (!state.isError && !state.isLoading),

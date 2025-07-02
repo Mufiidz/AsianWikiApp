@@ -9,7 +9,7 @@ import '../../../../model/detail_show.dart';
 import '../../../../model/favorite.dart';
 import '../../../../repository/detail_repository.dart';
 import '../../../../repository/favorite_repository.dart';
-import '../../../../utils/logger.dart';
+import '../../../../utils/export_utils.dart';
 
 part 'detail_drama_state.dart';
 part 'detail_drama_cubit.mapper.dart';
@@ -138,5 +138,15 @@ class DetailDramaCubit extends Cubit<DetailDramaState> {
       error: (String message) => state.copyWith(message: message),
     );
     return newState;
+  }
+
+  void shareShow() async {
+    final DetailShow? show = state.drama;
+    if (show == null) return;
+    await _detailRepository.share(
+      id: show.id,
+      title: show.title,
+      type: show.type.toAsianWikiType,
+    );
   }
 }

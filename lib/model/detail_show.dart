@@ -5,6 +5,7 @@ import '../res/locale_keys.g.dart';
 import '../utils/export_utils.dart';
 import 'date_range.dart';
 import 'favorite.dart';
+import 'show.dart';
 import 'simple_data.dart';
 import 'synopsis.dart';
 
@@ -109,6 +110,9 @@ class DetailShow with DetailShowMappable {
     imageUrl: imageUrl,
     type: type?.name ?? '',
   );
+
+  Show get toShow =>
+      Show(id: id, title: title, imageUrl: imageUrl, type: type?.name);
 }
 
 @MappableEnum()

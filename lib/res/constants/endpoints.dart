@@ -21,3 +21,6 @@ const String cast = '$_show/casts/{id}';
 
 /// /person/{id}
 const String person = '$_person/{id}';
+
+/// /deeplink/{id}
+const String deeplinkType = '/deeplink/type/{id}';

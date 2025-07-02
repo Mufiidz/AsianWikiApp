@@ -174,6 +174,13 @@ class _DetailShowScreenState extends State<DetailShowScreen>
                     },
                   ),
                   Visibility(
+                    visible: !state.isError && !state.isLoading,
+                    child: CircleButtonWidget.icon(
+                      Icons.share,
+                      onPressed: () => _detailDramaCubit.shareShow(),
+                    ),
+                  ),
+                  Visibility(
                     visible:
                         state.casts.isNotEmpty &&
                         (!state.isError && !state.isLoading),

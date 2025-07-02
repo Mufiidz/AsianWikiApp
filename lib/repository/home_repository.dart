@@ -6,6 +6,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import '../data/base_result.dart';
 import '../data/local/dao/upcoming_dao.dart';
 import '../data/network/api_services.dart';
+import '../model/asianwiki_type.dart';
 import '../model/show.dart';
 import '../model/upcoming.dart';
 import '../res/constants/sharedpref_keys.dart' as sharedpref_keys;
@@ -14,6 +15,7 @@ import '../utils/export_utils.dart';
 abstract class HomeRepository {
   Future<BaseResult<List<Show>>> getSlider();
   Future<BaseResult<List<Upcoming>>> getUpcoming({int? month, int? page});
+  Future<BaseResult<AsianwikiType>> deeplink(String id);
 }
 
 @Injectable(as: HomeRepository)
@@ -98,4 +100,8 @@ class HomeRepositoryImpl implements HomeRepository {
       return ErrorResult(e.toString());
     }
   }
+
+  @override
+  Future<BaseResult<AsianwikiType>> deeplink(String id) =>
+      _apiServices.deeplinkType(id).awaitResponse;
 }

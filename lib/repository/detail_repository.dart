@@ -1,8 +1,14 @@
-import 'package:injectable/injectable.dart';
+import 'dart:io';
 
+import 'package:injectable/injectable.dart';
+import 'package:share_plus/share_plus.dart';
+
+import '../config/env.dart';
 import '../data/base_result.dart';
 import '../data/network/api_services.dart';
 import '../data/network/cast_response.dart';
+import '../di/injection.dart';
+import '../model/asianwiki_type.dart';
 import '../model/cast_show.dart';
 import '../model/detail_person.dart';
 import '../model/detail_show.dart';
@@ -21,6 +27,12 @@ abstract class DetailRepository {
     String query,
     List<PersonShow> personShows,
   );
+  Future<BaseResult<String>> share({
+    String id,
+    String url,
+    String title,
+    AsianwikiType type,
+  });
 }
 
 @Injectable(as: DetailRepository)
@@ -105,5 +117,42 @@ class DetailRepositoryImpl implements DetailRepository {
               show.title.toLowerCase().contains(query.toLowerCase()),
         )
         .toList();
+  }
+
+  @override
+  Future<BaseResult<String>> share({
+    String id = '',
+    String url = '',
+    String title = '',
+    AsianwikiType type = AsianwikiType.unknown,
+  }) async {
+    try {
+      String baseUrl;
+
+      if (Platform.isAndroid) {
+        baseUrl = Env.baseUrlAndroid;
+      } else if (Platform.isIOS) {
+        baseUrl = Env.baseUrlIos;
+      } else {
+        baseUrl = Env.asianwikiUrl;
+      }
+      // TODO : For example purpose, change this content
+      final String content =
+          "Lihat ini deh :${'\n\n'}*[${type.name.toTitleCase()}] $title*${'\n\n'}$baseUrl/deeplink/$id";
+      final ShareParams params = ShareParams(
+        text: content,
+        uri: Uri.parse(url),
+      );
+
+      final ShareResult result = await getIt<SharePlus>().share(params);
+
+      return switch (result.status) {
+        ShareResultStatus.success => DataResult<String>('Success Share'),
+        _ => ErrorResult<String>('Failed Share'),
+      };
+    } catch (e) {
+      logger.e(e, tag: 'shareShow');
+      return ErrorResult<String>(e.toString());
+    }
   }
 }

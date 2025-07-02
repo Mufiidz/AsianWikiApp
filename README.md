@@ -39,8 +39,11 @@ AsianWiki App using the [Unofficial AsianWiki API](https://github.com/Mufiidz/As
 Unofficial AsianWiki API provides a RESTful API interface to highly detailed objects built from thousands of lines of data related to asianwiki.
 
 ## Lessons Learned
+
 Throughout building this app, I explored and learned:
+
 - New shared preferences (SharedPreferencesAsync & SharedPreferencesWithCache) - [Shared preference docs.](https://pub.dev/packages/shared_preferences#sharedpreferences-vs-sharedpreferencesasync-vs-sharedpreferenceswithcache)
 - Custom widget shimmer - [refer here.](https://docs.flutter.dev/cookbook/effects/shimmer-loading)
 - Best practice to using constant file - [refer here.](https://stackoverflow.com/questions/54069239/whats-the-best-practice-to-keep-all-the-constants-in-flutter)
 - Organize my app styles, inspired by [this article.](https://medium.com/@kanellopoulos.leo/a-simple-way-to-organize-your-styles-themes-in-flutter-a0e7eba5b297)
+- Deeplink, but still not yet understand about this, especially deeplink for iOS [refer to this.](https://docs.flutter.dev/ui/navigation/deep-linking)

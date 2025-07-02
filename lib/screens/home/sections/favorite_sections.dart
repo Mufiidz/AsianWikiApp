@@ -24,7 +24,6 @@ class FavoriteSections extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    logger.d(favorites.length);
     if (favorites.isEmpty) return const SizedBox.shrink();
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,

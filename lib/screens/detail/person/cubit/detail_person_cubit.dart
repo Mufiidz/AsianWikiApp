@@ -2,8 +2,10 @@ import 'package:bloc/bloc.dart';
 import 'package:dart_mappable/dart_mappable.dart';
 import 'package:injectable/injectable.dart';
 
+import '../../../../config/env.dart';
 import '../../../../data/base_result.dart';
 import '../../../../data/base_state.dart';
+import '../../../../model/asianwiki_type.dart';
 import '../../../../model/detail_person.dart';
 import '../../../../model/favorite.dart';
 import '../../../../repository/detail_repository.dart';
@@ -77,5 +79,15 @@ class DetailPersonCubit extends Cubit<DetailPersonState> {
       error: (String message) => state.copyWith(message: message),
     );
     return newState;
+  }
+
+  void sharePerson() async {
+    final DetailPerson person = state.person;
+    await _detailRepository.share(
+      id: person.id,
+      url: '${Env.asianwikiUrl}/${person.id}',
+      title: person.name,
+      type: AsianwikiType.actress,
+    );
   }
 }

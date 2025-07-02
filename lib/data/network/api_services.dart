@@ -2,6 +2,7 @@ import 'package:dio/dio.dart';
 import 'package:injectable/injectable.dart';
 import 'package:retrofit/retrofit.dart';
 
+import '../../model/asianwiki_type.dart';
 import '../../model/detail_person.dart';
 import '../../model/detail_show.dart';
 import '../../model/search.dart';
@@ -49,4 +50,7 @@ abstract class ApiServices {
     @Path('id') String id,
     @Query('lang') String? langCode,
   );
+
+  @GET(endpoint.deeplinkType)
+  Future<BaseResponse<AsianwikiType>> deeplinkType(@Path('id') String id);
 }
