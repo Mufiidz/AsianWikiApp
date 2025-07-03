@@ -42,6 +42,8 @@ class _DetailPersonScreenState extends State<DetailPersonScreen>
   List<Widget> _contents = <Widget>[];
   late final SearchController _searchController;
   late final AnimationController _favoriteController;
+  late final AnimationController _favoriteController2;
+  bool? _isFavorite;
 
   @override
   void initState() {
@@ -49,6 +51,7 @@ class _DetailPersonScreenState extends State<DetailPersonScreen>
     _person = widget.person;
     _searchController = SearchController();
     _favoriteController = AnimationController(vsync: this);
+    _favoriteController2 = AnimationController(vsync: this);
     super.initState();
 
     WidgetsBinding.instance.addPostFrameCallback((_) {
@@ -67,6 +70,10 @@ class _DetailPersonScreenState extends State<DetailPersonScreen>
           logger.d(state);
           _detailPerson = state.person;
           _contents = _baseContents;
+
+          setState(() {
+            _isFavorite = state.isFavorite;
+          });
         },
         builder: (BuildContext context, DetailPersonState state) => Stack(
           children: <Widget>[
@@ -117,28 +124,22 @@ class _DetailPersonScreenState extends State<DetailPersonScreen>
                       ),
                     ),
                   ),
-                  BlocSelector<DetailPersonCubit, DetailPersonState, bool?>(
-                    bloc: _cubit,
-                    selector: (DetailPersonState state) => state.isFavorite,
-                    builder: (BuildContext context, bool? isFavorite) {
-                      return Visibility(
-                        visible:
-                            isFavorite != null &&
-                            (!state.isError && !state.isLoading),
-                        child: CircleButtonWidget(
-                          onPressed: () {
-                            if (isFavorite == false) {
-                              _favoriteController.forward(from: 0.25);
-                            }
-                            _cubit.toggleFavorite();
-                          },
-                          child: FavoriteIcon(
-                            isFavorite: isFavorite == true,
-                            favoriteController: _favoriteController,
-                          ),
-                        ),
-                      );
-                    },
+                  Visibility(
+                    visible:
+                        _isFavorite != null &&
+                        (!state.isError && !state.isLoading),
+                    child: CircleButtonWidget(
+                      onPressed: () {
+                        if (_isFavorite == false) {
+                          _favoriteController.forward(from: 0.25);
+                        }
+                        _cubit.toggleFavorite();
+                      },
+                      child: FavoriteIcon(
+                        isFavorite: _isFavorite == true,
+                        favoriteController: _favoriteController,
+                      ),
+                    ),
                   ),
                   Visibility(
                     visible: !state.isError && !state.isLoading,
@@ -182,6 +183,8 @@ class _DetailPersonScreenState extends State<DetailPersonScreen>
       image: _detailPerson?.imageUrl ?? _person.imageUrl,
       title: _detailPerson?.name ?? _person.name,
       heroId: widget.heroId ?? _person.id,
+      favoriteController: _favoriteController2,
+      onClickFavorite: _onDoubleTapFavorite,
     ),
     SosmedSection(sosmeds: _detailPerson?.sosmed),
     InfoDetail(infos: _detailPerson?.info),
@@ -202,11 +205,22 @@ class _DetailPersonScreenState extends State<DetailPersonScreen>
     }
   }
 
+  void _onDoubleTapFavorite() {
+    if (_favoriteController2.duration == null) return;
+    if (_isFavorite == false) {
+      _favoriteController2.forward();
+    } else {
+      _favoriteController2.reverse(from: 0.3);
+    }
+    _cubit.toggleFavorite();
+  }
+
   @override
   void dispose() {
     clearMemoryImageCache();
     _searchController.dispose();
     _favoriteController.dispose();
+    _favoriteController2.dispose();
     super.dispose();
   }
 }

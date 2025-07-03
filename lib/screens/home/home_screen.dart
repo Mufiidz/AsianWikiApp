@@ -164,7 +164,7 @@ class _HomeScreenState extends State<HomeScreen> {
         await AppRoute.to(
           DetailShowScreen(drama: favorite.toShow, heroId: favorite.id),
         );
-        _cubit.getFavoriteActress();
+        _cubit.getFavoriteDrama();
       },
       onTapSeeAll: () async {
         await AppRoute.to(const FavoritesScreen(type: FavoriteType.drama));
@@ -192,7 +192,7 @@ class _HomeScreenState extends State<HomeScreen> {
         await AppRoute.to(
           DetailShowScreen(drama: favorite.toShow, heroId: favorite.id),
         );
-        _cubit.getFavoriteActress();
+        _cubit.getFavoriteMovie();
       },
       onTapSeeAll: () async {
         await AppRoute.to(const FavoritesScreen(type: FavoriteType.movie));

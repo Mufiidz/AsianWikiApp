@@ -37,7 +37,7 @@ class DetailShowScreen extends StatefulWidget {
 }
 
 class _DetailShowScreenState extends State<DetailShowScreen>
-    with SingleTickerProviderStateMixin {
+    with TickerProviderStateMixin {
   late final Show _drama;
   late final DetailDramaCubit _detailDramaCubit;
   late final ScrollController _scrollController;
@@ -47,6 +47,8 @@ class _DetailShowScreenState extends State<DetailShowScreen>
   late final SearchController _searchController;
   late final String _heroId;
   late final AnimationController _favoriteController;
+  late final AnimationController _favoriteController2;
+  bool? _isFavorite;
 
   @override
   void initState() {
@@ -56,6 +58,7 @@ class _DetailShowScreenState extends State<DetailShowScreen>
     _scrollController = ScrollController();
     _searchController = SearchController();
     _favoriteController = AnimationController(vsync: this);
+    _favoriteController2 = AnimationController(vsync: this);
     super.initState();
     _showId = _drama.id;
     WidgetsBinding.instance.addPostFrameCallback((_) {
@@ -74,6 +77,10 @@ class _DetailShowScreenState extends State<DetailShowScreen>
           _detailDrama = state.drama;
           _contents = _baseContents;
           final String errorMessage = state.message.toLowerCase();
+
+          setState(() {
+            _isFavorite = state.isFavorite;
+          });
 
           RegExp regExp = RegExp(r'\(([^)]+)\)');
           Match? match = regExp.firstMatch(errorMessage);
@@ -150,28 +157,22 @@ class _DetailShowScreenState extends State<DetailShowScreen>
                       ),
                     ),
                   ),
-                  BlocSelector<DetailDramaCubit, DetailDramaState, bool?>(
-                    bloc: _detailDramaCubit,
-                    selector: (DetailDramaState state) => state.isFavorite,
-                    builder: (BuildContext context, bool? isFavorite) {
-                      return Visibility(
-                        visible:
-                            isFavorite != null &&
-                            (!state.isError && !state.isLoading),
-                        child: CircleButtonWidget(
-                          onPressed: () {
-                            if (isFavorite == false) {
-                              _favoriteController.forward(from: 0.25);
-                            }
-                            _detailDramaCubit.toggleFavorite();
-                          },
-                          child: FavoriteIcon(
-                            isFavorite: isFavorite == true,
-                            favoriteController: _favoriteController,
-                          ),
-                        ),
-                      );
-                    },
+                  Visibility(
+                    visible:
+                        _isFavorite != null &&
+                        (!state.isError && !state.isLoading),
+                    child: CircleButtonWidget(
+                      onPressed: () {
+                        if (_isFavorite == false) {
+                          _favoriteController.forward(from: 0.25);
+                        }
+                        _detailDramaCubit.toggleFavorite();
+                      },
+                      child: FavoriteIcon(
+                        isFavorite: _isFavorite == true,
+                        favoriteController: _favoriteController,
+                      ),
+                    ),
                   ),
                   Visibility(
                     visible: !state.isError && !state.isLoading,
@@ -231,6 +232,8 @@ class _DetailShowScreenState extends State<DetailShowScreen>
       heroId: _heroId,
       image: _detailDrama?.imageUrl ?? '',
       title: _detailDrama?.title ?? widget.drama.title,
+      favoriteController: _favoriteController2,
+      onClickFavorite: _onDoubleTapFavorite,
     ),
     MainInfoDetail(mainInfos: _detailDrama?.mainInfo),
     InfoDetail(infos: _detailDrama?.getInfo()),
@@ -255,12 +258,23 @@ class _DetailShowScreenState extends State<DetailShowScreen>
     }
   }
 
+  void _onDoubleTapFavorite() {
+    if (_favoriteController2.duration == null) return;
+    if (_isFavorite == false) {
+      _favoriteController2.forward();
+    } else {
+      _favoriteController2.reverse(from: 0.3);
+    }
+    _detailDramaCubit.toggleFavorite();
+  }
+
   @override
   void dispose() {
     clearMemoryImageCache();
     _searchController.dispose();
     _scrollController.dispose();
     _favoriteController.dispose();
+    _favoriteController2.dispose();
     super.dispose();
   }
 }
