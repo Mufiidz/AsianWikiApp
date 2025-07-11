@@ -8,7 +8,6 @@ import '../../model/favorite.dart';
 import '../../model/upcoming.dart';
 import '../../res/constants/constants.dart' as constants;
 import '../../res/locale_keys.g.dart';
-import '../../styles/export_styles.dart';
 import '../../utils/export_utils.dart';
 import '../../widgets/export_widget.dart';
 import '../detail/person/detail_person_screen.dart';
@@ -103,10 +102,6 @@ class _HomeScreenState extends State<HomeScreen> {
                         itemBuilder:
                             (BuildContext context, Widget item, int index) =>
                                 item,
-                        separatorBuilder:
-                            (BuildContext context, Widget item, int index) =>
-                                Spacing.mediumSpacing,
-                        isSeparated: true,
                       );
                     },
                   ),

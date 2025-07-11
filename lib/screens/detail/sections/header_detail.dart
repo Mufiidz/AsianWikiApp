@@ -49,6 +49,7 @@ class _HeaderDetailState extends State<HeaderDetail> {
           _favoriteController.duration = duration;
           _favoriteController.reverseDuration = duration;
         })
+        // ignore: invalid_return_type_for_catch_error, argument_type_not_assignable_to_error_handler
         .catchError(logger.e);
 
     _favoriteController.addStatusListener((AnimationStatus status) {

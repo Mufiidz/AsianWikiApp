@@ -5,8 +5,11 @@ import 'package:injectable/injectable.dart';
 import '../../../../data/base_result.dart';
 import '../../../../data/base_state.dart';
 import '../../../../data/network/cast_response.dart';
+import '../../../../model/asianwiki_type.dart';
+import '../../../../model/date_range.dart';
 import '../../../../model/detail_show.dart';
 import '../../../../model/favorite.dart';
+import '../../../../model/upcoming_reminder.dart';
 import '../../../../repository/detail_repository.dart';
 import '../../../../repository/favorite_repository.dart';
 import '../../../../utils/export_utils.dart';
@@ -29,6 +32,7 @@ class DetailDramaCubit extends Cubit<DetailDramaState> {
     _errors.clear();
 
     await checkFavorite(id);
+    await _isUpcomingReminder(id);
 
     final List<Future<void>> actions = <Future<void>>[
       getDetail(id, langCode),
@@ -41,7 +45,11 @@ class DetailDramaCubit extends Cubit<DetailDramaState> {
         (_errors.length == 1 && isEmptyCasts)) {
       logger.e(_errors);
       emit(
-        state.copyWith(statusState: StatusState.failure, message: _errors[0]),
+        state.copyWith(
+          statusState: StatusState.failure,
+          message: _errors[0],
+          errorOnScreen: true,
+        ),
       );
     }
   }
@@ -121,7 +129,8 @@ class DetailDramaCubit extends Cubit<DetailDramaState> {
 
     final DetailDramaState newState = result.when(
       result: (Favorite data) => state.copyWith(isFavorite: true),
-      error: (String message) => state.copyWith(message: message),
+      error: (String message) =>
+          state.copyWith(message: message, errorOnScreen: false),
     );
     return newState;
   }
@@ -135,7 +144,8 @@ class DetailDramaCubit extends Cubit<DetailDramaState> {
 
     final DetailDramaState newState = result.when(
       result: (String data) => state.copyWith(isFavorite: false, message: data),
-      error: (String message) => state.copyWith(message: message),
+      error: (String message) =>
+          state.copyWith(message: message, errorOnScreen: false),
     );
     return newState;
   }
@@ -148,5 +158,91 @@ class DetailDramaCubit extends Cubit<DetailDramaState> {
       title: show.title,
       type: show.type.toAsianWikiType,
     );
+  }
+
+  void reminderUpcoming() async {
+    final DetailShow? show = state.drama;
+    if (show == null) return;
+    final String showId = show.id;
+    emit(state.copyWith(statusState: StatusState.loading));
+    final bool? isReminderExist = await _detailRepository
+        .isUpcomingReminderExist(showId);
+
+    if (isReminderExist == null) {
+      emit(state.copyWith(statusState: StatusState.idle));
+      return;
+    }
+
+    if (isReminderExist) {
+      cancelReminderUpcoming();
+    } else {
+      setReminderUpcoming();
+    }
+  }
+
+  void setReminderUpcoming() async {
+    final DetailShow? show = state.drama;
+    if (show == null) return;
+    final DetailShow(
+      :String id,
+      :String title,
+      :String releaseDate,
+      :DateRange? releaseDateRange,
+      :ShowType? type,
+    ) = show;
+    final BaseResult<String> result = await _detailRepository
+        .setReminderUpcoming(
+          UpcomingReminder(
+            reminderOn: releaseDateRange?.start ?? DateTime.parse(releaseDate),
+            showId: id,
+            title: title,
+            type: type?.toAsianWikiType ?? AsianwikiType.unknown,
+          ),
+        );
+
+    final DetailDramaState newState = result.when(
+      result: (String data) => state.copyWith(
+        message: data,
+        statusState: StatusState.success,
+        isSetReminder: true,
+      ),
+      error: (String message) => state.copyWith(
+        message: message,
+        statusState: StatusState.failure,
+        errorOnScreen: false,
+      ),
+    );
+
+    emit(newState);
+  }
+
+  void cancelReminderUpcoming() async {
+    final DetailShow? show = state.drama;
+    if (show == null) return;
+    final String showId = show.id;
+    final BaseResult<String> result = await _detailRepository
+        .cancelReminderUpcoming(showId);
+
+    final DetailDramaState newState = result.when(
+      result: (String data) => state.copyWith(
+        message: data,
+        statusState: StatusState.success,
+        isSetReminder: false,
+      ),
+      error: (String message) => state.copyWith(
+        message: message,
+        statusState: StatusState.failure,
+        errorOnScreen: false,
+      ),
+    );
+
+    emit(newState);
+  }
+
+  Future<void> _isUpcomingReminder(String id) async {
+    final bool? isReminderExist = await _detailRepository
+        .isUpcomingReminderExist(id);
+
+    emit(state.copyWith(isSetReminder: isReminderExist));
   }
 }

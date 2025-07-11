@@ -4,15 +4,12 @@ import 'package:extended_image/extended_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../../config/env.dart';
 import '../../../data/network/cast_response.dart';
 import '../../../di/injection.dart';
 import '../../../model/cast_show.dart';
 import '../../../model/detail_show.dart';
-import '../../../model/person.dart';
 import '../../../model/show.dart';
 import '../../../repository/detail_repository.dart';
-import '../../../res/constants/constants.dart' as constants;
 import '../../../res/export_res.dart';
 import '../../../styles/export_styles.dart';
 import '../../../utils/export_utils.dart';
@@ -26,6 +23,7 @@ import '../sections/notes_detail.dart';
 import 'cubit/detail_drama_cubit.dart';
 import 'sections/casts_detail.dart';
 import 'sections/synopsis_detail.dart';
+import 'sections/upcoming_reminder.dart';
 
 class DetailShowScreen extends StatefulWidget {
   final String? heroId;
@@ -82,20 +80,26 @@ class _DetailShowScreenState extends State<DetailShowScreen>
             _isFavorite = state.isFavorite;
           });
 
-          RegExp regExp = RegExp(r'\(([^)]+)\)');
-          Match? match = regExp.firstMatch(errorMessage);
-          String? result = match?.group(1);
+          if (state.isError &&
+              errorMessage.isNotEmpty &&
+              !state.errorOnScreen) {
+            context.snackbar.showSnackBar(
+              SnackbarWidget(
+                state.message,
+                context,
+                state: SnackbarState.error,
+              ),
+            );
+          }
 
-          if (state.isError && result != null) {
-            if (result == constants.actress) {
-              AppRoute.clearTopTo(
-                DetailPersonScreen(person: Person(id: _showId)),
-              );
-            } else {
-              AppRoute.clearTopTo(
-                WebviewScreen(url: '${Env.asianwikiUrl}/$_showId'),
-              );
-            }
+          if (state.isSuccess && errorMessage.isNotEmpty) {
+            context.snackbar.showSnackBar(
+              SnackbarWidget(
+                state.message,
+                context,
+                state: SnackbarState.success,
+              ),
+            );
           }
 
           final String? notes = state.drama?.notes;
@@ -119,6 +123,7 @@ class _DetailShowScreenState extends State<DetailShowScreen>
                 removeTop: !state.isError,
                 child: BodyWidget<DetailDramaState>(
                   state: state,
+                  isError: state.isError && state.errorOnScreen,
                   child: (BuildContext context, DetailDramaState state) =>
                       ListWidget<Widget>(
                         _contents,
@@ -236,6 +241,15 @@ class _DetailShowScreenState extends State<DetailShowScreen>
       onClickFavorite: _onDoubleTapFavorite,
     ),
     MainInfoDetail(mainInfos: _detailDrama?.mainInfo),
+    BlocSelector<DetailDramaCubit, DetailDramaState, bool?>(
+      bloc: _detailDramaCubit,
+      selector: (DetailDramaState state) => state.isSetReminder,
+      builder: (BuildContext context, bool? state) => UpcomingReminder(
+        showReminder: _detailDrama?.isUpcoming == true,
+        isSetReminder: state == false,
+        onClick: () => _detailDramaCubit.reminderUpcoming(),
+      ),
+    ),
     InfoDetail(infos: _detailDrama?.getInfo()),
     SynopsisDetail(synopsis: _detailDrama?.getSynopsis()),
     NotesDetail(notes: _detailDrama?.notes, onTapUrl: _onTapUrl),

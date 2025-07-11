@@ -32,6 +32,7 @@ class DetailShow with DetailShowMappable {
   Synopsis synopsis;
   int episodes;
   DateRange? releaseDateRange;
+  bool isUpcoming;
 
   DetailShow({
     this.id = '',
@@ -53,6 +54,7 @@ class DetailShow with DetailShowMappable {
     this.synopsis = const Synopsis(),
     this.episodes = 0,
     this.releaseDateRange,
+    this.isUpcoming = false,
   });
 
   List<SimpleData> get mainInfo => <SimpleData>[

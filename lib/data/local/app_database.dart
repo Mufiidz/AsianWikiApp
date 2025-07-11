@@ -13,16 +13,17 @@ import '../../config/env.dart';
 import 'app_database.steps.dart';
 import 'tables/favorite_table.dart';
 import 'tables/upcoming.dart';
+import 'tables/upcoming_reminder_table.dart';
 
 part 'app_database.g.dart';
 
 @lazySingleton
-@DriftDatabase(tables: <Type>[Upcoming, FavoriteTable])
+@DriftDatabase(tables: <Type>[Upcoming, FavoriteTable, UpcomingReminderTable])
 class AppDatabase extends _$AppDatabase {
   AppDatabase() : super(_openConnection());
 
   @override
-  int get schemaVersion => 2;
+  int get schemaVersion => 3;
 
   static QueryExecutor _openConnection() =>
       driftDatabase(name: Env.dbName, native: const DriftNativeOptions());
@@ -33,6 +34,8 @@ class AppDatabase extends _$AppDatabase {
     onUpgrade: stepByStep(
       from1To2: (Migrator m, Schema2 schema) async =>
           await m.createTable(schema.favorite),
+      from2To3: (Migrator m, Schema3 schema) async =>
+          await m.createTable(schema.upcomingReminderTable),
     ),
   );
 }

@@ -5,6 +5,7 @@ import 'export_widget.dart';
 
 class BodyWidget<State extends BaseState> extends StatelessWidget {
   final State state;
+  final bool? isError;
   final Widget Function(BuildContext context, State state)? loadingBuilder;
   final Widget Function(BuildContext context, State state)? errorBuilder;
   final Widget Function(BuildContext context, State state) child;
@@ -14,6 +15,7 @@ class BodyWidget<State extends BaseState> extends StatelessWidget {
     super.key,
     this.loadingBuilder,
     this.errorBuilder,
+    this.isError,
   });
 
   @override
@@ -23,7 +25,7 @@ class BodyWidget<State extends BaseState> extends StatelessWidget {
       return loadingBuilder?.call(context, state) ??
           const Center(child: CircularProgressIndicator.adaptive());
     }
-    if (state.isError) {
+    if (isError ?? state.isError) {
       return errorBuilder?.call(context, state) ??
           ErrorScreen(errorMessage: message);
     }

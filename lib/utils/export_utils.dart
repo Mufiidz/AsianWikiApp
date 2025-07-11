@@ -5,6 +5,7 @@ export 'enum_ext.dart';
 export 'future_ext.dart';
 export 'int_ext.dart';
 export 'lifecycle_event_handler.dart';
+export 'list_ext.dart';
 export 'logger.dart';
 export 'string_ext.dart';
 export 'theme_ext.dart';

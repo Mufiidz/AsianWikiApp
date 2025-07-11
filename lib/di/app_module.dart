@@ -3,10 +3,12 @@ import 'dart:io';
 import 'package:app_links/app_links.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:injectable/injectable.dart';
 import 'package:pretty_dio_logger/pretty_dio_logger.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:workmanager/workmanager.dart';
 
 import '../config/env.dart';
 import '../data/network/api_services.dart';
@@ -69,4 +71,11 @@ abstract class AppModule {
 
   @singleton
   SharePlus get sharePlus => SharePlus.instance;
+
+  @singleton
+  Workmanager get workmanager => Workmanager();
+
+  @singleton
+  FlutterLocalNotificationsPlugin get flutterLocalNotificationsPlugin =>
+      FlutterLocalNotificationsPlugin();
 }

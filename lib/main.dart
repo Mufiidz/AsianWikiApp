@@ -5,7 +5,9 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:easy_localization_loader/easy_localization_loader.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:timezone/data/latest.dart' as tz;
 
+import 'config/notification/notification_service.dart';
 import 'di/injection.dart';
 import 'model/asianwiki_type.dart';
 import 'model/upcoming.dart';
@@ -16,13 +18,7 @@ import 'screens/settings/cubit/settings_cubit.dart';
 import 'utils/export_utils.dart';
 
 void main() async {
-  WidgetsFlutterBinding.ensureInitialized();
-  await Future.wait(<Future<void>>[
-    EasyLocalization.ensureInitialized(),
-    setupDI(),
-  ]);
-  UpcomingMapper.ensureInitialized();
-  AsianwikiTypeMapper.ensureInitialized();
+  await initialize();
   runApp(
     EasyLocalization(
       supportedLocales: const <Locale>[Locale('id'), Locale('en')],
@@ -89,4 +85,16 @@ class _MyAppState extends State<MyApp> {
     _deeplinkSubscription.cancel();
     super.dispose();
   }
+}
+
+Future<void> initialize() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Future.wait(<Future<void>>[
+    EasyLocalization.ensureInitialized(),
+    setupDI(),
+  ]);
+  await getIt<NotificationService>().init();
+  UpcomingMapper.ensureInitialized();
+  AsianwikiTypeMapper.ensureInitialized();
+  tz.initializeTimeZones();
 }
