@@ -6,6 +6,7 @@ import 'export_widget.dart';
 class BodyWidget<State extends BaseState> extends StatelessWidget {
   final State state;
   final bool? isError;
+  final bool? isLoading;
   final Widget Function(BuildContext context, State state)? loadingBuilder;
   final Widget Function(BuildContext context, State state)? errorBuilder;
   final Widget Function(BuildContext context, State state) child;
@@ -16,12 +17,13 @@ class BodyWidget<State extends BaseState> extends StatelessWidget {
     this.loadingBuilder,
     this.errorBuilder,
     this.isError,
+    this.isLoading,
   });
 
   @override
   Widget build(BuildContext context) {
     final State(:String message, :StatusState statusState) = state;
-    if (state.isLoading) {
+    if (isLoading ?? state.isLoading) {
       return loadingBuilder?.call(context, state) ??
           const Center(child: CircularProgressIndicator.adaptive());
     }

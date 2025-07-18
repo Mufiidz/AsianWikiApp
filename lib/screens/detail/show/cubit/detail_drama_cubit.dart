@@ -28,7 +28,7 @@ class DetailDramaCubit extends Cubit<DetailDramaState> {
 
   void getAllDetail(String id, String? langCode) async {
     if (id.isEmpty) return;
-    emit(state.copyWith(statusState: StatusState.loading));
+    emit(state.copyWith(statusStateScreen: StatusStateScreen.loading));
     _errors.clear();
 
     await checkFavorite(id);
@@ -46,9 +46,8 @@ class DetailDramaCubit extends Cubit<DetailDramaState> {
       logger.e(_errors);
       emit(
         state.copyWith(
-          statusState: StatusState.failure,
+          statusStateScreen: StatusStateScreen.failure,
           message: _errors[0],
-          errorOnScreen: true,
         ),
       );
     }
@@ -68,11 +67,16 @@ class DetailDramaCubit extends Cubit<DetailDramaState> {
     );
 
     final DetailDramaState newState = result.when(
-      result: (DetailShow data) =>
-          state.copyWith(drama: data, statusState: StatusState.idle),
+      result: (DetailShow data) => state.copyWith(
+        drama: data,
+        statusStateScreen: StatusStateScreen.idle,
+      ),
       error: (String message) {
         isError = true;
-        return state.copyWith(statusState: StatusState.idle, message: message);
+        return state.copyWith(
+          statusStateScreen: StatusStateScreen.idle,
+          message: message,
+        );
       },
     );
 
@@ -91,11 +95,17 @@ class DetailDramaCubit extends Cubit<DetailDramaState> {
     final DetailDramaState newState = result.when(
       result: (List<CastResponse> data) {
         isEmptyCasts = data.isEmpty;
-        return state.copyWith(casts: data, statusState: StatusState.idle);
+        return state.copyWith(
+          casts: data,
+          statusStateScreen: StatusStateScreen.idle,
+        );
       },
       error: (String message) {
         isError = true;
-        return state.copyWith(statusState: StatusState.idle, message: message);
+        return state.copyWith(
+          statusStateScreen: StatusStateScreen.idle,
+          message: message,
+        );
       },
     );
 
@@ -129,8 +139,7 @@ class DetailDramaCubit extends Cubit<DetailDramaState> {
 
     final DetailDramaState newState = result.when(
       result: (Favorite data) => state.copyWith(isFavorite: true),
-      error: (String message) =>
-          state.copyWith(message: message, errorOnScreen: false),
+      error: (String message) => state.copyWith(message: message),
     );
     return newState;
   }
@@ -144,8 +153,7 @@ class DetailDramaCubit extends Cubit<DetailDramaState> {
 
     final DetailDramaState newState = result.when(
       result: (String data) => state.copyWith(isFavorite: false, message: data),
-      error: (String message) =>
-          state.copyWith(message: message, errorOnScreen: false),
+      error: (String message) => state.copyWith(message: message),
     );
     return newState;
   }
@@ -206,11 +214,8 @@ class DetailDramaCubit extends Cubit<DetailDramaState> {
         statusState: StatusState.success,
         isSetReminder: true,
       ),
-      error: (String message) => state.copyWith(
-        message: message,
-        statusState: StatusState.failure,
-        errorOnScreen: false,
-      ),
+      error: (String message) =>
+          state.copyWith(message: message, statusState: StatusState.failure),
     );
 
     emit(newState);
@@ -229,11 +234,8 @@ class DetailDramaCubit extends Cubit<DetailDramaState> {
         statusState: StatusState.success,
         isSetReminder: false,
       ),
-      error: (String message) => state.copyWith(
-        message: message,
-        statusState: StatusState.failure,
-        errorOnScreen: false,
-      ),
+      error: (String message) =>
+          state.copyWith(message: message, statusState: StatusState.failure),
     );
 
     emit(newState);

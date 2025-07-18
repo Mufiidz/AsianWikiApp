@@ -80,9 +80,7 @@ class _DetailShowScreenState extends State<DetailShowScreen>
             _isFavorite = state.isFavorite;
           });
 
-          if (state.isError &&
-              errorMessage.isNotEmpty &&
-              !state.errorOnScreen) {
+          if (state.isError && errorMessage.isNotEmpty) {
             context.snackbar.showSnackBar(
               SnackbarWidget(
                 state.message,
@@ -123,7 +121,8 @@ class _DetailShowScreenState extends State<DetailShowScreen>
                 removeTop: !state.isError,
                 child: BodyWidget<DetailDramaState>(
                   state: state,
-                  isError: state.isError && state.errorOnScreen,
+                  isError: state.isErrorScreen,
+                  isLoading: state.isLoadingScreen,
                   child: (BuildContext context, DetailDramaState state) =>
                       ListWidget<Widget>(
                         _contents,
