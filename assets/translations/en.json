@@ -71,5 +71,7 @@
     "notification_upcoming_message_2": "{} is officially out today! Grab your snacks, it’s marathon time!",
     "notification_upcoming_message_3": "The first episode of {} is here! It’s thrilling from the very first minute!",
     "notification_upcoming_message_4": "{} premieres now! The drama you’ve been waiting for has finally arrived!",
-    "notification_upcoming_message_5": "Good news! {} is now available to watch. Hurry before the spoilers spread!"
+    "notification_upcoming_message_5": "Good news! {} is now available to watch. Hurry before the spoilers spread!",
+    "watchlist_msg_success": "{} Added to watchlist",
+    "watchlist_msg_remove": "Removed from watchlist"
 }

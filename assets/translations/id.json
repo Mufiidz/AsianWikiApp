@@ -71,5 +71,7 @@
     "notification_upcoming_message_2": "{} resmi rilis hari ini! Siapkan camilanmu, waktunya marathon!",
     "notification_upcoming_message_3": "Episode perdana {} sudah hadir! Bikin penasaran dari menit pertama!",
     "notification_upcoming_message_4": "{} tayang perdana sekarang! Drama yang kamu tunggu akhirnya datang!",
-    "notification_upcoming_message_5": "Kabar baik! {} sudah bisa kamu tonton. Gas nonton sebelum spoiler bertebaran!"
+    "notification_upcoming_message_5": "Kabar baik! {} sudah bisa kamu tonton. Gas nonton sebelum spoiler bertebaran!",
+    "watchlist_msg_success": "{} ditambahkan ke daftar nonton",
+    "watchlist_msg_remove": "Dihapus dari daftar nonton"
 }

@@ -3,6 +3,7 @@ import 'package:injectable/injectable.dart';
 import '../data/base_result.dart';
 import '../data/local/dao/watch_dao.dart';
 import '../model/watch.dart';
+import '../res/export_res.dart';
 import '../utils/export_utils.dart';
 
 abstract class WatchlistRepository {
@@ -22,7 +23,9 @@ class WatchlistRepositoryImpl implements WatchlistRepository {
     try {
       final Watch savedWatch = await _watchDao.addWatchList(watch);
 
-      return DataResult<String>('${savedWatch.title} added to watchlist');
+      return DataResult<String>(
+        LocaleKeys.watchlist_msg_success.tr(args: <String>[savedWatch.title]),
+      );
     } catch (e) {
       return ErrorResult<String>(e.toString());
     }
@@ -52,7 +55,7 @@ class WatchlistRepositoryImpl implements WatchlistRepository {
   Future<BaseResult<String>> removeWatchList(String showId) async {
     try {
       await _watchDao.deleteWatchList(showId);
-      return DataResult<String>('Removed from watchlist');
+      return DataResult<String>(LocaleKeys.watchlist_msg_remove.tr());
     } catch (e) {
       return ErrorResult<String>(e.toString());
     }
