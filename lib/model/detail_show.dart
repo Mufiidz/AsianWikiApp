@@ -8,6 +8,7 @@ import 'favorite.dart';
 import 'show.dart';
 import 'simple_data.dart';
 import 'synopsis.dart';
+import 'watch.dart';
 
 part 'detail_show.mapper.dart';
 
@@ -115,6 +116,14 @@ class DetailShow with DetailShowMappable {
 
   Show get toShow =>
       Show(id: id, title: title, imageUrl: imageUrl, type: type?.name);
+
+  Watch get toWatch => Watch(
+    id: id,
+    title: title,
+    image: imageUrl,
+    type: type,
+    isWatched: false,
+  );
 }
 
 @MappableEnum()

@@ -6,6 +6,7 @@ class DetailDramaState extends BaseState with DetailDramaStateMappable {
   final List<CastResponse> casts;
   final bool? isFavorite;
   final bool? isSetReminder;
+  final bool? onWatchlist;
 
   DetailDramaState({
     super.statusState,
@@ -15,5 +16,6 @@ class DetailDramaState extends BaseState with DetailDramaStateMappable {
     this.casts = const <CastResponse>[],
     this.isFavorite,
     this.isSetReminder,
+    this.onWatchlist,
   });
 }

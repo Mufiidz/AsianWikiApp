@@ -12,6 +12,7 @@ import '../../../../model/favorite.dart';
 import '../../../../model/upcoming_reminder.dart';
 import '../../../../repository/detail_repository.dart';
 import '../../../../repository/favorite_repository.dart';
+import '../../../../repository/watchlist_repository.dart';
 import '../../../../utils/export_utils.dart';
 
 part 'detail_drama_state.dart';
@@ -23,16 +24,20 @@ class DetailDramaCubit extends Cubit<DetailDramaState> {
   final List<String> _errors = <String>[];
   bool isEmptyCasts = false;
   final FavoriteRepository _favoriteRepository;
-  DetailDramaCubit(this._detailRepository, this._favoriteRepository)
-    : super(DetailDramaState());
+  final WatchlistRepository _watchlistRepository;
+
+  DetailDramaCubit(
+    this._detailRepository,
+    this._favoriteRepository,
+    this._watchlistRepository,
+  ) : super(DetailDramaState());
 
   void getAllDetail(String id, String? langCode) async {
     if (id.isEmpty) return;
     emit(state.copyWith(statusStateScreen: StatusStateScreen.loading));
     _errors.clear();
 
-    await checkFavorite(id);
-    await _isUpcomingReminder(id);
+    await _checkAllData(id);
 
     final List<Future<void>> actions = <Future<void>>[
       getDetail(id, langCode),
@@ -53,10 +58,21 @@ class DetailDramaCubit extends Cubit<DetailDramaState> {
     }
   }
 
-  Future<void> checkFavorite(String id) {
-    return _favoriteRepository.isFavorite(id).then((bool? isFavorite) {
-      emit(state.copyWith(isFavorite: isFavorite));
-    });
+  Future<void> _checkAllData(String id) async {
+    final bool? isFavorite = await _favoriteRepository.isFavorite(id);
+
+    final bool? isReminderExist = await _detailRepository
+        .isUpcomingReminderExist(id);
+
+    final bool? isWatchlist = await _watchlistRepository.onWatchList(id);
+
+    emit(
+      state.copyWith(
+        isFavorite: isFavorite,
+        isSetReminder: isReminderExist,
+        onWatchlist: isWatchlist,
+      ),
+    );
   }
 
   Future<void> getDetail(String id, String? langCode) async {
@@ -241,10 +257,54 @@ class DetailDramaCubit extends Cubit<DetailDramaState> {
     emit(newState);
   }
 
-  Future<void> _isUpcomingReminder(String id) async {
-    final bool? isReminderExist = await _detailRepository
-        .isUpcomingReminderExist(id);
+  void toggleBookmark() async {
+    bool? isBookmark = state.onWatchlist;
+    if (isBookmark == null) return;
 
-    emit(state.copyWith(isSetReminder: isReminderExist));
+    final DetailDramaState newState;
+    if (isBookmark) {
+      newState = await _cancelBookmark();
+    } else {
+      newState = await _setBookmark();
+    }
+
+    emit(newState);
+  }
+
+  Future<DetailDramaState> _setBookmark() async {
+    final DetailShow? show = state.drama;
+    if (show == null) return state;
+    final BaseResult<String> result = await _watchlistRepository.addWatchList(
+      show.toWatch,
+    );
+
+    final DetailDramaState newState = result.when(
+      result: (String data) => state.copyWith(
+        onWatchlist: true,
+        message: data,
+        statusState: StatusState.success,
+      ),
+      error: (String message) =>
+          state.copyWith(message: message, statusState: StatusState.failure),
+    );
+    return newState;
+  }
+
+  Future<DetailDramaState> _cancelBookmark() async {
+    final DetailShow? show = state.drama;
+    if (show == null) return state;
+    final BaseResult<String> result = await _watchlistRepository
+        .removeWatchList(show.id);
+
+    final DetailDramaState newState = result.when(
+      result: (String data) => state.copyWith(
+        onWatchlist: false,
+        message: data,
+        statusState: StatusState.success,
+      ),
+      error: (String message) =>
+          state.copyWith(message: message, statusState: StatusState.failure),
+    );
+    return newState;
   }
 }

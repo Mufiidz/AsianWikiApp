@@ -14,11 +14,14 @@ import 'app_database.steps.dart';
 import 'tables/favorite_table.dart';
 import 'tables/upcoming.dart';
 import 'tables/upcoming_reminder_table.dart';
+import 'tables/watch_table.dart';
 
 part 'app_database.g.dart';
 
 @lazySingleton
-@DriftDatabase(tables: <Type>[Upcoming, FavoriteTable, UpcomingReminderTable])
+@DriftDatabase(
+  tables: <Type>[Upcoming, FavoriteTable, UpcomingReminderTable, WatchTable],
+)
 class AppDatabase extends _$AppDatabase {
   AppDatabase() : super(_openConnection());
 
@@ -36,6 +39,8 @@ class AppDatabase extends _$AppDatabase {
           await m.createTable(schema.favorite),
       from2To3: (Migrator m, Schema3 schema) async =>
           await m.createTable(schema.upcomingReminderTable),
+      from3To4: (Migrator m, Schema4 schema) async =>
+          m.createTable(schema.watchTable),
     ),
   );
 }

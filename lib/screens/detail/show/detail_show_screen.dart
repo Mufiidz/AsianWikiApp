@@ -24,6 +24,7 @@ import 'cubit/detail_drama_cubit.dart';
 import 'sections/casts_detail.dart';
 import 'sections/synopsis_detail.dart';
 import 'sections/upcoming_reminder.dart';
+import 'widgets/additional_button_show.dart';
 
 class DetailShowScreen extends StatefulWidget {
   final String? heroId;
@@ -46,6 +47,7 @@ class _DetailShowScreenState extends State<DetailShowScreen>
   late final String _heroId;
   late final AnimationController _favoriteController;
   late final AnimationController _favoriteController2;
+  late final AnimationController _bookmarkController;
   bool? _isFavorite;
 
   @override
@@ -57,6 +59,7 @@ class _DetailShowScreenState extends State<DetailShowScreen>
     _searchController = SearchController();
     _favoriteController = AnimationController(vsync: this);
     _favoriteController2 = AnimationController(vsync: this);
+    _bookmarkController = AnimationController(vsync: this);
     super.initState();
     _showId = _drama.id;
     WidgetsBinding.instance.addPostFrameCallback((_) {
@@ -239,6 +242,16 @@ class _DetailShowScreenState extends State<DetailShowScreen>
       favoriteController: _favoriteController2,
       onClickFavorite: _onDoubleTapFavorite,
     ),
+    BlocSelector<DetailDramaCubit, DetailDramaState, bool?>(
+      bloc: _detailDramaCubit,
+      selector: (DetailDramaState state) => state.onWatchlist,
+      builder: (BuildContext context, bool? state) => AdditionalButtonShow(
+        isBookmark: state == true,
+        bookmarkController: _bookmarkController,
+        onClickBookmark: () => _onClickBookmark(state),
+        onClickShare: () => _detailDramaCubit.shareShow(),
+      ),
+    ),
     MainInfoDetail(mainInfos: _detailDrama?.mainInfo),
     BlocSelector<DetailDramaCubit, DetailDramaState, bool?>(
       bloc: _detailDramaCubit,
@@ -281,6 +294,18 @@ class _DetailShowScreenState extends State<DetailShowScreen>
     _detailDramaCubit.toggleFavorite();
   }
 
+  void _onClickBookmark(bool? isBookmark) {
+    if (isBookmark == null || _bookmarkController.duration == null) return;
+
+    if (isBookmark) {
+      _bookmarkController.reverse(from: 0.3);
+    } else {
+      _bookmarkController.forward();
+    }
+
+    _detailDramaCubit.toggleBookmark();
+  }
+
   @override
   void dispose() {
     clearMemoryImageCache();
@@ -288,6 +313,8 @@ class _DetailShowScreenState extends State<DetailShowScreen>
     _scrollController.dispose();
     _favoriteController.dispose();
     _favoriteController2.dispose();
+    _bookmarkController.dispose();
+    _detailDramaCubit.close();
     super.dispose();
   }
 }
