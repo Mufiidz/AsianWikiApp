@@ -185,7 +185,7 @@ class DetailRepositoryImpl implements DetailRepository {
         _ => ErrorResult<String>(LocaleKeys.error_msg_share.tr()),
       };
     } catch (e) {
-      logger.e(e, tag: 'shareShow');
+      logger.e(e);
       return ErrorResult<String>(e.toString());
     }
   }
@@ -247,7 +247,7 @@ class DetailRepositoryImpl implements DetailRepository {
       );
       return DataResult<String>(LocaleKeys.reminder_msg_set.tr());
     } catch (e) {
-      logger.e(e, tag: 'setReminderUpcoming');
+      logger.e(e);
       return ErrorResult<String>(e.toString());
     }
   }
@@ -261,7 +261,7 @@ class DetailRepositoryImpl implements DetailRepository {
           await _upcomingReminderDao.getUpcomingReminders();
       return DataResult<List<UpcomingReminder>>(upcomingReminders);
     } catch (e) {
-      logger.e(e, tag: 'getUpcomingReminders');
+      logger.e(e);
       return ErrorResult<List<UpcomingReminder>>(e.toString());
     }
   }
@@ -272,7 +272,7 @@ class DetailRepositoryImpl implements DetailRepository {
     try {
       return await _upcomingReminderDao.isUpcomingReminderExist(showId);
     } catch (e) {
-      logger.e(e, tag: 'isUpcomingReminderExist');
+      logger.e(e,);
       return null;
     }
   }

@@ -50,14 +50,14 @@ class FavoriteRepositoryImpl implements FavoriteRepository {
     try {
       final deletedItem = await _favoriteDao.deleteAllFavorites();
 
-      logger.d(deletedItem, tag: 'deleteAllFavorites');
+      logger.d(deletedItem);
       final message = deletedItem > 0
           ? 'Deleted $deletedItem favorite(s)'
           : 'No favorite(s) deleted';
 
       return DataResult(message);
     } catch (e) {
-      logger.e(e, tag: 'deleteAllFavorites');
+      logger.e(e);
       return ErrorResult(e.toString());
     }
   }
@@ -67,7 +67,7 @@ class FavoriteRepositoryImpl implements FavoriteRepository {
     try {
       final deletedFavorite = await _favoriteDao.deleteFavorite(id);
 
-      logger.d(deletedFavorite, tag: 'deleteFavorite');
+      logger.d(deletedFavorite);
       final String message = deletedFavorite != null
           ? '${deletedFavorite.title} has been deleted'
           : 'No favorite deleted';

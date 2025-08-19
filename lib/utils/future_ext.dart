@@ -1,10 +1,9 @@
 import 'package:dio/dio.dart';
-import 'package:easy_localization/easy_localization.dart';
 
 import '../data/base_result.dart';
 import '../data/network/base_response.dart';
 import '../data/network/error_response.dart';
-import '../res/locale_keys.g.dart';
+import '../res/export_res.dart';
 import 'export_utils.dart';
 
 extension FutureExt<T> on Future<BaseResponse<T>> {

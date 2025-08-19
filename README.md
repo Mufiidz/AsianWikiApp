@@ -47,3 +47,4 @@ Throughout building this app, I explored and learned:
 - Best practice to using constant file - [refer here.](https://stackoverflow.com/questions/54069239/whats-the-best-practice-to-keep-all-the-constants-in-flutter)
 - Organize my app styles, inspired by [this article.](https://medium.com/@kanellopoulos.leo/a-simple-way-to-organize-your-styles-themes-in-flutter-a0e7eba5b297)
 - Deeplink, but still not yet understand about this, especially deeplink for iOS [refer to this.](https://docs.flutter.dev/ui/navigation/deep-linking)
+- If want to added "tag" for [logger](https://pub.dev/packages/logger), you can add this from [pull request.](https://github.com/SourceHorizon/logger/pull/67#event-19074125254)

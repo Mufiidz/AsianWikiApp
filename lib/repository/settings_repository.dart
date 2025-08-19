@@ -38,7 +38,7 @@ class SettingsRepositoryImpl implements SettingsRepository {
       await context.setLocale(locale);
       return DataResult<String>(LocaleKeys.success_msg_language.tr());
     } catch (e) {
-      logger.e(e, tag: 'changeLanguage');
+      logger.e(e);
       return ErrorResult<String>(LocaleKeys.error_msg_language.tr());
     }
   }

@@ -39,7 +39,7 @@ class FavoriteDaoImpl extends DatabaseAccessor<AppDatabase>
       favoriteTable,
     )..where(($FavoriteTableTable tbl) => tbl.id.equals(id))).goAndReturn();
 
-    logger.d(favorites.length, tag: 'deleteFavorite');
+    logger.d(favorites.length);
 
     if (favorites.isEmpty) return null;
     return favorites.first.toFavorite;

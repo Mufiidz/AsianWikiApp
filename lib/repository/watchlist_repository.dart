@@ -46,7 +46,7 @@ class WatchlistRepositoryImpl implements WatchlistRepository {
     try {
       return await _watchDao.isWatchListExist(showId);
     } catch (e) {
-      logger.e(e, tag: 'onWatchList');
+      logger.e(e);
       return null;
     }
   }
