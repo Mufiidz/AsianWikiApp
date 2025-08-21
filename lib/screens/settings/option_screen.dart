@@ -48,39 +48,45 @@ class _OptionScreenState<OPTION> extends State<OptionScreen<OPTION>> {
         child: Card.filled(
           margin: PaddingStyle.paddingH16V8,
           shape: RoundedRectangleBorder(borderRadius: CornerRadius.largeRadius),
-          child: ListWidget<OptionSetting<OPTION>>(
-            widget.options,
-            isSeparated: true,
-            shrinkWrap: true,
-            padding: PaddingStyle.screen,
-            scrollPhysics: const NeverScrollableScrollPhysics(),
-            itemBuilder:
-                (BuildContext context, OptionSetting<OPTION> item, int index) {
-                  final OptionSetting<OPTION>(
-                    :String title,
-                    :String? subtitle,
-                    :Widget? icon,
-                    :OPTION value,
-                  ) = item;
-                  return ListTile(
-                    title: Text(title),
-                    subtitle: subtitle != null ? Text(subtitle) : null,
-                    leading: icon,
-                    trailing: Radio<OPTION>.adaptive(
-                      value: value,
-                      groupValue: _groupValue,
-                      onChanged: (OPTION? value) =>
-                          setState(() => _groupValue = value),
-                    ),
-                    onTap: () {
-                      setState(() => _groupValue = value);
-                      AppRoute.back(_groupValue);
-                    },
-                  );
-                },
-            separatorBuilder:
-                (BuildContext context, OptionSetting<OPTION> item, int index) =>
-                    const Divider(),
+          child: RadioGroup<OPTION>(
+            groupValue: _groupValue,
+            onChanged: (OPTION? value) => setState(() => _groupValue = value),
+            child: ListWidget<OptionSetting<OPTION>>(
+              widget.options,
+              isSeparated: true,
+              shrinkWrap: true,
+              padding: PaddingStyle.screen,
+              scrollPhysics: const NeverScrollableScrollPhysics(),
+              itemBuilder:
+                  (
+                    BuildContext context,
+                    OptionSetting<OPTION> item,
+                    int index,
+                  ) {
+                    final OptionSetting<OPTION>(
+                      :String title,
+                      :String? subtitle,
+                      :Widget? icon,
+                      :OPTION value,
+                    ) = item;
+                    return ListTile(
+                      title: Text(title),
+                      subtitle: subtitle != null ? Text(subtitle) : null,
+                      leading: icon,
+                      trailing: Radio<OPTION>.adaptive(value: value),
+                      onTap: () {
+                        setState(() => _groupValue = value);
+                        AppRoute.back(_groupValue);
+                      },
+                    );
+                  },
+              separatorBuilder:
+                  (
+                    BuildContext context,
+                    OptionSetting<OPTION> item,
+                    int index,
+                  ) => const Divider(),
+            ),
           ),
         ),
       ),
