@@ -20,8 +20,8 @@ abstract class NotificationService {
   Future<void> showNotification(
     int id,
     String title,
-    String body, {
-    NotificationDetails? notificationDetails,
+    String body,
+    NotificationDetails? notificationDetails, {
     NotificationPayload? payload,
   });
   Future<void> scheduleNotification(
@@ -104,8 +104,8 @@ class NotificationServiceImpl implements NotificationService {
   Future<void> showNotification(
     int id,
     String title,
-    String body, {
-    NotificationDetails? notificationDetails,
+    String body,
+    NotificationDetails? notificationDetails, {
     NotificationPayload? payload,
   }) => _flutterNotification.show(
     id,

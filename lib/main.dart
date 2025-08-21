@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:io';
 
 import 'package:app_links/app_links.dart';
 import 'package:easy_localization/easy_localization.dart';
@@ -15,6 +16,7 @@ import 'res/constants/constants.dart' as constants;
 import 'screens/deeplink/deeplink_screen.dart';
 import 'screens/home/home_screen.dart';
 import 'screens/settings/cubit/settings_cubit.dart';
+import 'services/workmanager/workmanager_services.dart';
 import 'utils/export_utils.dart';
 
 void main() async {
@@ -97,4 +99,19 @@ Future<void> initialize() async {
   UpcomingMapper.ensureInitialized();
   AsianwikiTypeMapper.ensureInitialized();
   tz.initializeTimeZones();
+
+  final WorkManagerServices workManagerServices = getIt<WorkManagerServices>();
+
+  final bool isInitializedWorkMnager = await workManagerServices.init();
+
+  if (!isInitializedWorkMnager) return;
+
+  await Future.wait(<Future<void>>[
+    Platform.isAndroid
+        ? workManagerServices.runInitScheduled()
+        : workManagerServices.runInitScheduledIos(),
+    Platform.isAndroid
+        ? workManagerServices.runInitWork()
+        : workManagerServices.runInitIos(),
+  ]);
 }

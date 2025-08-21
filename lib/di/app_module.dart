@@ -13,6 +13,7 @@ import 'package:workmanager/workmanager.dart';
 import '../config/env.dart';
 import '../data/network/api_services.dart';
 import '../res/constants/sharedpref_keys.dart' as sharedpref_keys;
+import '../services/workmanager/workmanager_services.dart';
 import '../utils/export_utils.dart';
 
 @module
@@ -78,4 +79,8 @@ abstract class AppModule {
   @singleton
   FlutterLocalNotificationsPlugin get flutterLocalNotificationsPlugin =>
       FlutterLocalNotificationsPlugin();
+
+  @singleton
+  WorkManagerServices get workManagerServices =>
+      WorkManagerServices(workmanager);
 }
